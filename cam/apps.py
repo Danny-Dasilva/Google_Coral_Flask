@@ -3,9 +3,9 @@ import logging
 import signal
 import cam.utils
 import time
-from .camera import make_camera
-from .gstreamer import Display, run_gen
-from .streaming.server import StreamingServer
+from cam.camera import make_camera
+from cam.gstreamer import Display, run_gen
+from cam.streaming.server import StreamingServer
 
 logger = logging.getLogger(__name__)
 
