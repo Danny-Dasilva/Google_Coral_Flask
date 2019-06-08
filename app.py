@@ -26,7 +26,6 @@ import time
     
 
 from flask import Flask, render_template, Response
-from camera import Camera
 import threading
 
 app = Flask(__name__)
