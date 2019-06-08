@@ -3,7 +3,7 @@ import sys
 from multiprocessing import Process
 import time
 from flask import Flask, render_template
-
+from cam import run_server, render_gen
 app = Flask(__name__)
 
 # def f():
@@ -14,14 +14,14 @@ def l():
     run_server(render_gen)
 
 
-@app.route('/')
-def index():
-    return render_template('layout.html')
+# @app.route('/')
+# def index():
+#     return render_template('layout.html')
 
 
 
-def a():
-    app.run(host='0.0.0.0', debug=False)
+# def a():
+#     app.run(host='0.0.0.0', debug=False)
 
 if __name__ == '__main__':
     global p
