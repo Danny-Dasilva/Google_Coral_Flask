@@ -34,11 +34,15 @@ app = Flask(__name__)
 def index():
     return render_template('layout.html')
 
-def gen():
-    sys.exit(main(sys.argv))
+def f():
+    app.run(host='0.0.0.0', debug=False)
 
 
 
 if __name__ == '__main__':
-    threading.Thread(target=gen).start()
-    app.run(host='0.0.0.0', debug=True)
+    sys.exit(main(sys.argv))
+    global p
+    p = Process(target=f)
+    p.start()
+
+    
