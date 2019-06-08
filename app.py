@@ -46,7 +46,7 @@ def index():
 
 @celery.task
 def my_background_task():
-    app.run(host='0.0.0.0', debug=False)
+    sys.exit(main(sys.argv))
 
 task = my_background_task.apply_async()
     
@@ -54,6 +54,7 @@ task = my_background_task.apply_async()
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    
+    app.run(host='0.0.0.0', debug=False)
 
     
