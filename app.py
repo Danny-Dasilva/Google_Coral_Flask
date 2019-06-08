@@ -23,11 +23,10 @@ def a():
     app.run(host='0.0.0.0', debug=False)
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
-
     global p
     p = Process(target=a)
     p.start()
+    sys.exit(main(sys.argv))
 
 #     global r
 #     r = Process(target=l)
