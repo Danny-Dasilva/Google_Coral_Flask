@@ -1,13 +1,13 @@
 # Copyright 2019 Google LLC
 #
-# Licensed under the Apache License, Version 2.0 (the 'License');
+# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #     https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an 'AS IS' BASIS,
+# distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
@@ -53,7 +53,7 @@ def on_new_sample(sink, overlay, screen_size, appsink_size, user_function):
 def detectCoralDevBoard():
   try:
     if 'MX8MQ' in open('/sys/firmware/devicetree/base/model').read():
-      print('Detected Edge TPU dev board.')
+      print('Detected EdgeTPU dev board.')
       return True
   except: pass
   return False
@@ -61,21 +61,21 @@ def detectCoralDevBoard():
 def run_pipeline(user_function,
                  src_size=(640,480),
                  appsink_size=(320, 180)):
-    PIPELINE = 'v4l2src device=/dev/video0 ! {src_caps} ! {leaky_q} '
+    PIPELINE = 'v4l2src ! {src_caps} ! {leaky_q}  ! tee name=t'
     if detectCoralDevBoard():
         SRC_CAPS = 'video/x-raw,format=YUY2,width={width},height={height},framerate=30/1'
-        PIPELINE += """ ! glupload ! tee name=t
-            t. ! {leaky_q} ! glfilterbin filter=glcolorscale
+        PIPELINE += """
+            t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
                ! {dl_caps} ! videoconvert ! {sink_caps} ! {sink_element}
-            t. ! {leaky_q} ! glfilterbin filter=glcolorscale
+            t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
                ! rsvgoverlay name=overlay ! waylandsink
         """
     else:
         SRC_CAPS = 'video/x-raw,width={width},height={height},framerate=30/1'
-        PIPELINE += """ ! tee name=t
+        PIPELINE += """
             t. ! {leaky_q} ! videoconvert ! videoscale ! {sink_caps} ! {sink_element}
             t. ! {leaky_q} ! videoconvert
-               ! rsvgoverlay name=overlay ! videoconvert ! ximagesink
+               ! rsvgoverlay name=overlay ! videoconvert ! autovideosink
             """
 
     SINK_ELEMENT = 'appsink name=appsink sync=false emit-signals=true max-buffers=1 drop=true'
