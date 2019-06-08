@@ -1,11 +1,11 @@
 import argparse
 import logging
 import signal
-import utils
+import cam.utils
 import time
-from camera import make_camera
-from gstreamer import Display, run_gen
-from streaming.server import StreamingServer
+from .camera import make_camera
+from .gstreamer import Display, run_gen
+from .streaming.server import StreamingServer
 
 logger = logging.getLogger(__name__)
 

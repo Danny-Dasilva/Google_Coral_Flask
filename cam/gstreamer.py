@@ -35,8 +35,8 @@ from gi.repository import GstPbutils  # Must be called after Gst.init().
 
 from PIL import Image
 
-from gst_native import set_display_contexts
-from pipelines import *
+from .gst_native import set_display_contexts
+from .pipelines import *
 
 COMMAND_SAVE_FRAME = ' '
 COMMAND_SAVE_FRAME_1 = '1'
