@@ -18,8 +18,6 @@ import argparse
 import sys
 import os
 import time
-from Cam.apps import run_server
-from Cam.classify import render_gen
 import threading
 from collections import deque, Counter
 from functools import partial
