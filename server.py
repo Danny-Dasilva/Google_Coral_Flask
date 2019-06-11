@@ -12,7 +12,7 @@ app = Flask(__name__)
 s = socket.socket()        
   
 # Define the port on which you want to connect 
-port = 14445                
+port = 11445                
   
 
 @app.route('/test')
