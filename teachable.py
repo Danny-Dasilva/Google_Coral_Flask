@@ -204,7 +204,8 @@ class TeachableMachine(object):
   def classify(self, img, svg):
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
-
+    print(img)
+    print(type(img))
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
 
