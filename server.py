@@ -14,7 +14,6 @@ s.connect(('127.0.0.1', port))
 
 def a():
     print( s.recv(1024) )
-    s.close()
 
 if __name__ == '__main__':
     global p
