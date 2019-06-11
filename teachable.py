@@ -33,7 +33,7 @@ from PIL import Image
 
 import gstreamer
 
-port=9012 
+port=5000 
 address="192.168.100.2" #server's ip
 size=width, height=  640, 480
 scale=width, height= 40, 10
