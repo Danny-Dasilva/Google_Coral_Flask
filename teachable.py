@@ -52,7 +52,7 @@ s.bind(('', port))
 print ("socket binded to %s" %(port) )
   
 # put the socket into listening mode 
-s.listen(5)      
+s.listen(2)      
 print ("socket is listening" )    
 
 """end test"""
