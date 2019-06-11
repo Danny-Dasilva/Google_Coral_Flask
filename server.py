@@ -4,7 +4,7 @@ from teachable import main
 from multiprocessing import Process
 import socket
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)        
+s = socket.socket()        
   
 # Define the port on which you want to connect 
 port = 12345                

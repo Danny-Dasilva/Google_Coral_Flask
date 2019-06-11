@@ -24,6 +24,7 @@ from functools import partial
 from multiprocessing import Process
 import multiprocessing as mp
 import os
+import socket
 
 os.environ['XDG_RUNTIME_DIR']='/run/user/1000'
 
