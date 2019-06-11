@@ -24,7 +24,6 @@ from functools import partial
 from multiprocessing import Process
 import multiprocessing as mp
 import os
-import socket
 
 os.environ['XDG_RUNTIME_DIR']='/run/user/1000'
 
@@ -33,11 +32,29 @@ from PIL import Image
 
 import gstreamer
 
-port=9012 
-address="192.168.100.2" #server's ip
-size=width, height=  640, 480
-scale=width, height= 40, 10
 
+"""test"""
+
+s = socket.socket()          
+print("Socket successfully created")
+  
+# reserve a port on your computer in our 
+# case it is 12345 but it can be anything 
+port = 12345                
+  
+# Next bind to the port 
+# we have not typed any ip in the ip field 
+# instead we have inputted an empty string 
+# this makes the server listen to requests  
+# coming from other computers on the network 
+s.bind(('', port))         
+print ("socket binded to %s" %(port) )
+  
+# put the socket into listening mode 
+s.listen(5)      
+print ("socket is listening" )    
+
+"""end test"""
 
 
 
@@ -219,25 +236,16 @@ class TeachableMachine(object):
     classification = Counter(self._buffer).most_common(1)[0][0]
     
 
-    #### Added Code
+    #added code
+    c, addr = s.accept()      
+    print ('Got connection from', addr )
+    
+    # send a thank you message to the client.  
+    output = 'Thank you for connecting'
+    c.sendall(output.encode('utf-8')) 
+  
 
-    s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((address, port))
-
-    #get image
-    image=img
-
-    #convert to pill image to scale
-    string_image=game.image.tostring(image, "RGBA",False)
-    pil_image=Image.fromstring("RGBA",size,string_image)
-    pil_image =pil_image.resize(scale)
-    buffer=pil_image.tostring()
-
-    #print size of buffer
-    print(sys.getsizeof(buffer))
-    s.sendall(buffer)
-
-
+    
     # Interpret user button presses (if any)
     debounced_buttons = self._ui.getDebouncedButtonState()
     for i, b in enumerate(debounced_buttons):
