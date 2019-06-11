@@ -24,6 +24,7 @@ from functools import partial
 from multiprocessing import Process
 import multiprocessing as mp
 import os
+import socket
 
 os.environ['XDG_RUNTIME_DIR']='/run/user/1000'
 
@@ -31,6 +32,14 @@ from embedding import kNNEmbeddingEngine
 from PIL import Image
 
 import gstreamer
+
+port=9012 
+address="192.168.100.2" #server's ip
+size=width, height=  640, 480
+scale=width, height= 40, 10
+
+
+
 
 def detectPlatform():
   try:
@@ -208,6 +217,26 @@ class TeachableMachine(object):
     print(type(img))
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
+    
+
+    #### Added Code
+
+    s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((address, port))
+
+    #get image
+    image=img
+
+    #convert to pill image to scale
+    string_image=game.image.tostring(image, "RGBA",False)
+    pil_image=Image.fromstring("RGBA",size,string_image)
+    pil_image =pil_image.resize(scale)
+    buffer=pil_image.tostring()
+
+    #print size of buffer
+    print(sys.getsizeof(buffer))
+    s.sendall(buffer)
+
 
     # Interpret user button presses (if any)
     debounced_buttons = self._ui.getDebouncedButtonState()

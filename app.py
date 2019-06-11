@@ -4,6 +4,7 @@ from multiprocessing import Process
 import time
 from flask import Flask, render_template
 from cam.apps import run_server, render_gen
+
 app = Flask(__name__)
 
 # def f():
@@ -12,6 +13,8 @@ app = Flask(__name__)
 
 # def l():
 #     run_server(render_gen)
+
+
 
 
 @app.route('/')
