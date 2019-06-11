@@ -42,8 +42,7 @@ print("Socket successfully created")
 # reserve a port on your computer in our 
 # case it is 12345 but it can be anything 
 port = 12345                
-c, addr = s.accept()      
-print ('Got connection from', addr )
+  
 # Next bind to the port 
 # we have not typed any ip in the ip field 
 # instead we have inputted an empty string 
@@ -238,9 +237,12 @@ class TeachableMachine(object):
     classification = Counter(self._buffer).most_common(1)[0][0]
     
 
+    #added code
+    c, addr = s.accept()      
+    print ('Got connection from', addr )
     
     # send a thank you message to the client.  
-    output = 'Thank you for connecting'
+    output = "some string for example"
     c.sendall(output.encode('utf-8')) 
   
 
