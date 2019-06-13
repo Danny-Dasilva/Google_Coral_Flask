@@ -3,6 +3,7 @@ import sys
 from multiprocessing import Process
 import time
 import socket
+from time import sleep
 from flask import Flask, render_template
 # app = Flask(__name__)
 
@@ -28,6 +29,9 @@ s.connect((socket.gethostname(), 1235))
 def a():
     msg = s.recv(1024)
     print(msg.decode("utf-8"))
+    print(msg.decode("utf-8"))
+    print(msg.decode("utf-8"))
+    print(msg.decode("utf-8"))
     
 
 
@@ -35,11 +39,8 @@ if __name__ == '__main__':
     global p
     p = Process(target=a)
     p.start()
+    sleep(3)
     sys.exit(main(sys.argv))
-
-    # global r
-    # r = Process(target=l)
-    # r.start()
     
 
 
