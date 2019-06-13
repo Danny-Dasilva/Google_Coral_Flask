@@ -31,7 +31,7 @@ def a():
     msg = s.recv(1024)
     print(msg.decode("utf-8"))
     l = msg.decode("utf-8")
-    f = open("demofile2.txt", "a")
+    f = open("demofile2.txt", "w")
     f.write(l)
     f.close()
     
@@ -40,7 +40,7 @@ def a():
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
-    
+
     global p
     p = Process(target=a)
     p.start()
