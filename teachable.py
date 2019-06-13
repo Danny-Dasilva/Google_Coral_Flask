@@ -214,12 +214,15 @@ class TeachableMachine(object):
     self._start_time = time.time()
     self._frame_times = deque(maxlen=40)
 
-  def classify(self, img, svg):
+  def socket(self, img, svg):
     """test code"""
     clientsocket, address = s.accept()
     print("connection established from", address)
     clientsocket.send(bytes("WWWWW to the server", "utf-8"))
     """end test code"""
+
+  def classify(self, img, svg):
+    
 
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
@@ -296,7 +299,7 @@ def main(args):
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
   
-
+    gstreamer.run_pipeline(teachable.socket)
 
 
     ui.wiggleLEDs(4)
