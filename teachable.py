@@ -271,11 +271,7 @@ def main(args):
     args = parser.parse_args()
     
     
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
-    """end test code"""
+    
     
 
     

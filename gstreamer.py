@@ -105,9 +105,14 @@ def run_pipeline(user_function,
     bus = pipeline.get_bus()
     bus.add_signal_watch()
     bus.connect('message', on_bus_message, loop)
-
-
     
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
+    """end test code"""
+
+
     # Run pipeline.
     pipeline.set_state(Gst.State.PLAYING)
     try:
