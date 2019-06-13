@@ -36,24 +36,10 @@ import gstreamer
 
 """test"""
 
-s = socket.socket()          
-print("Socket successfully created")
-  
-# reserve a port on your computer in our 
-# case it is 12345 but it can be anything 
-port = 11445                
-  
-# Next bind to the port 
-# we have not typed any ip in the ip field 
-# instead we have inputted an empty string 
-# this makes the server listen to requests  
-# coming from other computers on the network 
-s.bind(('', port))         
-print ("socket binded to %s" %(port) )
-  
-# put the socket into listening mode 
-s.listen(5)      
-print ("socket is listening" )    
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((socket.gethostname(), 1234))
+s.listen(5)
 
 """end test"""
 
@@ -238,12 +224,11 @@ class TeachableMachine(object):
     
 
     #added code
-    c, addr = s.accept()      
-    print ('Got connection from', addr )
     
-    # send a thank you message to the client.  
-    output = "some string for example"
-    c.sendall(output.encode('utf-8')) 
+
+
+
+    #end added code
   
 
     
@@ -277,7 +262,14 @@ def main(args):
     parser.add_argument('--keyboard', dest='keyboard', action='store_true',
                         help='Run test of UI. Ctrl-C to abort.', default='--keyboard')
     args = parser.parse_args()
-
+    
+    """test code"""
+    clientsocket, address = s.accept()
+    print(f"Connection from {address} has been established!")
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    clientsocket.close()
+    """end test code"""
+    
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.
     print('Initialize UI.')
