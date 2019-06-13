@@ -217,19 +217,13 @@ class TeachableMachine(object):
   def classify(self, img, svg):
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
-    print(img)
-    print(type(img))
+  
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
     
 
     #added code
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("Welcome to the server", "utf-8"))
-    clientsocket.close()
-    """end test code"""
+    
 
 
 
@@ -268,7 +262,12 @@ def main(args):
                         help='Run test of UI. Ctrl-C to abort.', default='--keyboard')
     args = parser.parse_args()
     
-    
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    clientsocket.close()
+    """end test code"""
     
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.

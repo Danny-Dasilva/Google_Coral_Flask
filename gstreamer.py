@@ -70,6 +70,8 @@ def run_pipeline(user_function,
             t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
                ! rsvgoverlay name=overlay ! waylandsink
         """
+        print(SRC_CAPS)
+        print(type(SRC_CAPS))
     else:
         SRC_CAPS = 'video/x-raw,width={width},height={height},framerate=30/1'
         PIPELINE += """
