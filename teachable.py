@@ -215,6 +215,12 @@ class TeachableMachine(object):
     self._frame_times = deque(maxlen=40)
 
   def classify(self, img, svg):
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
+    """end test code"""
+
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
   
@@ -224,9 +230,6 @@ class TeachableMachine(object):
 
     #added code
     
-    
-
-
     #end added code
   
 
@@ -251,12 +254,7 @@ class TeachableMachine(object):
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
     
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
-    clientsocket.close()
-    """end test code"""
+    
 
 
 def main(args):
