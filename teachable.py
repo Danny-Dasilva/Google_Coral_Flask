@@ -224,7 +224,7 @@ class TeachableMachine(object):
 
     #added code
     
-
+    
 
 
     #end added code
@@ -247,9 +247,16 @@ class TeachableMachine(object):
     status = 'fps %.1f; #examples: %d; Class % 7s'%(
             fps, self._engine.exampleCount(),
             classes[classification or 0])
-    print(status)
+    #print(status)
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
+    
+    # """test code"""
+    # clientsocket, address = s.accept()
+    # print("connection established from", address)
+    # clientsocket.send(bytes("WWWWW to the server", "utf-8"))
+    # clientsocket.close()
+    # """end test code"""
 
 
 def main(args):
@@ -263,6 +270,9 @@ def main(args):
     args = parser.parse_args()
     
     
+
+    
+
     
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.
@@ -284,17 +294,12 @@ def main(args):
     
     print('Initialize Model...')
     teachable = TeachableMachine(args.model, ui)
-    print(teachable)
+
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
-    print(result)
+  
 
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
-    clientsocket.close()
-    """end test code"""
+
 
     ui.wiggleLEDs(4)
 
