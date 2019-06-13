@@ -106,6 +106,8 @@ def run_pipeline(user_function,
     bus.add_signal_watch()
     bus.connect('message', on_bus_message, loop)
 
+
+    
     # Run pipeline.
     pipeline.set_state(Gst.State.PLAYING)
     try:
