@@ -22,6 +22,16 @@ gi.require_version('GstBase', '1.0')
 from gi.repository import GLib, GObject, Gst, GstBase
 from PIL import Image
 
+"""test"""
+
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((socket.gethostname(), 1235))
+s.listen(5)
+
+"""end test"""
+
+
 GObject.threads_init()
 Gst.init(None)
 
@@ -105,11 +115,11 @@ def run_pipeline(user_function,
     bus = pipeline.get_bus()
     bus.add_signal_watch()
     bus.connect('message', on_bus_message, loop)
-    
+
     """test code"""
     clientsocket, address = s.accept()
     print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
+    clientsocket.send(bytes("fucking shit to the server", "utf-8"))
     """end test code"""
 
 
