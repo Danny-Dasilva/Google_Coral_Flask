@@ -55,18 +55,20 @@ def on_new_sample(sink, overlay, screen_size, appsink_size, user_function):
     sample = sink.emit('pull-sample')
     buf = sample.get_buffer()
     result, mapinfo = buf.map(Gst.MapFlags.READ)
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
+    # """test code"""
+    # clientsocket, address = s.accept()
+    # print("connection established from", address)
 
-    """end test code"""
+    # """end test code"""
     if result:
       img = Image.frombytes('RGB', (appsink_size[0], appsink_size[1]), mapinfo.data, 'raw')
       svg_canvas = svgwrite.Drawing('', size=(screen_size[0], screen_size[1]))
       user_function(img, svg_canvas)
       overlay.set_property('data', svg_canvas.tostring())
       """test code"""
+      clientsocket, address = s.accept()
       clientsocket.send(bytes("fucking shit to the server", "utf-8"))
+      clientsocket.close()
       """end test code"""
 
     buf.unmap(mapinfo)
