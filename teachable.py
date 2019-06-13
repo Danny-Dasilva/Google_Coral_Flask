@@ -262,12 +262,7 @@ def main(args):
                         help='Run test of UI. Ctrl-C to abort.', default='--keyboard')
     args = parser.parse_args()
     
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
-    clientsocket.close()
-    """end test code"""
+    
     
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.
@@ -286,12 +281,20 @@ def main(args):
     if args.testui:
         ui.testButtons()
         return
-
+    
     print('Initialize Model...')
     teachable = TeachableMachine(args.model, ui)
-    
+    print(teachable)
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
+    print(result)
+
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
+    clientsocket.close()
+    """end test code"""
 
     ui.wiggleLEDs(4)
 
