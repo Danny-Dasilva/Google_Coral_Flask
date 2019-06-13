@@ -22,6 +22,7 @@ gi.require_version('GstBase', '1.0')
 from gi.repository import GLib, GObject, Gst, GstBase
 from PIL import Image
 
+
 """test"""
 
 
@@ -30,6 +31,8 @@ s.bind((socket.gethostname(), 1235))
 s.listen(5)
 
 """end test"""
+
+
 
 
 GObject.threads_init()
@@ -52,11 +55,20 @@ def on_new_sample(sink, overlay, screen_size, appsink_size, user_function):
     sample = sink.emit('pull-sample')
     buf = sample.get_buffer()
     result, mapinfo = buf.map(Gst.MapFlags.READ)
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+
+    """end test code"""
     if result:
       img = Image.frombytes('RGB', (appsink_size[0], appsink_size[1]), mapinfo.data, 'raw')
       svg_canvas = svgwrite.Drawing('', size=(screen_size[0], screen_size[1]))
       user_function(img, svg_canvas)
       overlay.set_property('data', svg_canvas.tostring())
+      """test code"""
+      clientsocket.send(bytes("fucking shit to the server", "utf-8"))
+      """end test code"""
+
     buf.unmap(mapinfo)
     return Gst.FlowReturn.OK
 
@@ -116,11 +128,7 @@ def run_pipeline(user_function,
     bus.add_signal_watch()
     bus.connect('message', on_bus_message, loop)
 
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("fucking shit to the server", "utf-8"))
-    """end test code"""
+    
 
 
     # Run pipeline.
