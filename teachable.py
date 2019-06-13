@@ -24,6 +24,7 @@ from functools import partial
 from multiprocessing import Process
 import multiprocessing as mp
 import os
+import socket
 
 os.environ['XDG_RUNTIME_DIR']='/run/user/1000'
 
@@ -31,6 +32,32 @@ from embedding import kNNEmbeddingEngine
 from PIL import Image
 
 import gstreamer
+
+
+"""test"""
+
+s = socket.socket()          
+print("Socket successfully created")
+  
+# reserve a port on your computer in our 
+# case it is 12345 but it can be anything 
+port = 11445                
+  
+# Next bind to the port 
+# we have not typed any ip in the ip field 
+# instead we have inputted an empty string 
+# this makes the server listen to requests  
+# coming from other computers on the network 
+s.bind(('', port))         
+print ("socket binded to %s" %(port) )
+  
+# put the socket into listening mode 
+s.listen(5)      
+print ("socket is listening" )    
+
+"""end test"""
+
+
 
 def detectPlatform():
   try:
@@ -204,10 +231,22 @@ class TeachableMachine(object):
   def classify(self, img, svg):
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
-
+    print(img)
+    print(type(img))
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
+    
 
+    #added code
+    c, addr = s.accept()      
+    print ('Got connection from', addr )
+    
+    # send a thank you message to the client.  
+    output = "some string for example"
+    c.sendall(output.encode('utf-8')) 
+  
+
+    
     # Interpret user button presses (if any)
     debounced_buttons = self._ui.getDebouncedButtonState()
     for i, b in enumerate(debounced_buttons):
