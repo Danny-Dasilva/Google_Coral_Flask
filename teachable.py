@@ -34,14 +34,14 @@ from PIL import Image
 import gstreamer
 
 
-"""test"""
+# """test"""
 
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((socket.gethostname(), 1235))
-s.listen(5)
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.bind((socket.gethostname(), 1235))
+# s.listen(5)
 
-"""end test"""
+# """end test"""
 
 
 
@@ -213,13 +213,6 @@ class TeachableMachine(object):
     self._kNN = kNN
     self._start_time = time.time()
     self._frame_times = deque(maxlen=40)
-
-  def socket(self, img, svg):
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("WWWWW to the server", "utf-8"))
-    """end test code"""
 
   def classify(self, img, svg):
     
