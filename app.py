@@ -4,8 +4,6 @@ from multiprocessing import Process
 import time
 import socket
 from flask import Flask, render_template
-from cam.apps import run_server, render_gen
-
 # app = Flask(__name__)
 
 # def f():
