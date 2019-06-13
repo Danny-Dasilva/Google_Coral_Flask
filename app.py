@@ -39,10 +39,12 @@ def a():
 
 
 if __name__ == '__main__':
+    sys.exit(main(sys.argv))
+    
     global p
     p = Process(target=a)
     p.start()
-    sys.exit(main(sys.argv))
+    
     
 
 
