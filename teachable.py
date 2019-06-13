@@ -265,7 +265,7 @@ def main(args):
     
     """test code"""
     clientsocket, address = s.accept()
-    print(f"Connection from {address} has been established!")
+    print("connection established from", address)
     clientsocket.send(bytes("Welcome to the server", "utf-8"))
     clientsocket.close()
     """end test code"""
