@@ -38,7 +38,7 @@ import gstreamer
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((socket.gethostname(), 1234))
+s.bind((socket.gethostname(), 1235))
 s.listen(5)
 
 """end test"""
@@ -224,7 +224,12 @@ class TeachableMachine(object):
     
 
     #added code
-    
+    """test code"""
+    clientsocket, address = s.accept()
+    print("connection established from", address)
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    clientsocket.close()
+    """end test code"""
 
 
 
@@ -263,12 +268,7 @@ def main(args):
                         help='Run test of UI. Ctrl-C to abort.', default='--keyboard')
     args = parser.parse_args()
     
-    """test code"""
-    clientsocket, address = s.accept()
-    print("connection established from", address)
-    clientsocket.send(bytes("Welcome to the server", "utf-8"))
-    clientsocket.close()
-    """end test code"""
+    
     
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.

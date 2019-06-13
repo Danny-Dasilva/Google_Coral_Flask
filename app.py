@@ -25,7 +25,7 @@ from cam.apps import run_server, render_gen
 #     app.run(host='0.0.0.0', debug=False)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((socket.gethostname(), 1234))
+s.connect((socket.gethostname(), 1235))
 
 def a():
     msg = s.recv(8)
