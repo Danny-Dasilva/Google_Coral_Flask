@@ -30,10 +30,7 @@ def a():
 
     msg = s.recv(1024)
     print(msg.decode("utf-8"))
-    l = msg.decode("utf-8")
-    f = open("demofile2.txt", "w")
-    f.write(l)
-    f.close()
+    
     
     
 
