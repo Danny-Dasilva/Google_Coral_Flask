@@ -10,18 +10,18 @@ app = Flask(__name__)
 #     sys.exit(main(sys.argv))
 
 
-def l():
-    run_server(render_gen)
+# def l():
+#     run_server(render_gen)
 
 
-# @app.route('/')
-# def index():
-#     return render_template('layout.html')
+@app.route('/')
+def index():
+    return render_template('layout.html')
 
 
 
-# def a():
-#     app.run(host='0.0.0.0', debug=False)
+def a():
+    app.run(host='0.0.0.0', debug=False)
 
 if __name__ == '__main__':
     global p
