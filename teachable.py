@@ -237,14 +237,16 @@ class TeachableMachine(object):
             classes[classification or 0])
    
     print(status)
-    clientsocket, address = s.accept()
-    print("Connection from has been established!", address)
-    clientsocket.send(bytes("Welcome to the server", "utf-8"))
-    clientsocket.close()
+    try:
+      clientsocket, address = s.accept()
+      print("Connection from has been established!", address)
+      clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    except:
+      pass
     
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
-    return status
+    
     
     
 
