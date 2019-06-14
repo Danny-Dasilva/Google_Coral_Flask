@@ -106,7 +106,7 @@ def run_pipeline(user_function,
         sink_element=SINK_ELEMENT)
 
     print('Gstreamer pipeline: ', pipeline)
-    print(user_function)
+    
     pipeline = Gst.parse_launch(pipeline)
 
     overlay = pipeline.get_by_name('overlay')

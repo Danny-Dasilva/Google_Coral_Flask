@@ -33,15 +33,11 @@ from PIL import Image
 
 import gstreamer
 
+import socket
 
-# """test"""
-
-
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# s.bind((socket.gethostname(), 1235))
-# s.listen(5)
-
-# """end test"""
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((socket.gethostname(), 1234))
+s.listen(5)
 
 
 
@@ -222,14 +218,7 @@ class TeachableMachine(object):
   
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
-    
 
-    #added code
-    
-    #end added code
-  
-
-    
     # Interpret user button presses (if any)
     debounced_buttons = self._ui.getDebouncedButtonState()
     for i, b in enumerate(debounced_buttons):
@@ -246,9 +235,12 @@ class TeachableMachine(object):
     status = 'fps %.1f; #examples: %d; Class % 7s'%(
             fps, self._engine.exampleCount(),
             classes[classification or 0])
-    
    
     print(status)
+    clientsocket, address = s.accept()
+    print(f"Connection from {address} has been established!")
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    clientsocket.close()
     
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
