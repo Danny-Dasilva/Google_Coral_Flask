@@ -7,4 +7,4 @@ while True:
     while True:
         msg = s.recv(8)
         print(msg.decode("utf-8"))
-    time.sleep(2)
+    
