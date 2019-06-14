@@ -1,6 +1,7 @@
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context
 from random import random
+import socket
 from time import sleep
 from threading import Thread, Event
 
@@ -18,6 +19,9 @@ socketio = SocketIO(app)
 thread = Thread()
 thread_stop_event = Event()
 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((socket.gethostname(), 1234))
+
 class RandomThread(Thread):
     def __init__(self):
         self.delay = .05
@@ -31,8 +35,11 @@ class RandomThread(Thread):
         #infinite loop of magical random numbers
         print("Making random numbers")
         while not thread_stop_event.isSet():
-            number = round(random()*10, 3)
-            print(number)
+            msg = s.recv(8)
+            print(msg.decode("utf-8"))
+            # number = round(random()*10, 3)
+            # print(number)
+            number = msg.decode("utf-8")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
 
@@ -62,5 +69,5 @@ def test_disconnect():
     print('Client disconnected')
 
 
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', debug=False)
+
+    
