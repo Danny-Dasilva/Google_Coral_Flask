@@ -211,6 +211,8 @@ class TeachableMachine(object):
     self._kNN = kNN
     self._start_time = time.time()
     self._frame_times = deque(maxlen=40)
+    print(clientsocket)
+    print(address)
     
 
   def classify(self, img, svg):
