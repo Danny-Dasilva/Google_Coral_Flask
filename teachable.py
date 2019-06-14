@@ -201,10 +201,12 @@ class UI_EdgeTpuDevBoard(UI):
 
 
 class TeachableMachine(object):
-  def __init__(self, model_path, ui, kNN=3, buffer_length=4):
+  def __init__(self, model_path, ui, clientsocket, address, kNN=3, buffer_length=4):
     assert os.path.isfile(model_path), 'Model file %s not found'%model_path
     self._engine = kNNEmbeddingEngine(model_path, kNN)
     self._ui = ui
+    self.clientsocket = clientsocket
+    self.address = address
     self._buffer = deque(maxlen = buffer_length)
     self._kNN = kNN
     self._start_time = time.time()
@@ -285,7 +287,7 @@ def main(args):
         return
     clientsocket, address = s.accept()
     print('Initialize Model...')
-    teachable = TeachableMachine(args.model, ui)
+    teachable = TeachableMachine(args.model, ui, clientsocket, address)
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
