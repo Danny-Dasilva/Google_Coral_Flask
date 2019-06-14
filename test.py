@@ -25,7 +25,7 @@ class RandomThread(Thread):
     def __init__(self):
         self.delay = .05
         super(RandomThread, self).__init__()
-       r
+        
     def randomNumberGenerator(self):
         """
         Generate a random number every 1 second and emit to a socketio instance (broadcast)
