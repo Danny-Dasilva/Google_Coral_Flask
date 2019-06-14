@@ -292,7 +292,7 @@ def main(args):
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
-    print(result)
+   
 
 
     ui.wiggleLEDs(4)
