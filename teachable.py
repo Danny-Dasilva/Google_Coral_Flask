@@ -285,14 +285,17 @@ def main(args):
     if args.testui:
         ui.testButtons()
         return
-    clientsocket, address = s.accept()
-    print('Initialize Model...')
-    teachable = TeachableMachine(args.model, ui, clientsocket, address)
+    if:
+      clientsocket, address = s.accept()
+      print('Initialize Model...')
+      teachable = TeachableMachine(args.model, ui, clientsocket, address)
 
-    print('Start Pipeline.')
-    result = gstreamer.run_pipeline(teachable.classify)
-   
+      print('Start Pipeline.')
+      result = gstreamer.run_pipeline(teachable.classify)
     
-    ui.wiggleLEDs(4)
+      
+      ui.wiggleLEDs(4)
+    else:
+      print("no socket connection")
 
 
