@@ -249,7 +249,7 @@ class TeachableMachine(object):
     l = status
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
-    return img, l
+    return l
     
     
 
@@ -292,9 +292,7 @@ def main(args):
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
-  
-    l = teachable.classify
-    print(l)
+    print(result)
 
 
     ui.wiggleLEDs(4)
