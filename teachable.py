@@ -201,7 +201,7 @@ class UI_EdgeTpuDevBoard(UI):
 
 
 class TeachableMachine(object):
-  def __init__(self, model_path, ui, kNN=3, buffer_length=4):
+  def __init__(self, model_path, ui, kNN=3, buffer_length=4, clientsocket, address):
     assert os.path.isfile(model_path), 'Model file %s not found'%model_path
     self._engine = kNNEmbeddingEngine(model_path, kNN)
     self._ui = ui
@@ -209,6 +209,7 @@ class TeachableMachine(object):
     self._kNN = kNN
     self._start_time = time.time()
     self._frame_times = deque(maxlen=40)
+    
 
   def classify(self, img, svg):
     
@@ -237,12 +238,11 @@ class TeachableMachine(object):
             classes[classification or 0])
    
     print(status)
-    try:
-      clientsocket, address = s.accept()
-      print("Connection from has been established!", address)
-      clientsocket.send(bytes("Welcome to the server", "utf-8"))
-    except:
-      pass
+    
+    
+    print("Connection from has been established!", address)
+    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    
     
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
@@ -283,9 +283,9 @@ def main(args):
     if args.testui:
         ui.testButtons()
         return
-    
+    clientsocket, address = s.accept()
     print('Initialize Model...')
-    teachable = TeachableMachine(args.model, ui)
+    teachable = TeachableMachine(args.model, ui, clientsocket, address)
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
