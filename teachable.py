@@ -247,12 +247,12 @@ class TeachableMachine(object):
             fps, self._engine.exampleCount(),
             classes[classification or 0])
     
-    global l
-    l = status
+   
+    print(status)
     
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
-    
+    return status
     
     
 
@@ -296,8 +296,7 @@ def main(args):
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
    
-    print(l)
-
+    
     ui.wiggleLEDs(4)
 
 
