@@ -286,7 +286,7 @@ def main(args):
         ui.testButtons()
         return
     try:
-      clientsocket, address = s.accept():
+      clientsocket, address = s.accept()
       if s.accept != 0:
         print('Initialize Model...')
         teachable = TeachableMachine(args.model, ui, clientsocket, address)
