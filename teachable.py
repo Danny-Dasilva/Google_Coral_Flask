@@ -285,7 +285,7 @@ def main(args):
         return
     clientsocket, address = s.accept()
     print('Initialize Model...')
-    teachable = TeachableMachine(args.model, ui, clientsocket, address)
+    teachable = TeachableMachine(args.model, ui)
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
