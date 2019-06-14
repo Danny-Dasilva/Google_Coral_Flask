@@ -238,7 +238,7 @@ class TeachableMachine(object):
    
     print(status)
     clientsocket, address = s.accept()
-    print(f"Connection from {address} has been established!")
+    print("Connection from has been established!", address)
     clientsocket.send(bytes("Welcome to the server", "utf-8"))
     clientsocket.close()
     
