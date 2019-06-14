@@ -246,7 +246,7 @@ class TeachableMachine(object):
     clientsocket = self.clientsocket
     
     print("Connection from has been established!", address)
-    clientsocket.send(bytes("Welcome to the server", "utf-8"))
+    clientsocket.send(bytes(status, "utf-8"))
     
     
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
