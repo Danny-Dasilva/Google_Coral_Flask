@@ -242,7 +242,8 @@ class TeachableMachine(object):
             classes[classification or 0])
    
     print(status)
-    
+    address = self.address
+    clientsocket = self.clientsocket
     
     print("Connection from has been established!", address)
     clientsocket.send(bytes("Welcome to the server", "utf-8"))
