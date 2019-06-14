@@ -23,14 +23,14 @@ from gi.repository import GLib, GObject, Gst, GstBase
 from PIL import Image
 
 
-"""test"""
+# """test"""
 
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((socket.gethostname(), 1235))
-s.listen(5)
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.bind((socket.gethostname(), 1235))
+# s.listen(5)
 
-"""end test"""
+# """end test"""
 
 
 

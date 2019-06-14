@@ -23,22 +23,22 @@ from flask import Flask, render_template
 # def a():
 #     app.run(host='0.0.0.0', debug=False)
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((socket.gethostname(), 1235))
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.connect((socket.gethostname(), 1235))
 
-def a():
+# def a():
 
-    msg = s.recv(1024)
-    print(msg.decode("utf-8"))
+#     msg = s.recv(1024)
+#     print(msg.decode("utf-8"))
     
     
     
 
 
 if __name__ == '__main__':
-    global p
-    p = Process(target=a)
-    p.start()
+    # global p
+    # p = Process(target=a)
+    # p.start()
     sys.exit(main(sys.argv))
     
 
