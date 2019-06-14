@@ -291,7 +291,7 @@ def main(args):
     teachable = TeachableMachine(args.model, ui)
 
     print('Start Pipeline.')
-    result = gstreamer.run_pipeline(teachable.classify)
+    img, result = gstreamer.run_pipeline(teachable.classify)
   
     print(result)
 
