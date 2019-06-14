@@ -249,7 +249,7 @@ class TeachableMachine(object):
     l = print(status)
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
-    return l
+    #return l
     
     
 
