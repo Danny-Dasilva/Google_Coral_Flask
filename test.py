@@ -41,13 +41,14 @@ class RandomThread(Thread):
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
             # print(number)
-            if msg == '':
-                break
-            else:
-                message.append(msg)
+                        # if msg == '':
+                        #     break
+                        # else:
+                        #     message.append(msg)
             #full_string="".join(message)
-            print(type(msg))
+            
             print(type(msg.decode()))
+            print(msg.decode())
             number = msg.decode("utf-8")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
