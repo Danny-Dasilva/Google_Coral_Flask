@@ -249,7 +249,7 @@ class TeachableMachine(object):
     
     # clientsocket.send(bytes(img, "utf-8"))
     image = img.tostring()
-    clientsocket.send(image)
+    clientsocket.sendall(image)
 
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))

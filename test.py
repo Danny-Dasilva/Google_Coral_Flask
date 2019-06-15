@@ -46,7 +46,7 @@ class RandomThread(Thread):
             else:
                 message.append(msg)
             full_string="".join(message)
-            image=game.fromstring(full_string)
+            print(type(msg))
             number = msg.decode("utf-8")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
