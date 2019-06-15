@@ -246,6 +246,7 @@ class TeachableMachine(object):
     clientsocket = self.clientsocket
     
     print("Connection from has been established!", address)
+    print(sys.getsizeof(img))
     clientsocket.send(bytes(img, "utf-8"))
     
     
