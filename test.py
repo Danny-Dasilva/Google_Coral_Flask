@@ -47,6 +47,7 @@ class RandomThread(Thread):
                 message.append(msg)
             #full_string="".join(message)
             print(type(msg))
+            print(type(msg.decode()))
             number = msg.decode("utf-8")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
