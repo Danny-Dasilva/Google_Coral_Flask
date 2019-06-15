@@ -25,7 +25,7 @@ class RandomThread(Thread):
     def __init__(self):
         self.delay = .05
         super(RandomThread, self).__init__()
-        
+
     def randomNumberGenerator(self):
         """
         Generate a random number every 1 second and emit to a socketio instance (broadcast)
@@ -36,7 +36,7 @@ class RandomThread(Thread):
         while not thread_stop_event.isSet():
             # number = round(random()*10, 3)
             # print(number)
-            msg = s.recv(8)
+            msg = s.recv(16)
             print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
             # print(number)
