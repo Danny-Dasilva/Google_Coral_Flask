@@ -33,6 +33,7 @@ class RandomThread(Thread):
         """
         #infinite loop of magical random numbers
         print("Making random numbers")
+        message = []
         while not thread_stop_event.isSet():
             # number = round(random()*10, 3)
             # print(number)
@@ -40,7 +41,12 @@ class RandomThread(Thread):
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
             # print(number)
-            print(msg)
+            if msg == '':
+                break
+            else:
+                message.append(msg)
+            full_string="".join(message)
+            image=game.fromstring(full_string)
             number = msg.decode("utf-8")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
