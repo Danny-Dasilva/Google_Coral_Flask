@@ -46,12 +46,12 @@ class RandomThread(Thread):
             #img.mode, img.size
             m = "RGB"
             si = (320, 180)
-
-            
-            number = Image.frombytes(m, si, msg)
-            number.save("working_functional_image.png")
-            socketio.emit('newnumber', {'number': number}, namespace='/test')
-            sleep(self.delay)
+            if msg:
+                
+                number = Image.frombytes(m, si, msg)
+                number.save("working_functional_image.png")
+                socketio.emit('newnumber', {'number': number}, namespace='/test')
+                sleep(self.delay)
 
     def run(self):
         self.randomNumberGenerator()
