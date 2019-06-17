@@ -1,4 +1,4 @@
-from teach import main
+from teachable import main
 import sys
 from multiprocessing import Process
 import time
