@@ -35,7 +35,6 @@ class RandomThread(Thread):
         print("Making random numbers")
         message = []
         while not thread_stop_event.isSet():
-            while not thread_stop_event.isSet():
             # number = round(random()*10, 3)
             # print(number)
             msg = s.recv(172833)
