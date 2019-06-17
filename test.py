@@ -4,7 +4,7 @@ from random import random
 from time import sleep
 from threading import Thread, Event
 import socket
-
+import PIL
 __author__ = 'slynn'
 
 app = Flask(__name__)
@@ -37,7 +37,7 @@ class RandomThread(Thread):
         while not thread_stop_event.isSet():
             # number = round(random()*10, 3)
             # print(number)
-            msg = s.recv(56)
+            msg = s.recv(172833)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
             # print(number)
@@ -46,10 +46,13 @@ class RandomThread(Thread):
                         # else:
                         #     message.append(msg)
             #full_string="".join(message)
+            #
+            #img.mode, img.size
+            m = None
+            s = (320, 180)
+
             
-            print(type(msg.decode()))
-            print(msg.decode())
-            number = msg.decode("utf-8")
+            number = PIL.Image.frombytes(m, s, msg)
             number.save("working_functional_image.png")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
