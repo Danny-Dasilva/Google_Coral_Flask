@@ -247,7 +247,7 @@ class TeachableMachine(object):
     
     # print("Connection from has been established!", address)
     print(img.format)
-    print(img.mode)
+    print("mode", img.mode)
     print(img.size)
     print(img.palette)
     
