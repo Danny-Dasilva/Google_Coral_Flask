@@ -240,17 +240,16 @@ class TeachableMachine(object):
     status = 'fps %.1f; #examples: %d; Class % 7s'%(
             fps, self._engine.exampleCount(),
             classes[classification or 0])
-    print(img)
-    print(type(img))
+    
     print(status)
     address = self.address
     clientsocket = self.clientsocket
     
     # print("Connection from has been established!", address)
-    
+    print(list(img))
     #clientsocket.send(bytes(status, "utf-8"))
     image = img.tobytes()
-    clientsocket.sendall(list(image))
+    # clientsocket.sendall(list(image))
 
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
