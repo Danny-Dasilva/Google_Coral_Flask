@@ -248,9 +248,9 @@ class TeachableMachine(object):
     
     # print("Connection from has been established!", address)
     
-    clientsocket.send(bytes(status, "utf-8"))
-    # image = img.tobytes()
-    # clientsocket.sendall(status)
+    #clientsocket.send(bytes(status, "utf-8"))
+    image = img.tobytes()
+    clientsocket.sendall(list(image))
 
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
