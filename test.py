@@ -36,8 +36,8 @@ class RandomThread(Thread):
         print("Making random numbers")
         message = []
         while not thread_stop_event.isSet():
-            # number = round(random()*10, 3)
-            # print(number)
+            
+        
             msg = s.recv(172833)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
@@ -50,10 +50,10 @@ class RandomThread(Thread):
             #
             #img.mode, img.size
             m = None
-            s = (320, 180)
+            si = (320, 180)
 
             
-            number = PIL.Image.frombytes(m, s, msg)
+            number = PIL.Image.frombytes(m, si, msg)
             number.save("working_functional_image.png")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
