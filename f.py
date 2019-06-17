@@ -6,6 +6,7 @@ from threading import Thread, Event
 import socket
 from PIL import Image
 import io
+from time import sleep
 
 
 
@@ -29,7 +30,9 @@ def serve_pil_image(pil_img):
     
 @app.route('/')
 def serve_img():
+    delay = .5
     while True:
+
         msg = s.recv(172833)
         # print(msg.decode("utf-8"))
         # number = round(random()*10, 3)
@@ -43,7 +46,7 @@ def serve_img():
             number = Image.frombytes(m, si, msg)
             # number.save("working_functional_image.png")
             img = number
-       
+        sleep(delay)
         
     return serve_pil_image(img)
 

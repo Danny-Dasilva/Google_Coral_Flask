@@ -50,7 +50,7 @@ class RandomThread(Thread):
             if msg:
 
                 number = Image.frombytes(m, si, msg)
-                #number.save("working_functional_image.png")
+                number.save("WWWWWWWW.png")
                 #socketio.emit('newnumber', {'number': number}, namespace='/test')
                 sleep(self.delay)
 
@@ -59,33 +59,9 @@ class RandomThread(Thread):
 
 
 
-def serve_pil_image(pil_img):
-    img_io = io.BytesIO()
-    pil_img.save(img_io, 'JPEG', quality=70)
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/jpeg')
-    
+
+
 @app.route('/')
-def serve_img():
-    msg = s.recv(172833)
-    # print(msg.decode("utf-8"))
-    # number = round(random()*10, 3)
-    
-    #
-    #img.mode, img.size
-    m = "RGB"
-    si = (320, 180)
-    if msg:
-
-        number = Image.frombytes(m, si, msg)
-        # number.save("working_functional_image.png")
-        img = number
-        socketio.emit('newnumber', {'number': number}, namespace='/test')
-        
-    return serve_pil_image(img)
-
-
-@app.route('/f')
 def index():
     #only by sending this page first will the client be connected to the socketio instance
     return render_template('index.html')
