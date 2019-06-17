@@ -250,10 +250,11 @@ class TeachableMachine(object):
     print(img.mode)
     print(img.size)
     print(img.palette)
-    print(img.size)
+    
     #clientsocket.send(bytes(status, "utf-8"))
     image = img.tobytes()
     # print(list(image))
+    print(sys.getsizeof(image))
     clientsocket.sendall(image)
 
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
