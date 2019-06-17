@@ -4,7 +4,7 @@ from random import random
 from time import sleep
 from threading import Thread, Event
 import socket
-import PIL
+from PIL import Image
 
 __author__ = 'slynn'
 
@@ -53,7 +53,7 @@ class RandomThread(Thread):
             si = (320, 180)
 
             
-            number = PIL.Image.frombytes(m, si, msg)
+            number = Image.frombytes(m, si, msg)
             number.save("working_functional_image.png")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
             sleep(self.delay)
