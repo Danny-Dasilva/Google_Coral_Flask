@@ -5,7 +5,7 @@ from time import sleep
 from threading import Thread, Event
 import socket
 from PIL import Image
-from datetime import datetime
+import datetime
 import io
 
 __author__ = 'slynn'
@@ -51,7 +51,7 @@ class RandomThread(Thread):
             if msg:
                 
                 number = Image.frombytes(m, si, msg)
-                number.save(datetime.now() + "image.png")
+                number.save(str(datetime.datetime.now().time()) + "image.png")
                 #socketio.emit('newnumber', {'number': number}, namespace='/test')
                 sleep(self.delay)
 
