@@ -5,6 +5,7 @@ from time import sleep
 from threading import Thread, Event
 import socket
 from PIL import Image
+from datetime import datetime
 import io
 
 __author__ = 'slynn'
@@ -25,7 +26,7 @@ s.connect((socket.gethostname(), 1234))
 
 class RandomThread(Thread):
     def __init__(self):
-        self.delay = .05
+        self.delay = 1
         super(RandomThread, self).__init__()
 
     def randomNumberGenerator(self):
@@ -48,9 +49,9 @@ class RandomThread(Thread):
             m = "RGB"
             si = (320, 180)
             if msg:
-
+                
                 number = Image.frombytes(m, si, msg)
-                number.save("WWWWWWWW   .png")
+                number.save(datetime.now() + "image.png")
                 #socketio.emit('newnumber', {'number': number}, namespace='/test')
                 sleep(self.delay)
 
