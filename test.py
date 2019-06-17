@@ -40,7 +40,7 @@ class RandomThread(Thread):
         while not thread_stop_event.isSet():
             
         
-            msg = s.recv(172833)
+            msg = s.recv(8)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
             
