@@ -243,13 +243,15 @@ class TeachableMachine(object):
     
     print(status)
     address = self.address
-    clientsocket = self.clientsocket
+    clientsocket = self.clientsocket  
     
     # print("Connection from has been established!", address)
     print(img.format)
     print(img.mode)
     print(img.size)
     print(img.palette)
+    img.save("fp", 'JPEG')
+    img.save("New_image.png")
     #clientsocket.send(bytes(status, "utf-8"))
     # image = img.tobytes()
     # print(list(image))
