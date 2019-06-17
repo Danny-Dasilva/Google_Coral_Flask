@@ -4,6 +4,7 @@ from random import random
 from time import sleep
 from threading import Thread, Event
 import socket
+import PIL
 
 __author__ = 'slynn'
 
