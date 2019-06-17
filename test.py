@@ -55,7 +55,7 @@ class RandomThread(Thread):
             number = PIL.Image.frombytes(m, s, msg)
             number.save("working_functional_image.png")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
-            sleep(self.delay
+            sleep(self.delay)
 
     def run(self):
         self.randomNumberGenerator()
