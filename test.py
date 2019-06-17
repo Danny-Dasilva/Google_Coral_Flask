@@ -40,19 +40,19 @@ class RandomThread(Thread):
         while not thread_stop_event.isSet():
             
         
-            msg = s.recv(8)
+            msg = s.recv(172833)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
-            
+            print(msg.size)
             #
             #img.mode, img.size
             m = "RGB"
             si = (320, 180)
-            if msg:
+            # if 172833:
                 
-                number = Image.frombytes(m, si, msg)
-                number.save(str(datetime.datetime.now().time()) + "image.png")
-                #socketio.emit('newnumber', {'number': number}, namespace='/test')
+            #     number = Image.frombytes(m, si, msg)
+            #     number.save(str(datetime.datetime.now().time()) + "image.png")
+            #     #socketio.emit('newnumber', {'number': number}, namespace='/test')
                 sleep(self.delay)
 
     def run(self):
