@@ -43,7 +43,7 @@ class RandomThread(Thread):
             msg = s.recv(172833)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
-            print(msg.size)
+            print(sys.getsizeof(msg))
             #
             #img.mode, img.size
             m = "RGB"
