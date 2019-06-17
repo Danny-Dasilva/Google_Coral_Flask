@@ -41,15 +41,10 @@ class RandomThread(Thread):
             msg = s.recv(172833)
             # print(msg.decode("utf-8"))
             # number = round(random()*10, 3)
-            # print(number)
-                        # if msg == '':
-                        #     break
-                        # else:
-                        #     message.append(msg)
-            #full_string="".join(message)
+            
             #
             #img.mode, img.size
-            m = None
+            m = "RGB"
             si = (320, 180)
 
             
