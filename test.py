@@ -4,7 +4,7 @@ from random import random
 from time import sleep
 from threading import Thread, Event
 import socket
-import PIL
+
 __author__ = 'slynn'
 
 app = Flask(__name__)
@@ -35,6 +35,7 @@ class RandomThread(Thread):
         print("Making random numbers")
         message = []
         while not thread_stop_event.isSet():
+            while not thread_stop_event.isSet():
             # number = round(random()*10, 3)
             # print(number)
             msg = s.recv(172833)
@@ -55,7 +56,7 @@ class RandomThread(Thread):
             number = PIL.Image.frombytes(m, s, msg)
             number.save("working_functional_image.png")
             socketio.emit('newnumber', {'number': number}, namespace='/test')
-            sleep(self.delay)
+            sleep(self.delay
 
     def run(self):
         self.randomNumberGenerator()
