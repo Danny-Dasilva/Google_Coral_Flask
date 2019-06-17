@@ -50,7 +50,7 @@ class RandomThread(Thread):
             if msg:
 
                 number = Image.frombytes(m, si, msg)
-                number.save("WWWWWWWW.png")
+                number.save("WWWWWWWW   .png")
                 #socketio.emit('newnumber', {'number': number}, namespace='/test')
                 sleep(self.delay)
 
