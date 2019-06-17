@@ -29,19 +29,20 @@ def serve_pil_image(pil_img):
     
 @app.route('/')
 def serve_img():
-    msg = s.recv(172833)
-    # print(msg.decode("utf-8"))
-    # number = round(random()*10, 3)
-    
-    #
-    #img.mode, img.size
-    m = "RGB"
-    si = (320, 180)
-    if msg:
+    while True:
+        msg = s.recv(172833)
+        # print(msg.decode("utf-8"))
+        # number = round(random()*10, 3)
+        
+        #
+        #img.mode, img.size
+        m = "RGB"
+        si = (320, 180)
+        if msg:
 
-        number = Image.frombytes(m, si, msg)
-        # number.save("working_functional_image.png")
-        img = number
+            number = Image.frombytes(m, si, msg)
+            # number.save("working_functional_image.png")
+            img = number
        
         
     return serve_pil_image(img)
