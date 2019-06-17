@@ -240,7 +240,8 @@ class TeachableMachine(object):
     status = 'fps %.1f; #examples: %d; Class % 7s'%(
             fps, self._engine.exampleCount(),
             classes[classification or 0])
-   
+    print(img)
+    print(type(img))
     print(status)
     address = self.address
     clientsocket = self.clientsocket
