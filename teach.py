@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import gstreamer
+from PIL import Image
+from embedding import kNNEmbeddingEngine
 import argparse
 import sys
 import os
@@ -26,16 +29,11 @@ import multiprocessing as mp
 import os
 import socket
 
-os.environ['XDG_RUNTIME_DIR']='/run/user/1000'
+os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
-from embedding import kNNEmbeddingEngine
-from PIL import Image
-
-import gstreamer
-
-import socket
 
 flaskImage = None
+
 
 def detectPlatform():
   try:
@@ -54,15 +52,18 @@ def detectPlatform():
 
 class UI(object):
   """Abstract UI class. Subclassed by specific board implementations."""
+
   def __init__(self):
     self._button_state = [False for _ in self._buttons]
     current_time = time.time()
     self._button_state_last_change = [current_time for _ in self._buttons]
-    self._debounce_interval = 0.1 # seconds
+    self._debounce_interval = 0.1  # seconds
 
   def setOnlyLED(self, index):
-    for i in range(len(self._LEDs)): self.setLED(i, False)
-    if index is not None: self.setLED(index, True)
+    for i in range(len(self._LEDs)):
+      self.setLED(i, False)
+    if index is not None:
+      self.setLED(index, True)
 
   def isButtonPressed(self, index):
     buttons = self.getButtonState()
@@ -76,13 +77,13 @@ class UI(object):
 
   def getDebouncedButtonState(self):
     t = time.time()
-    for i,new in enumerate(self.getButtonState()):
+    for i, new in enumerate(self.getButtonState()):
       if not new:
         self._button_state[i] = False
         continue
       old = self._button_state[i]
       if ((t-self._button_state_last_change[i]) >
-             self._debounce_interval) and not old:
+              self._debounce_interval) and not old:
         self._button_state[i] = True
       else:
         self._button_state[i] = False
@@ -93,8 +94,8 @@ class UI(object):
     while True:
       for i in range(5):
         self.setLED(i, self.isButtonPressed(i))
-      print('Buttons: ', ' '.join([str(i) for i,v in
-          enumerate(self.getButtonState()) if v]))
+      print('Buttons: ', ' '.join([str(i) for i, v in
+                                   enumerate(self.getButtonState()) if v]))
       time.sleep(0.01)
 
   def wiggleLEDs(self, reps=3):
@@ -111,7 +112,7 @@ class UI_Keyboard(UI):
     import keyinput
 
     # Layout of GPIOs for Raspberry demo
-    self._buttons = ['q', '1' , '2' , '3', '4']
+    self._buttons = ['q', '1', '2', '3', '4']
     self._LEDs = [None]*5
     super(UI_Keyboard, self).__init__()
 
@@ -122,7 +123,8 @@ class UI_Keyboard(UI):
     pressed_chars = set()
     while True:
       char = keyinput.get_char()
-      if not char : break
+      if not char:
+        break
       pressed_chars.add(char)
 
     state = [b in pressed_chars for b in self._buttons]
@@ -137,7 +139,7 @@ class UI_Raspberry(UI):
     rpigpio.setmode(rpigpio.BCM)
 
     # Layout of GPIOs for Raspberry demo
-    self._buttons = [16 , 6 , 5 , 24, 27]
+    self._buttons = [16, 6, 5, 24, 27]
     self._LEDs = [20, 13, 12, 25, 22]
 
     # Initialize them all
@@ -150,7 +152,7 @@ class UI_Raspberry(UI):
 
   def setLED(self, index, state):
     return rpigpio.output(self._LEDs[index],
-           rpigpio.LOW if state else rpigpio.HIGH)
+                          rpigpio.LOW if state else rpigpio.HIGH)
 
   def getButtonState(self):
     return [rpigpio.input(button) for button in self._buttons]
@@ -160,6 +162,7 @@ class UI_EdgeTpuDevBoard(UI):
   def __init__(self):
     global GPIO, PWM
     from periphery import GPIO, PWM, GPIOError
+
     def initPWM(pin):
       pwm = PWM(pin, 0)
       pwm.frequency = 1e3
@@ -185,12 +188,15 @@ class UI_EdgeTpuDevBoard(UI):
 
   def __del__(self):
     if hasattr(self, "_LEDs"):
-      for x in self._LEDs or [] + self._buttons or []: x.close()
+      for x in self._LEDs or [] + self._buttons or []:
+        x.close()
 
   def setLED(self, index, state):
     """Abstracts away mix of GPIO and PWM LEDs."""
-    if type(self._LEDs[index]) is GPIO: self._LEDs[index].write(not state)
-    else: self._LEDs[index].duty_cycle = 0.0 if state else 1.0
+    if type(self._LEDs[index]) is GPIO:
+      self._LEDs[index].write(not state)
+    else:
+      self._LEDs[index].duty_cycle = 0.0 if state else 1.0
 
   def getButtonState(self):
     return [button.read() for button in self._buttons]
@@ -198,56 +204,58 @@ class UI_EdgeTpuDevBoard(UI):
 
 class TeachableMachine(object):
   def __init__(self, model_path, ui, kNN=3, buffer_length=4):
-    assert os.path.isfile(model_path), 'Model file %s not found'%model_path
+    assert os.path.isfile(model_path), 'Model file %s not found' % model_path
     self._engine = kNNEmbeddingEngine(model_path, kNN)
     self._ui = ui
 
-    self._buffer = deque(maxlen = buffer_length)
+    self._buffer = deque(maxlen=buffer_length)
     self._kNN = kNN
     self._start_time = time.time()
     self._frame_times = deque(maxlen=40)
-   
-    
 
   def classify(self, img, svg):
-    
+
     global flaskImage
     flaskImage = img
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
-  
+
     self._buffer.append(self._engine.kNNEmbedding(emb))
     classification = Counter(self._buffer).most_common(1)[0][0]
 
     # Interpret user button presses (if any)
     debounced_buttons = self._ui.getDebouncedButtonState()
     for i, b in enumerate(debounced_buttons):
-      if not b: continue
-      if i == 0: self._engine.clear() # Hitting button 0 resets
-      else : self._engine.addEmbedding(emb, i) # otherwise the button # is the class
+      if not b:
+        continue
+      if i == 0:
+        self._engine.clear()  # Hitting button 0 resets
+      else:
+        # otherwise the button # is the class
+        self._engine.addEmbedding(emb, i)
 
     self._frame_times.append(time.time())
-    fps = len(self._frame_times)/float(self._frame_times[-1] - self._frame_times[0] + 0.001)
+    fps = len(self._frame_times) / \
+        float(self._frame_times[-1] - self._frame_times[0] + 0.001)
 
     # Print/Display results
     self._ui.setOnlyLED(classification)
     classes = ['--', 'One', 'Two', 'Three', 'Four']
-    status = 'fps %.1f; #examples: %d; Class % 7s'%(
-            fps, self._engine.exampleCount(),
-            classes[classification or 0])
+    status = 'fps %.1f; #examples: %d; Class % 7s' % (
+        fps, self._engine.exampleCount(),
+        classes[classification or 0])
     #print(img)
     #print(type(img))
     print(status)
-   
-    
 
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
-    
-    
-    
 
 
+def testThread():
+  while True:
+    print("WHy Is ThiS wOrKiNg")
+    
 def main(args):
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='File path of Tflite model.',
@@ -257,12 +265,7 @@ def main(args):
     parser.add_argument('--keyboard', dest='keyboard', action='store_true',
                         help='Run test of UI. Ctrl-C to abort.', default='--keyboard')
     args = parser.parse_args()
-    
-    
-    
-    
 
-    
     # The UI differs a little depending on the system because the GPIOs
     # are a little bit different.
     print('Initialize UI.')
@@ -270,8 +273,10 @@ def main(args):
     if args.keyboard:
       ui = UI_Keyboard()
     else:
-      if platform == 'raspberry': ui = UI_Raspberry()
-      elif platform == 'devboard': ui = UI_EdgeTpuDevBoard()
+      if platform == 'raspberry':
+        ui = UI_Raspberry()
+      elif platform == 'devboard':
+        ui = UI_EdgeTpuDevBoard()
       else:
         print('No GPIOs detected - falling back to Keyboard input')
         ui = UI_Keyboard()
@@ -280,16 +285,12 @@ def main(args):
     if args.testui:
         ui.testButtons()
         return
-    
-      
+
     print('Initialize Model...')
     teachable = TeachableMachine(args.model, ui,)
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
     print(flaskImage)
-  
+
     ui.wiggleLEDs(4)
-  
-
-
