@@ -38,6 +38,8 @@ if __name__ == '__main__':
     t1 = Thread(target = teach.main, args=sys.argv)
     t1.start
     print("Thread started")
+    while True:
+        None
 '''
 if __name__ == '__main__':
     # global p
