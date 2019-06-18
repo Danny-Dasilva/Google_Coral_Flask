@@ -33,7 +33,7 @@ os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
 
 flaskImage = None
-
+flaskStatus = None
 
 def detectPlatform():
   try:
@@ -216,6 +216,7 @@ class TeachableMachine(object):
   def classify(self, img, svg):
 
     global flaskImage
+    global flaskStatus
     flaskImage = img
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
@@ -246,8 +247,8 @@ class TeachableMachine(object):
         classes[classification or 0])
     #print(img)
     #print(type(img))
-    print(status)
-
+    #print(status)
+    flaskStatus = status
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
 

@@ -1,52 +1,47 @@
 import teach
 import sys
-from multiprocessing import Process
-import time
-import socket
-from time import sleep
-from flask import Flask, render_template
 from threading import Thread
-# app = Flask(__name__)
+from flask import Flask, send_file
+from io import BytesIO
+app = Flask(__name__)
+import time
+def printVariable():
+    time.sleep(1)
+    while True:
+        #print(teach.flaskImage)
+        #print(teach.flaskStatus)
+        time.sleep(0.05)
 
-# def f():
-#     sys.exit(main(sys.argv))
+def flaskServer():
+    print("ServerStarted")
+    app.run(host='0.0.0.0', debug=False)
+
+def serve_pil_image(pil_img):
+    img_io = BytesIO()
+    pil_img.save(img_io, 'JPEG', quality=70)
+    img_io.seek(0)
+    return send_file(img_io, mimetype='image/jpeg')
+
+@app.route('/')
+def serve_img():
+    return serve_pil_image(teach.flaskImage)
+if __name__ == "__main__":
+
+    #thread = Thread(target=printVariable)
+    #thread.daemon = True
+
+    thread1 = Thread(target=flaskServer)
+    thread1.daemon = True
+    #thread.start()
+    thread1.start()
+
+    teach.main(sys.argv)
+    sys.exit(0)
 
 
-# def l():
-#     run_server(render_gen)
 
 
-# @app.route('/')
-# def index():
-#     return render_template('layout.html')
 
-
-# def a():
-#     app.run(host='0.0.0.0', debug=False)
-
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# s.connect((socket.gethostname(), 1235))
-
-# def a():
-
-#     msg = s.recv(1024)
-#     print(msg.decode("utf-8"))
-    
-    
-if __name__ == '__main__':
-    print("Thread Starting")
-    #t1 = Thread(target = teach.main, args=sys.argv)
-    t1 = Thread(target = teach.testThread)
-    t1.start
-    print("Thread started")
-'''
-if __name__ == '__main__':
-    # global p
-     p = Process(target=teach.main)
-     p.start()
-    sys.exit(teach.main(sys.argv))
-'''
-    
 
 
 
