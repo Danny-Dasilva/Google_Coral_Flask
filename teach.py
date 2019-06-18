@@ -35,7 +35,7 @@ import gstreamer
 
 import socket
 
-
+flaskImage = None
 
 def detectPlatform():
   try:
@@ -211,7 +211,8 @@ class TeachableMachine(object):
 
   def classify(self, img, svg):
     
-
+    global flaskImage
+    flaskImage = img
     # Classify current image and determine
     emb = self._engine.DetectWithImage(img)
   
@@ -234,8 +235,8 @@ class TeachableMachine(object):
     status = 'fps %.1f; #examples: %d; Class % 7s'%(
             fps, self._engine.exampleCount(),
             classes[classification or 0])
-    print(img)
-    print(type(img))
+    #print(img)
+    #print(type(img))
     print(status)
    
     
@@ -286,7 +287,7 @@ def main(args):
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
-  
+    print(flaskImage)
   
     ui.wiggleLEDs(4)
   

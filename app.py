@@ -1,10 +1,11 @@
-from teachable import main
+import teach
 import sys
 from multiprocessing import Process
 import time
 import socket
 from time import sleep
 from flask import Flask, render_template
+from threading import Thread
 # app = Flask(__name__)
 
 # def f():
@@ -34,12 +35,16 @@ from flask import Flask, render_template
     
     
 
+t1 = Thread(target = teach.main, args=sys.argv)
+t1.start
 
+'''
 if __name__ == '__main__':
     # global p
-    # p = Process(target=a)
-    # p.start()
-    sys.exit(main(sys.argv))
+     p = Process(target=teach.main)
+     p.start()
+    sys.exit(teach.main(sys.argv))
+'''
     
 
 
