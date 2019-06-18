@@ -1,8 +1,9 @@
 import teach
 import sys
 from threading import Thread
-from flask import Flask, send_file
+from flask import Flask, send_file, Response, render_template
 from io import BytesIO
+from customCamera import Camera
 app = Flask(__name__)
 import time
 def printVariable():
@@ -24,7 +25,20 @@ def serve_pil_image(pil_img):
 
 @app.route('/')
 def serve_img():
-    return serve_pil_image(teach.flaskImage)
+    return render_template('index.html')
+def gen(cam):
+    while True:
+        img_io = BytesIO()
+        teach.flaskImage.save(img_io, 'JPEG', quality=70)
+        frame = cam.get_frame(img_io)
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(Camera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 if __name__ == "__main__":
 
     #thread = Thread(target=printVariable)

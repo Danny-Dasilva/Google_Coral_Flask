@@ -74,6 +74,7 @@ def detectCoralDevBoard():
 
 def run_pipeline(user_function,
                  src_size=(640,480),
+                 #src_size=(1920,1080),
                  appsink_size=(320, 180)):
     PIPELINE = 'v4l2src ! {src_caps} ! {leaky_q}  ! tee name=t'
     if detectCoralDevBoard():
