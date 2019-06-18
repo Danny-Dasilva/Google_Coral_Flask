@@ -33,11 +33,11 @@ from threading import Thread
 #     print(msg.decode("utf-8"))
     
     
-    
-print("Thread Starting")
-t1 = Thread(target = teach.main, args=sys.argv)
-t1.start
-print("Thread started")
+if __name__ == '__main__':
+    print("Thread Starting")
+    t1 = Thread(target = teach.main, args=sys.argv)
+    t1.start
+    print("Thread started")
 '''
 if __name__ == '__main__':
     # global p
