@@ -6,6 +6,11 @@ from io import BytesIO
 from customCamera import Camera
 app = Flask(__name__)
 import time
+
+from adafruit_servokit import ServoKit
+kit = ServoKit(channels =16)
+
+
 def printVariable():
     time.sleep(1)
     while True:
