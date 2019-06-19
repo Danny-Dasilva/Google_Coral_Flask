@@ -51,14 +51,6 @@ def detectPlatform():
 
 class UI(object):
   """Abstract UI class. Subclassed by specific board implementations."""
-
-  def __init__(self):
-   
-    current_time = time.time()
-
-
-class UI(object):
-  """Abstract UI class. Subclassed by specific board implementations."""
   def __init__(self):
     self._button_state = [False for _ in self._buttons]
     current_time = time.time()
@@ -109,6 +101,28 @@ class UI(object):
         time.sleep(0.05)
         self.setLED(i, False)
 
+class UI_Keyboard(UI):
+  def __init__(self):
+    global keyinput
+    import keyinput
+
+    # Layout of GPIOs for Raspberry demo
+    self._buttons = ['q', '1' , '2' , '3', '4']
+    self._LEDs = [None]*5
+    super(UI_Keyboard, self).__init__()
+
+  def setLED(self, index, state):
+    pass
+
+  def getButtonState(self):
+    pressed_chars = set()
+    while True:
+      char = keyinput.get_char()
+      if not char : break
+      pressed_chars.add(char)
+
+    state = [b in pressed_chars for b in self._buttons]
+    return state
 
 
 class UI_EdgeTpuDevBoard(UI):
