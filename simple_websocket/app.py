@@ -14,16 +14,16 @@ Updated 13th April 2018
 
 # Start with a basic flask app webpage.
 from flask_socketio import SocketIO, emit
-from flask import Flask, render_template, url_for, copy_current_request_context
+from flask import Flask, render_template, url_for, copy_current_request_context, Response
 from random import random
 from time import sleep
 from threading import Thread, Event
-
+from Cam import camera
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-
+Image = camera()
 #turn the flask app into a socketio app
 socketio = SocketIO(app)
 
@@ -69,6 +69,11 @@ def test_connect():
         print("Starting Thread")
         thread = RandomThread()
         thread.start()
+    
+@app.route('/video_feed')
+def video_feed():
+    return Response(Image.ImageStream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
