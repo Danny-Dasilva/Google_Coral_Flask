@@ -15,8 +15,6 @@
 # limitations under the License.
 
 import gstreamer
-from adafruit_servokit import ServoKit
-
 from PIL import Image
 from embedding import kNNEmbeddingEngine
 import argparse
@@ -36,8 +34,6 @@ os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
 flaskImage = None
 flaskStatus = None
-
-kit = ServoKit(channels =16)
 
 def detectPlatform():
   try:
@@ -252,10 +248,6 @@ class TeachableMachine(object):
     #print(img)
     #print(type(img))
     #print(status)
-    print(classes[classification or 0])
-
-    kit.continuous_servo[0].throttle = 0.5
-
     flaskStatus = status
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
