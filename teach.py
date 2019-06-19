@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import gstreamer
-keyinput
+
 
 from PIL import Image
 from embedding import kNNEmbeddingEngine
