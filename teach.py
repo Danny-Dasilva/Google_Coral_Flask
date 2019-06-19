@@ -181,6 +181,7 @@ class TeachableMachine(object):
 
 
     flaskStatus = classes[classification or 0]
+    print(flaskStatus)
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
 
