@@ -55,42 +55,8 @@ class UI(object):
   """Abstract UI class. Subclassed by specific board implementations."""
 
   def __init__(self):
-    self._button_state = [False for _ in self._buttons]
+   
     current_time = time.time()
-    self._button_state_last_change = [current_time for _ in self._buttons]
-    self._debounce_interval = 0.1  # seconds
-
-  
-  def getDebouncedButtonState(self):
-    t = time.time()
-    for i, new in enumerate(self.getButtonState()):
-      if not new:
-        self._button_state[i] = False
-        continue
-      old = self._button_state[i]
-      if ((t-self._button_state_last_change[i]) >
-              self._debounce_interval) and not old:
-        self._button_state[i] = True
-      else:
-        self._button_state[i] = False
-      self._button_state_last_change[i] = t
-    return self._button_state
-
-  def testButtons(self):
-    while True:
-      for i in range(5):
-        self.setLED(i, self.isButtonPressed(i))
-      print('Buttons: ', ' '.join([str(i) for i, v in
-                                   enumerate(self.getButtonState()) if v]))
-      time.sleep(0.01)
-
-  def wiggleLEDs(self, reps=3):
-    for i in range(reps):
-      for i in range(5):
-        self.setLED(i, True)
-        time.sleep(0.05)
-        self.setLED(i, False)
-
 
 class UI_Keyboard(UI):
   def __init__(self):
@@ -102,91 +68,13 @@ class UI_Keyboard(UI):
     self._LEDs = [None]*5
     super(UI_Keyboard, self).__init__()
 
-  def setLED(self, index, state):
-    pass
-
-  def getButtonState(self):
-    pressed_chars = set()
-    while True:
-      char = keyinput.get_char()
-      if not char:
-        break
-      pressed_chars.add(char)
-
-    state = [b in pressed_chars for b in self._buttons]
-    return state
-
-
-class UI_Raspberry(UI):
-  def __init__(self):
-    # Only for RPi3: set GPIOs to pulldown
-    global rpigpio
-    import RPi.GPIO as rpigpio
-    rpigpio.setmode(rpigpio.BCM)
-
-    # Layout of GPIOs for Raspberry demo
-    self._buttons = [16, 6, 5, 24, 27]
-    self._LEDs = [20, 13, 12, 25, 22]
-
-    # Initialize them all
-    for pin in self._buttons:
-      rpigpio.setup(pin, rpigpio.IN, pull_up_down=rpigpio.PUD_DOWN)
-    for pin in self._LEDs:
-      rpigpio.setwarnings(False)
-      rpigpio.setup(pin, rpigpio.OUT)
-    super(UI_Raspberry, self).__init__()
-
-  def setLED(self, index, state):
-    return rpigpio.output(self._LEDs[index],
-                          rpigpio.LOW if state else rpigpio.HIGH)
-
-  def getButtonState(self):
-    return [rpigpio.input(button) for button in self._buttons]
 
 
 class UI_EdgeTpuDevBoard(UI):
   def __init__(self):
-    global GPIO, PWM
-    from periphery import GPIO, PWM, GPIOError
-
-    def initPWM(pin):
-      pwm = PWM(pin, 0)
-      pwm.frequency = 1e3
-      pwm.duty_cycle = 0
-      pwm.enable()
-      return pwm
-    try:
-      self._LEDs = [GPIO(86, "out"),
-                    initPWM(1),
-                    initPWM(0),
-                    GPIO(140, "out"),
-                    initPWM(2)]
-      self._buttons = [GPIO(141, "in"),
-                       GPIO(8, "in"),
-                       GPIO(7, "in"),
-                       GPIO(138, "in"),
-                       GPIO(6, "in")]
-    except GPIOError as e:
-      print("Unable to access GPIO pins. Did you run with sudo ?")
-      sys.exit(1)
-
     super(UI_EdgeTpuDevBoard, self).__init__()
 
-  def __del__(self):
-    if hasattr(self, "_LEDs"):
-      for x in self._LEDs or [] + self._buttons or []:
-        x.close()
-
-  def setLED(self, index, state):
-    """Abstracts away mix of GPIO and PWM LEDs."""
-    if type(self._LEDs[index]) is GPIO:
-      self._LEDs[index].write(not state)
-    else:
-      self._LEDs[index].duty_cycle = 0.0 if state else 1.0
-
-  def getButtonState(self):
-    return [button.read() for button in self._buttons]
-
+  
 
 class TeachableMachine(object):
   def __init__(self, model_path, ui, kNN=3, buffer_length=4):
@@ -243,9 +131,7 @@ class TeachableMachine(object):
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
 
 
-def testThread():
-  while True:
-    print("WHy Is ThiS wOrKiNg")
+
     
 def main(args):
     parser = argparse.ArgumentParser()
@@ -264,24 +150,14 @@ def main(args):
     if args.keyboard:
       ui = UI_Keyboard()
     else:
-      if platform == 'raspberry':
-        ui = UI_Raspberry()
-      elif platform == 'devboard':
+      if platform == 'devboard':
         ui = UI_EdgeTpuDevBoard()
       else:
         print('No GPIOs detected - falling back to Keyboard input')
         ui = UI_Keyboard()
-
-    ui.wiggleLEDs()
-    if args.testui:
-        ui.testButtons()
-        return
 
     print('Initialize Model...')
     teachable = TeachableMachine(args.model, ui,)
 
     print('Start Pipeline.')
     result = gstreamer.run_pipeline(teachable.classify)
-    print(flaskImage)
-
-    ui.wiggleLEDs(4)
