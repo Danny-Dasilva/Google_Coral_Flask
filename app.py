@@ -46,8 +46,8 @@ def video_feed():
 
 if __name__ == "__main__":
 
-    #thread = Thread(target=printVariable)
-    #thread.daemon = True
+    thread = Thread(target=printVariable)
+    thread.daemon = True
 
     thread1 = Thread(target=flaskServer)
     thread1.daemon = True
