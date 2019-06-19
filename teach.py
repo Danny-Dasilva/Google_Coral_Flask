@@ -42,9 +42,6 @@ kit = ServoKit(channels =16)
 def detectPlatform():
   try:
     model_info = open("/sys/firmware/devicetree/base/model").read()
-    if 'Raspberry Pi' in model_info:
-      print("Detected Raspberry Pi.")
-      return "raspberry"
     if 'MX8MQ' in model_info:
       print("Detected EdgeTPU dev board.")
       return "devboard"
@@ -63,22 +60,7 @@ class UI(object):
     self._button_state_last_change = [current_time for _ in self._buttons]
     self._debounce_interval = 0.1  # seconds
 
-  def setOnlyLED(self, index):
-    for i in range(len(self._LEDs)):
-      self.setLED(i, False)
-    if index is not None:
-      self.setLED(index, True)
-
-  def isButtonPressed(self, index):
-    buttons = self.getButtonState()
-    return buttons[index]
-
-  def setLED(self, index, state):
-    raise NotImplementedError()
-
-  def getButtonState(self):
-    raise NotImplementedError()
-
+  
   def getDebouncedButtonState(self):
     t = time.time()
     for i, new in enumerate(self.getButtonState()):
