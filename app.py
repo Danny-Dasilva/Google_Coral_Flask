@@ -14,7 +14,7 @@ kit = ServoKit(channels =16)
 def printVariable():
     time.sleep(1)
     while True:
-        #print(teach.flaskImage)
+        print(teach.flaskImage)
         #print(teach.flaskStatus)
         time.sleep(0.05)
 

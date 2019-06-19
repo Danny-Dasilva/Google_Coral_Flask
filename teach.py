@@ -177,10 +177,10 @@ class TeachableMachine(object):
     #print(img)
     #print(type(img))
     #print(status)
-    print(classes[classification or 0])
+    
 
 
-    flaskStatus = status
+    flaskStatus = classes[classification or 0]
     svg.add(svg.text(status, insert=(26, 26), fill='black', font_size='20'))
     svg.add(svg.text(status, insert=(25, 25), fill='white', font_size='20'))
 
