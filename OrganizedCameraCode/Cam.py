@@ -1,25 +1,28 @@
 import gstreamer
 from threading import Thread
 from PIL import Image
-class camera:
+class cameraStream(Thread):
     def __init__(self):
+        Thread.__init__(self)
         self.img = None
         self.width = None
         self.height = None
-        thread1 = Thread(target=self.runThread)
-        thread1.daemon = True
-        thread1.start()
-    def runThread(self):
+
+    def run(self):
         result = gstreamer.run_pipeline(self.updateIMG)
+
     def updateIMG(self, image, width, height):
         self.img = image
         self.width = width
         self.height = height
-        #print(width)
-        #print(height)
-        #print(image)
+
+class camera():
+    import cameraStream
+    def __init__(self):
+        self.stream = cameraStream(4)
+        self.stream.start()
     def imgBytes(self):
-        return self.img
+        return self.stream.img
     def PILImage(self):
-        return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
+        return Image.frombytes('RGB', (self.stream.width, self.stream.height), self.stream.img, 'raw')
 
