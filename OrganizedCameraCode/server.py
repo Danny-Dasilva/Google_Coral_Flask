@@ -1,14 +1,11 @@
-from flask import Flask, send_file, Response, render_template
 from Cam import camera
-import time
-Image = camera()
-time.sleep(2)
+from flask import Flask, send_file, Response, render_template
 
-def main():
-    img = Image.PILImage()
-    # print(img)
-    time.sleep(0.1)
+Image = camera()
+app = Flask(__name__)
+@app.route('/video_feed')
+def video_feed():
+    return Response(Image.ImageStream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
-    while True:
-        main()
+    app.run(host='0.0.0.0', debug=False)
