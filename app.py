@@ -30,6 +30,7 @@ def serve_pil_image(pil_img):
 
 @app.route('/')
 def serve_img():
+    kit.continuous_servo[0].throttle = 0.6
     return render_template('index.html')
 def gen(cam):
     while True:
@@ -41,6 +42,7 @@ def gen(cam):
 
 @app.route('/video_feed')
 def video_feed():
+    kit.continuous_servo[0].throttle = 0.05
     return Response(gen(Camera()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
