@@ -23,7 +23,7 @@ thread_stop_event = Event()
 
 class RandomThread(Thread):
     def __init__(self):
-        self.delay = 0.1
+        self.delay = 0.05
         super(RandomThread, self).__init__()
 
     def randomNumberGenerator(self):
