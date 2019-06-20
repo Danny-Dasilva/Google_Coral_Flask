@@ -7,7 +7,7 @@ app = Flask(__name__)
 def video_feed():
     return Response(Image.ImageStream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 @app.route('/')
-def video_feed():
+def index():
     return 'functional'
 
 if __name__ == "__main__":
