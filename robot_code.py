@@ -11,7 +11,7 @@ while True:
     kit.servo[0].angle = 0
     print("Stoped")
     sleep(2)
-    kit.servo[0].angle = 90
+    kit.servo[0].angle = 180
     print("Forward")
     sleep(2)
     
