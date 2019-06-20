@@ -1,29 +1,19 @@
-"""
-Demo Flask application to test the operation of Flask with socket.io
-Aim is to create a webpage that is constantly updated with random numbers from a background python process.
-30th May 2014
-===================
-Updated 13th April 2018
-+ Upgraded code to Python 3
-+ Used Python3 SocketIO implementation
-+ Updated CDN Javascript and CSS sources
-"""
-
-
 
 
 # Start with a basic flask app webpage.
 from flask_socketio import SocketIO, emit
-from flask import Flask, render_template, url_for, copy_current_request_context, Response
+from flask import Flask, render_template, url_for, copy_current_request_context
 from random import random
 from time import sleep
 from threading import Thread, Event
-from Cam import camera
+
+
+__author__ = 'slynn'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-Image = camera()
+
 #turn the flask app into a socketio app
 socketio = SocketIO(app)
 
@@ -33,7 +23,7 @@ thread_stop_event = Event()
 
 class RandomThread(Thread):
     def __init__(self):
-        self.delay = 0.05
+        self.delay = 1
         super(RandomThread, self).__init__()
 
     def randomNumberGenerator(self):
@@ -69,11 +59,6 @@ def test_connect():
         print("Starting Thread")
         thread = RandomThread()
         thread.start()
-    
-@app.route('/video_feed')
-def video_feed():
-    return Response(Image.ImageStream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
@@ -81,4 +66,4 @@ def test_disconnect():
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app)
