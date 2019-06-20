@@ -212,3 +212,11 @@ def main(args):
 
     print('Initialize Model...')
     teachable = TeachableMachine(args.model, ui,)
+class AI():
+  def __init__(self):
+    main(sys.argv)
+  def run(self, img):
+    if (img != None):
+      return(teachable.classify(img))
+
+
