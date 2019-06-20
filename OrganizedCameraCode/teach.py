@@ -180,7 +180,7 @@ class TeachableMachine(object):
     
 
 
-    flaskStatus = status
+    flaskStatus = classes[classification or 0]
     #print(flaskStatus)
     return(flaskStatus)
 

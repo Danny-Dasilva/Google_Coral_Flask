@@ -1,32 +1,50 @@
 import gstreamer
-from threading import Thread
+from threading import Thread, Event
 from PIL import Image
-import time
+from time import sleep
 import flask
 from io import BytesIO
 class camera:
-    def __init__(self):
+
+    def __init__(self, ai, socketio):
         self.img = None
         self.width = None
         self.height = None
+        self.AI = ai
+        self.socketio = socketio
+        self.result = None
         thread1 = Thread(target=self.runThread)
         thread1.daemon = True
+        thread2 = Thread(target=self.updateString)
+        thread2.daemon = True
+        thread2.start()
         thread1.start()
+    def updateString(self):
 
+        while True:
+            #print("Thread2")
+            image = self.PILImage()
+            self.result = self.AI.run(image)
+            self.socketio.emit('newnumber', {'number': self.result}, namespace='/test')
+            sleep(0.01)
+    def getAIResult(self):
+        return self.result
     def runThread(self):
         while True:
-            result = gstreamer.run_pipeline(self.updateIMG)
+            self.result = gstreamer.run_pipeline(self.updateIMG)
 
     def updateIMG(self, image, width, height):
+
         self.img = image
         self.width = width
         self.height = height
         # time.sleep(0.01)
     def imgBytes(self):
-        time.sleep(0.01)
+        sleep(0.01)
         return self.img
     def PILImage(self):
-        time.sleep(0.01)
+
+        sleep(0.01)
         if(self.img != None):
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
@@ -35,7 +53,7 @@ class camera:
 
     def convertIMG(self):
         while True:
-            time.sleep(0.001)
+            sleep(0.001)
             img_io = BytesIO()
             image = self.PILImage()
             if image != None:
