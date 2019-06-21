@@ -19,8 +19,7 @@ class camera:
    
     
     def runThread(self):
-        while True:
-            self.result = gstreamer.run_pipeline(self.updateIMG)
+        self.result = gstreamer.run_pipeline(self.updateIMG)
 
     def updateIMG(self, image, width, height):
 
