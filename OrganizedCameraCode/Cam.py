@@ -19,7 +19,7 @@ class camera:
    
     
     def runThread(self):
-        self.result = gstreamer.run_pipeline(self.updateIMG)
+        self.result = sys.exit(gstreamer.run_pipeline(self.updateIMG))
 
     def updateIMG(self, image, width, height):
 
