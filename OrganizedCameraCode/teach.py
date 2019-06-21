@@ -171,16 +171,14 @@ class TeachableMachine(object):
     # Print/Display results
     self._ui.setOnlyLED(classification)
     classes = ['--', 'One', 'Two', 'Three', 'Four']
-    status = 'fps %.1f; #examples: %d; Class % 7s' % (
-        fps, self._engine.exampleCount(),
-        classes[classification or 0])
+    status = [fps, self._engine.exampleCount(),classes[classification or 0]]
     #print(img)
     #print(type(img))
     #print(status)
     
 
 
-    flaskStatus = classes[classification or 0]
+    flaskStatus = status
     #print(flaskStatus)
     return(flaskStatus)
 

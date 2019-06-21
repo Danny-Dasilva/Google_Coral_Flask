@@ -5,6 +5,7 @@ from threading import Thread
 from UpdateString import RandomThread
 import sys
 from adafruit_servokit import ServoKit
+from time import sleep
 kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
@@ -27,7 +28,8 @@ if __name__ == "__main__":
     thread.daemon = True
     thread.start()
     while True:
-        result = Image.result
+        sleep(0.01)
+        result = Image.val
         if(result == "One"):
             print("One")
             kit.servo[0].angle = 0
