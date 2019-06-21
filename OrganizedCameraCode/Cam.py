@@ -17,8 +17,6 @@ class camera:
        
         thread1.start()
    
-    def getAIResult(self):
-        return self.result
     
     def runThread(self):
         while True:

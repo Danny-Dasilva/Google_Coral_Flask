@@ -27,8 +27,10 @@ if __name__ == "__main__":
     thread.daemon = True
     thread.start()
     while True:
-        result = Image.getAIResult()
+        result = Image.result
         if(result == "One"):
+            print("One")
             kit.servo[0].angle = 0
         elif(result == "Two"):
+            print("Two")
             kit.servo[0].angle = 180
