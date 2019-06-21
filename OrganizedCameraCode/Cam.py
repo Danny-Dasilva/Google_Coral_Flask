@@ -33,11 +33,11 @@ class camera:
         self.result = self.AI.run(image)
         # time.sleep(0.01)
     def imgBytes(self):
-        sleep(0.01)
+        sleep(0.001)
         return self.img
     def PILImage(self):
 
-        sleep(0.01)
+        sleep(0.001)
         if(self.img != None):
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
