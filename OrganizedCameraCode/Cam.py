@@ -3,7 +3,6 @@ from threading import Thread, Event
 from PIL import Image
 from time import sleep
 import flask
-import sys
 from io import BytesIO
 class camera:
 
@@ -20,7 +19,8 @@ class camera:
    
     
     def runThread(self):
-        self.result = sys.exit(gstreamer.run_pipeline(self.updateIMG))
+        while True:
+            self.result = gstreamer.run_pipeline(self.updateIMG)
 
     def updateIMG(self, image, width, height):
 
