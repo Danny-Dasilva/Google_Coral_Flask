@@ -79,6 +79,14 @@ def main():
 
     last_time = time.monotonic()
     def user_callback(image, svg_canvas):
+
+      #added
+      global flaskImage
+      global flaskStatus
+      flaskImage = image
+
+
+
       nonlocal last_time
       start_time = time.monotonic()
       objs = engine.DetectWithImage(image, threshold=args.threshold,
@@ -90,10 +98,12 @@ def main():
           'FPS: %.2f fps' %(1.0/(end_time - last_time)),
       ]
       print(' '.join(text_lines))
+
       last_time = end_time
       generate_svg(svg_canvas, objs, labels, text_lines)
 
+
+      flaskStatus = text_lines
+
     result = gstreamer.run_pipeline(user_callback)
 
-if __name__ == '__main__':
-    main()

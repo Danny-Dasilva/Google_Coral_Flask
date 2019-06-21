@@ -54,6 +54,13 @@ def main():
 
     last_time = time.monotonic()
     def user_callback(image, svg_canvas):
+
+      #added
+      global flaskImage
+      global flaskStatus
+      flaskImage = image
+      
+      
       nonlocal last_time
       start_time = time.monotonic()
       results = engine.ClassifyWithImage(image, threshold=args.threshold, top_k=args.top_k)
@@ -68,7 +75,10 @@ def main():
       last_time = end_time
       generate_svg(svg_canvas, text_lines)
 
+
+      flaskStatus = text_lines
+
+
     result = gstreamer.run_pipeline(user_callback)
 
-if __name__ == '__main__':
-    main()
+
