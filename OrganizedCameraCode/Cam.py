@@ -6,29 +6,20 @@ import flask
 from io import BytesIO
 class camera:
 
-    def __init__(self, ai, socketio):
+    def __init__(self, ai):
         self.img = None
         self.width = None
         self.height = None
         self.AI = ai
-        self.socketio = socketio
         self.result = None
         thread1 = Thread(target=self.runThread)
         thread1.daemon = True
-        thread2 = Thread(target=self.updateString)
-        thread2.daemon = True
-        thread2.start()
+       
         thread1.start()
-    def updateString(self):
-
-        while True:
-            #print("Thread2")
-            image = self.PILImage()
-            self.result = self.AI.run(image)
-            self.socketio.emit('newnumber', {'number': self.result}, namespace='/test')
-            sleep(0.01)
+   
     def getAIResult(self):
         return self.result
+    
     def runThread(self):
         while True:
             self.result = gstreamer.run_pipeline(self.updateIMG)
@@ -38,6 +29,8 @@ class camera:
         self.img = image
         self.width = width
         self.height = height
+        image = self.PILImage()
+        self.result = self.AI.run(image)
         # time.sleep(0.01)
     def imgBytes(self):
         sleep(0.01)

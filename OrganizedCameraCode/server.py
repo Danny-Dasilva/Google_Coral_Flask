@@ -9,8 +9,7 @@ from adafruit_servokit import ServoKit
 kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode='gevent')
-Image = camera(teach.AI(), socketio)
+Image = camera(teach.AI())
 
 @app.route('/')
 def index():
@@ -21,7 +20,7 @@ def video_feed():
     return Response(Image.ImageStream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def flaskServer():
-    socketio.run(app, host="0.0.0.0")
+    app.run(host="0.0.0.0", debug=False)
 
 if __name__ == "__main__":
     global status
