@@ -3,6 +3,7 @@ from threading import Thread, Event
 from PIL import Image
 from time import sleep
 import flask
+import sys
 from io import BytesIO
 class camera:
 
