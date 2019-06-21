@@ -1,5 +1,4 @@
 from Cam import camera
-from flask_socketio import SocketIO
 from flask import Flask, send_file, Response, render_template
 import teach
 from threading import Thread
