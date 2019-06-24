@@ -4,9 +4,9 @@ import teach
 from threading import Thread
 from UpdateString import RandomThread
 import sys
-from adafruit_servokit import ServoKit
+#from adafruit_servokit import ServoKit
 from time import sleep
-kit = ServoKit(channels = 16)
+#kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
 Image = camera(teach.AI())
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         result = Image.val
         if(result == "One"):
             print("One")
-            kit.servo[0].angle = 0
+            #kit.servo[0].angle = 0
         elif(result == "Two"):
             print("Two")
-            kit.servo[0].angle = 180
+            #kit.servo[0].angle = 180
