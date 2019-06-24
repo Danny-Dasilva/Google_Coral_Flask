@@ -22,8 +22,11 @@ class camera:
    
     
     def runThread(self):
-        while True:
-            self.result = gstreamer.run_pipeline(self.updateIMG)
+        try:
+            while True:
+                self.result = gstreamer.run_pipeline(self.updateIMG)
+        except KeyboardInterrupt:
+            print('interrupted!')
 
     def updateIMG(self, image, width, height):
 

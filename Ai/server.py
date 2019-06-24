@@ -28,12 +28,11 @@ def flaskServer():
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
-    thread.daemon = False
+    thread.daemon = True
     thread.start()
     while True:
         sleep(0.01)
         result = Image.val
-        print(Image.val)
         if(result == "One"):
             print("One")
             #kit.servo[0].angle = 0
