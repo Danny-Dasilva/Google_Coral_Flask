@@ -33,6 +33,7 @@ if __name__ == "__main__":
     while True:
         sleep(0.01)
         result = Image.val
+        print(Image.val)
         if(result == "One"):
             print("One")
             #kit.servo[0].angle = 0
