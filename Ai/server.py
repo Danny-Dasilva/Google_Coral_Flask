@@ -28,7 +28,7 @@ def flaskServer():
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
-    thread.daemon = True
+    thread.daemon = False
     thread.start()
     while True:
         sleep(0.01)
