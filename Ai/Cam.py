@@ -64,7 +64,7 @@ class camera:
                     status = 'fps %.1f; #examples: %d; Class % 7s' % (self.fps, self.numImages,self.val)
                     draw.text((0,0), status, (255, 255, 255), font=font)
                 elif(self.AI.type == "objClass"):
-                    draw.rectangle([0,0,200,20], fill="Black")
+                    draw.rectangle([0,0,300,20], fill="Black")
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
                     status = 'fps %.1f; % 7s' % (self.fps, self.numImages)
