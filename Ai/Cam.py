@@ -64,7 +64,9 @@ class camera:
                 elif(self.AI.type == "objClass"):
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
-                    status = 'fps %.1f' % (self.fps,)
+                    self.val = self.result[2]
+                    status = 'fps %.1f; #examples: %d; Class % 7s' % (self.fps, self.numImages,self.val)
+                    draw.text((0,0), status, (255, 255, 255), font=font)
                     
                 elif(self.AI.type == "face"):
                     status = self.result
