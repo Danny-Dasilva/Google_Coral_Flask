@@ -64,9 +64,8 @@ class camera:
                 elif(self.AI.type == "objClass"):
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
-                    #status = 'fps %.1f; #examples: %d;' % (self.fps, self.numImages)
-                    print(self.fps)
-                    print(self.numImages)
+                    status = 'fps %.1f' % (self.fps,)
+                    
                 elif(self.AI.type == "face"):
                     status = self.result
                     if status != None:
