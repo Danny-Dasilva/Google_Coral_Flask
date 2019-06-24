@@ -61,6 +61,7 @@ def on_new_sample(sink, overlay, screen_size, appsink_size, user_function):
       #svg_canvas = svgwrite.Drawing('', size=(screen_size[0], screen_size[1]))
       width = appsink_size[0]
       height = appsink_size[1]
+      #print(mapinfo.data)
       user_function(mapinfo.data,width,height)
       #overlay.set_property('data', svg_canvas.tostring())
     buf.unmap(mapinfo)
@@ -74,10 +75,7 @@ def detectCoralDevBoard():
   except: pass
   return False
 
-def run_pipeline(user_function,
-                 src_size=(640,480),
-                 #src_size=(1920,1080),
-                 appsink_size=(320, 180)):
+def run_pipeline(user_function,src_size=(640,480), appsink_size = (320, 180)):
     PIPELINE = 'v4l2src ! {src_caps} ! {leaky_q}  ! tee name=t'
     if detectCoralDevBoard():
         SRC_CAPS = 'video/x-raw,format=YUY2,width={width},height={height},framerate=30/1'

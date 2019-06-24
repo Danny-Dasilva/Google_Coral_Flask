@@ -212,6 +212,7 @@ def main(args):
     teachable = TeachableMachine(args.model, ui,)
 class AI():
   def __init__(self):
+    self.type = "embedding"
     main(sys.argv)
   def run(self, img):
     if (img != None):

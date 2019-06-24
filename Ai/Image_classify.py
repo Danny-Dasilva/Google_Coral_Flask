@@ -21,7 +21,8 @@ import imp
 import os
 from edgetpu.classification.engine import ClassificationEngine
 import gstreamer
-
+flaskImage = None
+flaskStatus = None
 def load_labels(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
@@ -33,27 +34,28 @@ def generate_svg(dwg, text_lines):
       dwg.add(dwg.text(line, insert=(11, y*20+1), fill='black', font_size='20'))
       dwg.add(dwg.text(line, insert=(10, y*20), fill='white', font_size='20'))
 
-def main():
-    default_model_dir = "../all_models"
-    default_model = 'mobilenet_v2_1.0_224_quant_edgetpu.tflite'
-    default_labels = 'imagenet_labels.txt'
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--model', help='.tflite model path',
-                        default=os.path.join(default_model_dir,default_model))
-    parser.add_argument('--labels', help='label file path',
-                        default=os.path.join(default_model_dir, default_labels))
-    parser.add_argument('--top_k', type=int, default=3,
-                        help='number of classes with highest score to display')
-    parser.add_argument('--threshold', type=float, default=0.1,
-                        help='class score threshold')
-    args = parser.parse_args()
+class TeachableMachine():
+    def __init__(self):
+        default_model_dir = "./all_models"
+        default_model = 'mobilenet_v2_1.0_224_quant_edgetpu.tflite'
+        default_labels = 'imagenet_labels.txt'
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--model', help='.tflite model path',
+                            default=os.path.join(default_model_dir,default_model))
+        parser.add_argument('--labels', help='label file path',
+                            default=os.path.join(default_model_dir, default_labels))
+        parser.add_argument('--top_k', type=int, default=1,
+                            help='number of classes with highest score to display')
+        parser.add_argument('--threshold', type=float, default=0.1,
+                            help='class score threshold')
+        self.args = parser.parse_args()
 
-    print("Loading %s with %s labels."%(args.model, args.labels))
-    engine = ClassificationEngine(args.model)
-    labels = load_labels(args.labels)
+        #print("Loading %s with %s labels."%(self.args.model, self.args.labels))
+        self.engine = ClassificationEngine(self.args.model)
+        self.labels = load_labels(self.args.labels)
 
-    last_time = time.monotonic()
-    def user_callback(image, svg_canvas):
+        self.last_time = time.monotonic()
+    def user_callback(self,image):
 
       #added
       global flaskImage
@@ -61,24 +63,38 @@ def main():
       flaskImage = image
       
       
-      nonlocal last_time
       start_time = time.monotonic()
-      results = engine.ClassifyWithImage(image, threshold=args.threshold, top_k=args.top_k)
+      results = self.engine.ClassifyWithImage(image, threshold=self.args.threshold, top_k=self.args.top_k)
       end_time = time.monotonic()
       text_lines = [
           'Inference: %.2f ms' %((end_time - start_time) * 1000),
-          'FPS: %.2f fps' %(1.0/(end_time - last_time)),
+          (1.0/(end_time - self.last_time)),
       ]
       for index, score in results:
-        text_lines.append('score=%.2f: %s' % (score, labels[index]))
-      print(' '.join(text_lines))
-      last_time = end_time
-      generate_svg(svg_canvas, text_lines)
+        text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
+      #for index, score in results:
+      #  text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
+      #print(' '.join(text_lines))
+      if(len(text_lines) > 2):
+        status = [text_lines[1], text_lines[2], ""]
+      else:
+          status = [text_lines[1], "", ""]
+      self.last_time = end_time
+      #generate_svg(svg_canvas, text_lines)
 
 
-      flaskStatus = text_lines
-
-
-    result = gstreamer.run_pipeline(user_callback)
+      flaskStatus = status
+      return(flaskStatus)
+teachable = None
+def main():
+    global teachable
+    teachable = TeachableMachine()
+class AI():
+  def __init__(self):
+    self.type = "objClass"
+    main()
+  def run(self, img):
+    if (img != None):
+      return(teachable.user_callback(img))
 
 
