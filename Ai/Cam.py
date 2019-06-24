@@ -55,6 +55,7 @@ class camera:
                 draw = ImageDraw.Draw(image)
                 font = ImageFont.truetype("Gentona-Bold.ttf", 15)
                 font2 = ImageFont.truetype("Gentona-Bold.ttf", 20)
+                draw.rectangle([0,0,100,20], fill="Black")
                 if(self.AI.type == "embedding"):
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
@@ -64,9 +65,7 @@ class camera:
                 elif(self.AI.type == "objClass"):
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
-                    self.val = self.result[2]
                     status = 'fps %.1f; Class % 7s' % (self.fps, self.numImages)
-                    print(self.val)
                     draw.text((0,0), status, (255, 255, 255), font=font)
                     
                 elif(self.AI.type == "face"):
@@ -78,7 +77,7 @@ class camera:
                             draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline="Red")
                 else:
                     status = ""
-                draw.rectangle([0,0,100,20], fill="Black")
+                
                 image.save(img_io, 'JPEG', quality=70)
                 stream = img_io
                 stream.seek(0)
