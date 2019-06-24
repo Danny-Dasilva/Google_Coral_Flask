@@ -55,17 +55,19 @@ class camera:
                 draw = ImageDraw.Draw(image)
                 font = ImageFont.truetype("Gentona-Bold.ttf", 15)
                 font2 = ImageFont.truetype("Gentona-Bold.ttf", 20)
-                draw.rectangle([0,0,100,20], fill="Black")
+                
                 if(self.AI.type == "embedding"):
+                    draw.rectangle([0,0,100,20], fill="Black")
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
                     self.val = self.result[2]
                     status = 'fps %.1f; #examples: %d; Class % 7s' % (self.fps, self.numImages,self.val)
                     draw.text((0,0), status, (255, 255, 255), font=font)
                 elif(self.AI.type == "objClass"):
+                    draw.rectangle([0,0,100,50], fill="Black")
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
-                    status = 'fps %.1f; Class % 7s' % (self.fps, self.numImages)
+                    status = 'fps %.1f; % 7s' % (self.fps, self.numImages)
                     draw.text((0,0), status, (255, 255, 255), font=font)
                     
                 elif(self.AI.type == "face"):
