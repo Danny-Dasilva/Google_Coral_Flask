@@ -63,6 +63,7 @@ class camera:
                     draw.text((0,0), status, (255, 255, 255), font=font)
                 elif(self.AI.type == "objClass"):
                     status = 'fps %.1f' % self.fps + ", " + self.numImages
+                    status = float(status)
                 elif(self.AI.type == "face"):
                     status = self.result
                     if status != None:

@@ -12,8 +12,8 @@ from time import sleep
 
 app = Flask(__name__)
 #Image = camera(teach.AI())
-#Image = camera(Image_classify.AI())
-Image = camera(face_detect.AI())
+Image = camera(Image_classify.AI())
+#Image = camera(face_detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
