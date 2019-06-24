@@ -11,9 +11,9 @@ from time import sleep
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-#Image = camera(teach.AI())
+Image = camera(teach.AI())
 #Image = camera(Image_classify.AI())
-Image = camera(face_detect.AI())
+#Image = camera(face_detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
