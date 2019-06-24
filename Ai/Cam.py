@@ -57,11 +57,11 @@ class camera:
                 font2 = ImageFont.truetype("Gentona-Bold.ttf", 20)
                 
                 if(self.AI.type == "embedding"):
-                    draw.rectangle([0,0,150,20], fill="Black")
+                    draw.rectangle([0,0,200,20], fill="Black")
                     self.fps = self.result[0]
                     self.numImages = self.result[1]
                     self.val = self.result[2]
-                    status = 'fps %.1f; #examples: %d; Class % 7s' % (self.fps, self.numImages,self.val)
+                    status = 'fps %.1f; #ex: %d; Class%7s' % (self.fps, self.numImages,self.val)
                     draw.text((0,0), status, (255, 255, 255), font=font)
                 elif(self.AI.type == "objClass"):
                     draw.rectangle([0,0,320,20], fill="Black")
