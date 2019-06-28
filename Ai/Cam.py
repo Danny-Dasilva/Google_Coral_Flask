@@ -1,3 +1,4 @@
+import sys
 import gstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
@@ -16,17 +17,15 @@ class camera:
         self.numImages = None
         self.val = None
         thread1 = Thread(target=self.runThread)
-        thread1.daemon = True
-       
+        thread1.deamon = True
         thread1.start()
    
     
     def runThread(self):
-        try:
-            while True:
-                self.result = gstreamer.run_pipeline(self.updateIMG)
-        except KeyboardInterrupt:
-            print('interrupted!')
+        while True:
+            pipeline = gstreamer.run_pipeline(self.updateIMG)
+            self.result = sys.exit(pipeline)
+            
 
     def updateIMG(self, image, width, height):
 
