@@ -87,7 +87,7 @@ in order to access the server you need to go to the ip of the Coral and go to th
 
 ### Additional
 
-theres a while loop for the gstreamer thread so in order to stop the program you need to spam
+theres a while loop for the gstreamer thread so in order to stop the program you need to press
 <kbd>CTRL</kbd>+<kbd>C</kbd> until it stops
 
 or press <kbd>CTRL</kbd>+<kbd>\
