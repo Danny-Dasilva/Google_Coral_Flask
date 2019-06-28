@@ -5,6 +5,8 @@ from PIL import Image, ImageFont, ImageDraw
 from time import sleep
 import flask
 from io import BytesIO
+import sys
+
 class camera:
 
     def __init__(self, ai):
@@ -25,7 +27,6 @@ class camera:
         while True:
             pipeline = gstreamer.run_pipeline(self.updateIMG)
             self.result = sys.exit(pipeline)
-            
 
     def updateIMG(self, image, width, height):
 

@@ -4,8 +4,11 @@ import teach
 from time import sleep
 import Image_classify
 import face_detect
+
 from threading import Thread, active_count
-from UpdateString import RandomThread
+
+from threading import Thread
+
 import sys
 #from adafruit_servokit import ServoKit
 from time import sleep
