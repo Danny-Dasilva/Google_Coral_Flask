@@ -5,7 +5,6 @@ from time import sleep
 import Image_classify
 import face_detect
 from threading import Thread
-from UpdateString import RandomThread
 import sys
 from adafruit_servokit import ServoKit
 from time import sleep
