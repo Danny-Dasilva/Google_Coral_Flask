@@ -1,12 +1,13 @@
 from Cam import camera
 from flask import Flask, send_file, Response, render_template
 import teach
+import keyboard
 from time import sleep
 import Image_classify
 import face_detect
 
 from threading import Thread, active_count
-
+import signal
 from threading import Thread
 
 import sys
@@ -29,12 +30,10 @@ def video_feed():
 def flaskServer():
     app.run(host="0.0.0.0", debug=False)
 
-if __name__ == "__main__":
-    global status
-    thread = Thread(target=flaskServer)
-    thread.daemon = True
-    thread.start()
-    
+def signal_handler(signal, frame):
+    print("\nprogram exiting gracefully")
+    sys.exit()
+def Robot_code():
     while True:
         sleep(0.01)
         result = Image.val
@@ -47,5 +46,15 @@ if __name__ == "__main__":
         elif(result == "Two"):
             print("Two")
             #kit.servo[0].angle = 30
-            #sleep(0.4)
-        sys.exit(0)
+            #sleep(0)
+if __name__ == "__main__":
+    global status
+    thread = Thread(target=flaskServer)
+    thread.daemon = True
+    thread.start()
+    sleep(2)
+    thread2 = Thread(target=Robot_code)
+    thread2.deamon = True
+    thread2.start() 
+    signal.signal(signal.SIGINT, signal_handler)
+    #print("7777777777777777")
