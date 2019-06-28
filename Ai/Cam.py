@@ -4,6 +4,8 @@ from PIL import Image, ImageFont, ImageDraw
 from time import sleep
 import flask
 from io import BytesIO
+import sys
+
 class camera:
 
     def __init__(self, ai):
