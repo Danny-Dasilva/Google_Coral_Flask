@@ -11,9 +11,9 @@ import signal
 from threading import Thread
 
 import sys
-from adafruit_servokit import ServoKit
+#from adafruit_servokit import ServoKit
 from time import sleep
-kit = ServoKit(channels = 16)
+#kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
 Image = camera(teach.AI())
@@ -41,13 +41,13 @@ def Robot_code():
         if(result == "One"):
             print("One")
             #kit.servo[0].angle = 0
-            kit.servo[0].angle = 0
+            #kit.servo[0].angle = 0
             sleep(0.4)
             #kit.continuous_servo[1].throttle = 0.3
-            kit.servo[1].angle = 0
+            #kit.servo[1].angle = 0
         elif(result == "Two"):
             print("Two")
-<<<<<<< HEAD
+
             #kit.servo[0].angle = 30
             #sleep(0)
 if __name__ == "__main__":
@@ -60,13 +60,3 @@ if __name__ == "__main__":
     thread2.deamon = True
     thread2.start() 
     signal.signal(signal.SIGINT, signal_handler)
-    #print("7777777777777777")
-=======
-            #kit.servo[0].angle = 180
-            kit.servo[0].angle = 30
-            sleep(0.4)
-            kit.servo[1].angle = 0
-        else:
-            kit.servo[1].angle = 17
-        sys.exit(0)
->>>>>>> 991c6bc0de57cec63f2f1027fe195dd0ce27b9f5
