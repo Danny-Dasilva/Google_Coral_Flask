@@ -5,17 +5,18 @@ import keyboard
 from time import sleep
 import Image_classify
 import face_detect
-
 from threading import Thread, active_count
 import signal
 from threading import Thread
-
 import sys
+
+
 #from adafruit_servokit import ServoKit
-from time import sleep
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
+
+
 Image = camera(teach.AI())
 #Image = camera(Image_classify.AI())
 #Image = camera(face_detect.AI())
