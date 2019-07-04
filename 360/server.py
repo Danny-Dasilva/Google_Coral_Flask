@@ -5,7 +5,6 @@ import keyboard
 from time import sleep
 import Image_classify
 import face_detect
-from GoDrone import drone
 
 from threading import Thread, active_count
 import signal
@@ -18,7 +17,6 @@ from time import sleep
 
 app = Flask(__name__)
 #Image = camera(teach.AI())
-Drone = drone()
 #Image = camera(Image_classify.AI())
 Image = camera(face_detect.AI())
 @app.route('/')
@@ -38,12 +36,6 @@ def signal_handler(signal, frame):
 def Drone_code():
     while True:
         sleep(0.01)
-        #print(list(Drone.channels))
-        if(Drone.align == True):
-            Drone.sendFaceData(Image.result)
-            Drone.sendSBUSData(Drone.channels)
-        else:
-            Drone.sendSBUSData(Drone.channels)
     
 
 if __name__ == "__main__":
