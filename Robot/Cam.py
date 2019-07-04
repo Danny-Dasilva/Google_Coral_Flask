@@ -75,6 +75,7 @@ class camera:
                     
                 elif(self.AI.type == "face"):
                     status = self.result
+                    self.val = status
                     if len(status) > 0:
                         for i in status:
                             draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill="Red")
