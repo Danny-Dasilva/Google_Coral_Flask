@@ -7,12 +7,8 @@ import Image_classify
 import face_detect
 from threading import Thread, active_count
 import signal
-<<<<<<< HEAD
 from threading import Thread, Event
 
-=======
-from threading import Thread
->>>>>>> a791a0c3aa46feaead11e8538ef2129addac1ff3
 import sys
 
 
@@ -20,13 +16,9 @@ import sys
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-<<<<<<< HEAD
-#Image = camera(teach.AI())
-=======
 
 
 Image = camera(teach.AI())
->>>>>>> a791a0c3aa46feaead11e8538ef2129addac1ff3
 #Image = camera(Image_classify.AI())
 Image = camera(face_detect.AI())
 @app.route('/')
