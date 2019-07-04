@@ -8,7 +8,7 @@ import face_detect
 
 from threading import Thread, active_count
 import signal
-from threading import Thread
+from threading import Thread, Event
 
 import sys
 #from adafruit_servokit import ServoKit
@@ -16,9 +16,9 @@ from time import sleep
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-Image = camera(teach.AI())
+#Image = camera(teach.AI())
 #Image = camera(Image_classify.AI())
-#Image = camera(face_detect.AI())
+Image = camera(face_detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -32,21 +32,34 @@ def flaskServer():
 
 def signal_handler(signal, frame):
     print("\nprogram exiting gracefully")
-    sys.exit()
+    sys.exit(0)
+
 def Robot_code():
     while True:
         sleep(0.01)
         result = Image.val
-
-        if(result == "One"):
-            print("One")
+        print(Image.val)
+        #kit.servo[0].angle = 15
+        #print("zero")
+        #sleep(3)
+        #kit.servo[0].angle = 30
+        #sleep(3)
+        #kit.servo[0].angle = 0
+        #sleep(3)
+        #kit.servo[1].angle = 0
+        #sleep(3)
+        #kit.servo[1].angle = 45
+        #sleep(3)
+        '''different'''
+        #if(result == "One"):
+          #  print("One")
             #kit.servo[0].angle = 0
             #kit.servo[0].angle = 0
-            sleep(0.4)
-            #kit.continuous_servo[1].throttle = 0.3
+          #  sleep(0.4)
+         #   #kit.continuous_servo[1].throttle = 0.3
             #kit.servo[1].angle = 0
-        elif(result == "Two"):
-            print("Two")
+        #elif(result == "Two"):
+         #   print("Two")
 
             #kit.servo[0].angle = 30
             #sleep(0)
@@ -58,5 +71,5 @@ if __name__ == "__main__":
     sleep(2)
     thread2 = Thread(target=Robot_code)
     thread2.deamon = True
-    thread2.start() 
+    thread2.start()
     signal.signal(signal.SIGINT, signal_handler)
