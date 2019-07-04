@@ -3,7 +3,6 @@ if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   echo "Installing DevBoard specific dependencies"
   sudo apt-get install python3-pip
   sudo apt-get install python3-dev
-  sudo apt-get install flask
   python3 -m pip install python-periphery
   sudo pip3 install adafruit-circuitpython-servokit
   wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/libgpiod.sh

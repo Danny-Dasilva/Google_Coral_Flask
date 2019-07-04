@@ -5,12 +5,10 @@ import keyboard
 from time import sleep
 import Image_classify
 import face_detect
+from GoDrone import drone
+
 from threading import Thread, active_count
 import signal
-
-from threading import Thread, Event
-
-
 from threading import Thread
 
 import sys
@@ -19,12 +17,10 @@ from time import sleep
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-
-
-Image = camera(teach.AI())
-
+#Image = camera(teach.AI())
+Drone = drone()
 #Image = camera(Image_classify.AI())
-#Image = camera(face_detect.AI())
+Image = camera(face_detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,31 +34,24 @@ def flaskServer():
 
 def signal_handler(signal, frame):
     print("\nprogram exiting gracefully")
-    sys.exit(0)
-
-def Robot_code():
+    sys.exit()
+def Drone_code():
     while True:
         sleep(0.01)
-        result = Image.val
-        print(result)
-        #print(Image.val)
-        #kit.servo[0].angle = 15
-        #print("zero")
-        #sleep(3)
-        #kit.servo[0].angle = 30
-        #sleep(3)
-        #kit.servo[0].angle = 0
-        #sleep(3)
-        #kit.servo[1].angle = 0
-        #sleep(3)
-        #kit.servo[1].angle = 45
-        #sleep(3)
-        '''different'''
- 
+        #print(list(Drone.channels))
+        if(Drone.align == True):
+            Drone.sendFaceData(Image.result)
+            Drone.sendSBUSData(Drone.channels)
+        else:
+            Drone.sendSBUSData(Drone.channels)
+    
+
 if __name__ == "__main__":
-    global status
     thread = Thread(target=flaskServer)
     thread.daemon = True
     thread.start()
+    thread1 = Thread(target=Drone_code)
+    thread1.daemon = True
+    thread1.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)

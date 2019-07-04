@@ -44,7 +44,6 @@ class camera:
 
         sleep(0.01)
         if(self.img != None):
-            print("img is no none")
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
     def ImageStream(self):
@@ -76,12 +75,15 @@ class camera:
                     
                 elif(self.AI.type == "face"):
                     status = self.result
-                    if status != None:
+                    if len(status) > 0:
                         for i in status:
                             draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill="Red")
                             draw.text((i[1] * self.width, i[4] * self.height), str(i[0]), (255, 255, 255), font=font2)
                             draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline="Red")
+                        #self.result = (self.result[0][1] + self.result[0][3]) / 2, (self.result[0][2] + self.result[0][4]) / 2
+
                 else:
+                    self.result = [0, 0]
                     status = ""
                 
                 image.save(img_io, 'JPEG', quality=70)
