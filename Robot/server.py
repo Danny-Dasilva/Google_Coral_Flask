@@ -60,19 +60,7 @@ def Robot_code():
         #sleep(3)
         #kit.servo[1].angle = 45
         #sleep(3)
-        '''different'''
-        #if(result == "One"):
-          #  print("One")
-            #kit.servo[0].angle = 0
-            #kit.servo[0].angle = 0
-          #  sleep(0.4)
-         #   #kit.continuous_servo[1].throttle = 0.3
-            #kit.servo[1].angle = 0
-        #elif(result == "Two"):
-         #   print("Two")
-
-            #kit.servo[0].angle = 30
-            #sleep(0)
+       
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
