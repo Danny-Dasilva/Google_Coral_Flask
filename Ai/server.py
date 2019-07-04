@@ -7,37 +7,24 @@ import Image_classify
 import face_detect
 from threading import Thread, active_count
 import signal
-<<<<<<< HEAD
+
 from threading import Thread, Event
 
-=======
+
 from threading import Thread
->>>>>>> a791a0c3aa46feaead11e8538ef2129addac1ff3
+
 import sys
-<<<<<<< HEAD
 #from adafruit_servokit import ServoKit
 from time import sleep
 #kit = ServoKit(channels = 16)
 
 app = Flask(__name__)
-#Image = camera(teach.AI())
-=======
-
-
-#from adafruit_servokit import ServoKit
-#kit = ServoKit(channels = 16)
-
-app = Flask(__name__)
-<<<<<<< HEAD
-#Image = camera(teach.AI())
-=======
 
 
 Image = camera(teach.AI())
->>>>>>> a791a0c3aa46feaead11e8538ef2129addac1ff3
->>>>>>> b347e930692781c126b2aeca9e48c60d917b7d44
+
 #Image = camera(Image_classify.AI())
-Image = camera(face_detect.AI())
+#Image = camera(face_detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -57,7 +44,8 @@ def Robot_code():
     while True:
         sleep(0.01)
         result = Image.val
-        print(Image.val)
+        print(result)
+        #print(Image.val)
         #kit.servo[0].angle = 15
         #print("zero")
         #sleep(3)
@@ -70,50 +58,11 @@ def Robot_code():
         #kit.servo[1].angle = 45
         #sleep(3)
         '''different'''
-        #if(result == "One"):
-          #  print("One")
-            #kit.servo[0].angle = 0
-            #kit.servo[0].angle = 0
-          #  sleep(0.4)
-         #   #kit.continuous_servo[1].throttle = 0.3
-            #kit.servo[1].angle = 0
-        #elif(result == "Two"):
-         #   print("Two")
-
-            #kit.servo[0].angle = 30
-            #sleep(0)
+ 
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
     thread.daemon = True
     thread.start()
-<<<<<<< HEAD
-    
-    while True:
-        sleep(0.01)
-        result = Image.val
-        print(result)
-        if(result == "One"):
-            print("One")
-            #kit.servo[0].angle = 0
-            #kit.servo[0].angle = 0
-            #sleep(0.4)
-            #kit.continuous_servo[1].throttle = 0.3
-            #kit.servo[1].angle = 0
-        elif(result == "Two"):
-            print("Two")
-            #kit.servo[0].angle = 180
-            #kit.servo[0].angle = 30
-            #sleep(0.4)
-            #kit.servo[1].angle = 0
-        else:
-            pass
-            #kit.servo[1].angle = 17
-        sys.exit(0)
-=======
     sleep(2)
-    thread2 = Thread(target=Robot_code)
-    thread2.deamon = True
-    thread2.start()
     signal.signal(signal.SIGINT, signal_handler)
->>>>>>> b347e930692781c126b2aeca9e48c60d917b7d44

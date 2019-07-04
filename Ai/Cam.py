@@ -44,6 +44,7 @@ class camera:
 
         sleep(0.01)
         if(self.img != None):
+            print("img is no none")
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
     def ImageStream(self):
