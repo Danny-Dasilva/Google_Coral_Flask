@@ -53,7 +53,7 @@ def Robot_code():
         #sleep(3)
         #kit.servo[0].angle = 0
         #sleep(3)
-        #kit.servo[1].angle = 0
+        #kit.servo[1].angle = 0-
         #sleep(3)
         #kit.servo[1].angle = 45
         #sleep(3)
