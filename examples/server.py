@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '../')
+
 from Cam import camera
 from flask import Flask, send_file, Response, render_template
 import teach

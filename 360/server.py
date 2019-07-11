@@ -11,10 +11,13 @@ import signal
 from threading import Thread
 
 import sys
-#from adafruit_servokit import ServoKit
+from adafruit_servokit import ServoKit
 from time import sleep
-#kit = ServoKit(channels = 16)
-
+kit = ServoKit(channels = 16)
+servo_max = 110
+servo_min = 70
+servo_max1 = 100
+servo_min1 = 80
 app = Flask(__name__)
 #Image = camera(teach.AI())
 #Image = camera(Image_classify.AI())
@@ -34,9 +37,41 @@ def signal_handler(signal, frame):
     print("\nprogram exiting gracefully")
     sys.exit()
 def Drone_code():
+    position = 90
+    position1 = 90
     while True:
-        sleep(0.01)
-    
+        sleep(.03)
+        result = Image.val
+        
+        if result:
+            for i in result:
+                x = i[1]
+                y = i[2]
+                #print(y)
+                if x < .35:
+                    position = position + .25
+                    if position > servo_max:
+                        position = servo_max
+                if x > .45:
+                    position = position - .25
+                    if position < servo_min:
+                        position = servo_min
+
+                kit.servo[1].angle = position
+                if y < .20:
+                    position1 = position1 + .1
+                    if position1 > servo_max1:
+                        print('max angle met')
+                        position1 = servo_max1
+                if y > .35:
+                    position1 = position1 - .1
+                    if position1 < servo_min1:
+                        position1 = servo_min1
+
+                kit.servo[0].angle = position1
+                print(y)  
+                print(position1)
+                #kit.servo[1].angle = 40 + 100 * -x
 
 if __name__ == "__main__":
     thread = Thread(target=flaskServer)
