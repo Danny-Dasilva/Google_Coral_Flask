@@ -34,7 +34,8 @@ class camera:
         self.width = width
         self.height = height
         image = self.PILImage()
-        self.result = self.AI.run(image)
+        if self.result is not None:
+            self.result = self.AI.run(image)
 
         # time.sleep(0.01)
     def imgBytes(self):
