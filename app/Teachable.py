@@ -186,7 +186,7 @@ class TeachableMachine(object):
 teachable = None
 def main(args):
     global teachable
-    default_model_dir = './all_models'
+    default_model_dir = './app/all_models'
     default_model = 'mobilenet_quant_v1_224_headless_edgetpu.tflite'
 
     parser = argparse.ArgumentParser()
