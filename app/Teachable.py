@@ -131,7 +131,7 @@ class UI_EdgeTpuDevBoard(UI):
 
   
 
-class TeachableMachine(object):
+class Model(object):
   def __init__(self, model_path, ui, kNN=3, buffer_length=4):
     assert os.path.isfile(model_path), 'Model file %s not found' % model_path
     self._engine = embedding.kNNEmbeddingEngine(model_path, kNN)
@@ -212,7 +212,7 @@ def main(args):
         ui = UI_Keyboard()
 
     print('Initialize Model...')
-    teachable = TeachableMachine(args.model, ui,)
+    teachable = Model(args.model, ui,)
 class AI():
   def __init__(self):
     self.type = "embedding"

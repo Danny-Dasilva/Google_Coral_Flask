@@ -34,7 +34,7 @@ def generate_svg(dwg, text_lines):
       dwg.add(dwg.text(line, insert=(11, y*20+1), fill='black', font_size='20'))
       dwg.add(dwg.text(line, insert=(10, y*20), fill='white', font_size='20'))
 
-class TeachableMachine():
+class Model():
     def __init__(self):
         default_model_dir = "./app/all_models"
         default_model = 'mobilenet_v2_1.0_224_quant_edgetpu.tflite'
@@ -88,7 +88,7 @@ class TeachableMachine():
 teachable = None
 def main():
     global teachable
-    teachable = TeachableMachine()
+    teachable = Model()
 class AI():
   def __init__(self):
     self.type = "objClass"

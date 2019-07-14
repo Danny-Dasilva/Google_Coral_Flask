@@ -59,7 +59,7 @@ def generate_svg(dwg, objs, labels, text_lines):
         dwg.add(dwg.rect(insert=(x,y), size=(w, h),
                         fill='red', fill_opacity=0.3, stroke='white'))
 
-class TeachableMachine():
+class Model():
     def __init__(self):
         default_model_dir = './app/all_models'
         default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
@@ -112,7 +112,7 @@ class TeachableMachine():
 teachable = None
 def main():
     global teachable
-    teachable = TeachableMachine()
+    teachable = Model()
 class AI():
   def __init__(self):
     self.type = "face"
