@@ -17,7 +17,8 @@ app = Flask(__name__)
 #Image = Cam.camera(Teachable.AI())
 
 #Image = Cam.camera(Classify.AI())
-Image = Cam.camera(Detect.AI())
+#Image = Cam.camera(Detect.AI())
+Image = Cam.camera(None)
 @app.route('/')
 def index():
     return render_template('index.html')
