@@ -1,4 +1,4 @@
-from app import Cam, Detect, Classify, Teachable
+from app import Cam, Detect, Classify, Teachable, Empty
 from flask import Flask, send_file, Response, render_template
 import keyboard
 from time import sleep
@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 #Image = Cam.camera(Classify.AI())
 #Image = Cam.camera(Detect.AI())
-Image = Cam.camera('None')
+#Image = Cam.camera(Empty.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
