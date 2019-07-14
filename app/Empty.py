@@ -36,24 +36,21 @@ from app import gstreamer
 
 class Model():
     def __init__(self):
-
         self.last_time = time.monotonic()
-    def user_callback(self, image):
 
-      #added
+    def user_callback(self, image):
       start_time = time.monotonic()
-      
       end_time = time.monotonic()
       self.last_time = end_time
 
-teachable = None
+model = None
 def main():
-    global teachable
-    teachable = Model()
+    global model
+    model = Model()
 class AI():
   def __init__(self):
     self.type = "None"
     main()
   def run(self, img):
     if (img != None):
-      return(teachable.user_callback(img))
+      return(model.user_callback(img))

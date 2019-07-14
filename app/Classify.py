@@ -85,16 +85,16 @@ class Model():
 
       flaskStatus = status
       return(flaskStatus)
-teachable = None
+model = None
 def main():
-    global teachable
-    teachable = Model()
+    global model
+    model = Model()
 class AI():
   def __init__(self):
     self.type = "objClass"
     main()
   def run(self, img):
     if (img != None):
-      return(teachable.user_callback(img))
+      return(model.user_callback(img))
 
 

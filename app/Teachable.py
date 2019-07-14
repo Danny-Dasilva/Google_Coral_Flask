@@ -183,9 +183,9 @@ class Model(object):
     return(flaskStatus)
 
 
-teachable = None
+model = None
 def main(args):
-    global teachable
+    global model
     default_model_dir = './app/all_models'
     default_model = 'mobilenet_quant_v1_224_headless_edgetpu.tflite'
 
@@ -212,13 +212,13 @@ def main(args):
         ui = UI_Keyboard()
 
     print('Initialize Model...')
-    teachable = Model(args.model, ui,)
+    model = Model(args.model, ui,)
 class AI():
   def __init__(self):
     self.type = "embedding"
     main(sys.argv)
   def run(self, img):
     if (img != None):
-      return(teachable.classify(img))
+      return(model.classify(img))
 
 
