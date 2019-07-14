@@ -1,5 +1,6 @@
-from app import Cam, Detect, Classify, Teachable, Empty
+from app import Detect, Classify, Teachable, Empty
 from flask import Flask, send_file, Response, render_template
+from app.Cam import camera
 import keyboard
 from time import sleep
 from threading import Thread, active_count
@@ -8,13 +9,12 @@ from threading import Thread, Event
 from threading import Thread
 import sys
 
-#from adafruit_servokit import ServoKit
-#kit = ServoKit(channels = 16)
+
 
 app = Flask(__name__)
 
 
-Image = Cam.camera(Teachable.AI())
+Image = camera(Teachable.AI())
 
 #Image = Cam.camera(Classify.AI())
 #Image = Cam.camera(Detect.AI())
