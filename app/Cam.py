@@ -85,7 +85,7 @@ class camera:
 
                 else:
                     self.result = [0, 0]
-                    self.val = ('s')
+                    self.val = ('no model')
                     status = ""
                 
                 image.save(img_io, 'JPEG', quality=70)
