@@ -46,5 +46,3 @@ if __name__ == "__main__":
     thread.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
-    while True: 
-            sleep(1)
