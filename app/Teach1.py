@@ -18,7 +18,7 @@ from app import gstreamer
 
 
 from PIL import Image
-from embedding import kNNEmbeddingEngine
+from app import embedding
 import argparse
 import sys
 import os
@@ -33,7 +33,7 @@ import socket
 
 os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
-
+kNNEmbeddingEngine = embedding.kNNEmbeddingEngine()
 flaskImage = None
 flaskStatus = None
 
