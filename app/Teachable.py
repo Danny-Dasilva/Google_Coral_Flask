@@ -186,9 +186,12 @@ class TeachableMachine(object):
 teachable = None
 def main(args):
     global teachable
+    default_model_dir = './all_models'
+    default_model = 'mobilenet_quant_v1_224_headless_edgetpu.tflite'
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='File path of Tflite model.',
-                        default='mobilenet_quant_v1_224_headless_edgetpu.tflite')
+                        default=os.path.join(default_model_dir,default_model))
     parser.add_argument('--testui', dest='testui', action='store_true',
                         help='Run test of UI. Ctrl-C to abort.')
     parser.add_argument('--keyboard', dest='keyboard', action='store_true',
