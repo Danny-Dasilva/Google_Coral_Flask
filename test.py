@@ -38,19 +38,6 @@ def Robot_code():
         sleep(0.01)
         result = Image.val
         print(result)
-        #print(Image.val)
-        #kit.servo[0].angle = 15
-        #print("zero")
-        #sleep(3)
-        #kit.servo[0].angle = 30
-        #sleep(3)
-        #kit.servo[0].angle = 0
-        #sleep(3)
-        #kit.servo[1].angle = 0-
-        #sleep(3)
-        #kit.servo[1].angle = 45
-        #sleep(3)
-        '''different'''
  
 if __name__ == "__main__":
     global status
