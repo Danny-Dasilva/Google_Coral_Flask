@@ -1,4 +1,4 @@
-from testing import camera
+from testing import Cam
 from flask import Flask, send_file, Response, render_template
 from testing import teach
 import keyboard
@@ -14,7 +14,7 @@ import sys
 #from adafruit_servokit import ServoKit
 from time import sleep
 #kit = ServoKit(channels = 16)
-
+camera = Cam.camera()
 app = Flask(__name__)
 
 
