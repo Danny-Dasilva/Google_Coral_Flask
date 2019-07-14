@@ -36,6 +36,7 @@ class camera:
         image = self.PILImage()
         
         if self.AI == 'None':
+            self.AI.type = 'None'
             pass
         else:
             self.result = self.AI.run(image)
