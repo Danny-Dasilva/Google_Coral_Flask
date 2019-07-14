@@ -10,14 +10,14 @@ import sys
 
 #from adafruit_servokit import ServoKit
 #kit = ServoKit(channels = 16)
-camera = Cam.camera()
+
 app = Flask(__name__)
 
 
-Image = camera(teach.AI())
+Image = Cam.camera(Teach.AI())
 
-#Image = camera(Image_classify.AI())
-#Image = camera(face_detect.AI())
+#Image = Cam.camera(Classify.AI())
+#Image = Cam.camera(Detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
