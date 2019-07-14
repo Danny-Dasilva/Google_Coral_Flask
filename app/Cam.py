@@ -34,9 +34,10 @@ class camera:
         self.width = width
         self.height = height
         image = self.PILImage()
-        if self.AI is None:
-            self.AI.type = 'None'
-        if self.result is not None:
+        
+        if self.AI == 'None':
+            pass
+        else:
             self.result = self.AI.run(image)
 
         # time.sleep(0.01)
