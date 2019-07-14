@@ -1,4 +1,4 @@
-from app import Cam, Detect, Classify, Teach1
+from app import Cam, Detect, Classify, Teachable
 from flask import Flask, send_file, Response, render_template
 import keyboard
 from time import sleep
@@ -14,7 +14,7 @@ import sys
 app = Flask(__name__)
 
 
-Image = Cam.camera(Teach1.AI())
+Image = Cam.camera(Teachable.AI())
 
 #Image = Cam.camera(Classify.AI())
 #Image = Cam.camera(Detect.AI())
