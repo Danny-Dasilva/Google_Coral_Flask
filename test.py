@@ -45,8 +45,5 @@ if __name__ == "__main__":
     thread = Thread(target=flaskServer)
     thread.daemon = True
     thread.start()
-    thread = Thread(target=Robot_code)
-    thread.daemon = True
-    thread.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
