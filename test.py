@@ -1,4 +1,4 @@
-from app import Cam, Detect, Classify, Teach
+from app import Cam, Detect, Classify, Teach1
 from flask import Flask, send_file, Response, render_template
 import keyboard
 from time import sleep
