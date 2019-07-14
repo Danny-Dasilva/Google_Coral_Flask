@@ -33,7 +33,7 @@ import socket
 
 os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
-kNNEmbeddingEngine = embedding.kNNEmbeddingEngine()
+
 flaskImage = None
 flaskStatus = None
 
@@ -134,7 +134,7 @@ class UI_EdgeTpuDevBoard(UI):
 class TeachableMachine(object):
   def __init__(self, model_path, ui, kNN=3, buffer_length=4):
     assert os.path.isfile(model_path), 'Model file %s not found' % model_path
-    self._engine = kNNEmbeddingEngine(model_path, kNN)
+    self._engine = embedding.kNNEmbeddingEngine(model_path, kNN)
     self._ui = ui
 
     self._buffer = deque(maxlen=buffer_length)
