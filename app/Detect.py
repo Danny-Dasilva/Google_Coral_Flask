@@ -61,7 +61,7 @@ def generate_svg(dwg, objs, labels, text_lines):
 
 class TeachableMachine():
     def __init__(self):
-        default_model_dir = './all_models'
+        default_model_dir = './app/all_models'
         default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
         default_labels = 'coco_labels.txt'
         parser = argparse.ArgumentParser()
