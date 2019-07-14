@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 #Image = Cam.camera(Classify.AI())
 #Image = Cam.camera(Detect.AI())
-Image = Cam.camera('sdlkjfhb')
+Image = Cam.camera()
 @app.route('/')
 def index():
     return render_template('index.html')
