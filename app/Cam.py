@@ -1,5 +1,5 @@
 import sys
-import gstreamer
+from app import gstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
 from time import sleep

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import gstreamer
+from app import gstreamer
 
 
 from PIL import Image
@@ -104,7 +104,7 @@ class UI(object):
 class UI_Keyboard(UI):
   def __init__(self):
     global keyinput
-    import keyinput
+    from app import keyinput
 
     # Layout of GPIOs for Raspberry demo
     self._buttons = ['q', '1' , '2' , '3', '4']

@@ -32,7 +32,7 @@ import svgwrite
 import imp
 import os
 from edgetpu.detection.engine import DetectionEngine
-import gstreamer
+from app import gstreamer
 flaskImage = None
 flaskStatus = None
 def load_labels(path):

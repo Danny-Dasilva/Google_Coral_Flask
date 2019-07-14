@@ -1,10 +1,7 @@
-from testing import Cam
+from app import Cam, Detect, Classify, Teach
 from flask import Flask, send_file, Response, render_template
-from testing import teach
 import keyboard
 from time import sleep
-from testing import Image_classify
-from testing import face_detect
 from threading import Thread, active_count
 import signal
 from threading import Thread, Event
@@ -12,7 +9,6 @@ from threading import Thread
 import sys
 
 #from adafruit_servokit import ServoKit
-from time import sleep
 #kit = ServoKit(channels = 16)
 camera = Cam.camera()
 app = Flask(__name__)

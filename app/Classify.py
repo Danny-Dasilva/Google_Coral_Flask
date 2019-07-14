@@ -20,7 +20,7 @@ import svgwrite
 import imp
 import os
 from edgetpu.classification.engine import ClassificationEngine
-import gstreamer
+from app import gstreamer
 flaskImage = None
 flaskStatus = None
 def load_labels(path):
