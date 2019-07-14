@@ -14,10 +14,10 @@ import sys
 app = Flask(__name__)
 
 
-Image = Cam.camera(Teachable.AI())
+#Image = Cam.camera(Teachable.AI())
 
 #Image = Cam.camera(Classify.AI())
-#Image = Cam.camera(Detect.AI())
+Image = Cam.camera(Detect.AI())
 @app.route('/')
 def index():
     return render_template('index.html')
