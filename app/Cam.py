@@ -56,8 +56,8 @@ class camera:
             image = self.PILImage()
             if image != None:
                 draw = ImageDraw.Draw(image)
-                font = ImageFont.truetype("Gentona-Bold.ttf", 15)
-                font2 = ImageFont.truetype("Gentona-Bold.ttf", 20)
+                font = ImageFont.truetype("./app/fonts/Gentona-Bold.ttf", 15)
+                font2 = ImageFont.truetype("./app/fonts/Gentona-Bold.ttf", 20)
                 
                 if(self.AI.type == "embedding"):
                     draw.rectangle([0,0,200,20], fill="Black")
