@@ -43,7 +43,6 @@ def Robot_code():
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
-    thread.daemon = True
     thread.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
