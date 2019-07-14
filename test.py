@@ -14,7 +14,7 @@ import sys
 app = Flask(__name__)
 
 
-Image = Cam.camera(Teach.AI())
+Image = Cam.camera(Teach1.AI())
 
 #Image = Cam.camera(Classify.AI())
 #Image = Cam.camera(Detect.AI())
