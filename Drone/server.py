@@ -38,12 +38,7 @@ def signal_handler(signal, frame):
 def Drone_code():
     while True:
         sleep(0.01)
-        #print(list(Drone.channels))
-        if(Drone.align == True):
-            Drone.sendFaceData(Image.result)
-            Drone.sendSBUSData(Drone.channels)
-        else:
-            Drone.sendSBUSData(Drone.channels)
+        Drone.sendSBUSData(Drone.channels)
     
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@ class drone:
         self.server_socket.bind(('', 6666))
         self.align = False
         self.count = 0
+        self.newChannels = [1024] * 16
         t1 = Thread(target=self.updateData)
         t1.daemon = True
         t1.start()
@@ -33,9 +34,19 @@ class drone:
                     checksum1 = checksum1 ^ byte
                 checksum1 = checksum1 & 0xFE
                 checksum2 = (~checksum1) & 0xFE
-                if(checksum1 == dataFromClient[30] and checksum2 == dataFromClient[29]):
-                    self.channels = dataFromClient[4:29]
-                    #print(self.channels)
+                if(checksum1 == dataFromClient[36] and checksum2 == dataFromClient[37]):
+                    self.channels = dataFromClient[4:36]
+                    chan = []
+                    for i in range(0,len(self.channels),2):
+                        LSB = self.channels[i]
+                        MSB = self.channels[i+1] << 8
+                        num = int(LSB + MSB)
+                        chan.append(num)
+                    self.channels = chan
+                    for i in range(len(self.channels)):
+                        self.update_channel(i, self.channels[i])
+                    #self.create_SBUS(self.newChannels)
+
             elif(cmd == "BEAT"):
                 print("BEAT")
             elif(cmd == "HAND"):
@@ -49,15 +60,59 @@ class drone:
                     self.align = False
                     self.server_socket.sendto(b"FACE", (address[0], address[1]))
                     self.count = 0
+
+    def bit_not(self, n, numbits=8):
+        return (1 << numbits) - 1 - n
+
+
+    def create_SBUS(self, chan):
+        data = bytearray(25)
+
+        data[0] = 0x0f  # start byte
+
+        current_byte = 1
+        available_bits = 8
+
+        for ch in chan:
+            ch &= 0x7ff
+            remaining_bits = 11
+            while remaining_bits:
+                mask = self.bit_not(0xffff >> available_bits << available_bits, 16)
+                enc = (ch & mask) << (8 - available_bits)
+                data[current_byte] |= enc
+
+                encoded_bits = 0
+                if remaining_bits < available_bits:
+                    encoded_bits = remaining_bits
+                else:
+                    encoded_bits = available_bits
+
+                remaining_bits -= encoded_bits
+                available_bits -= encoded_bits
+                ch >>= encoded_bits
+
+                if available_bits == 0:
+                    current_byte += 1
+                    available_bits = 8
+
+        data[23] = 0
+        data[24] = 0
+        return data
+
+    def set_channel(self, chan, data):
+        self.newChannels[chan] = data & 0x07ff
+
+    def update_channel(self, chan, value):
+        self.set_channel(chan, self.mapData(value))
+
+    def mapData(self, n):
+        return int((819 * ((n - 1500) / 500)) + 992)
+
     def sendSBUSData(self, chan):
         if (time.time() - self.timeSent < 1):
             time.sleep(0.05)
-            self.ser.write(chan)
+            self.ser.write(self.create_SBUS(self.newChannels))
+            self.newChannels = [1024] * 16
         else:
             None
-            
-    def sendFaceData(self, pos):
-        print(pos)
-        #self.server_socket.sendto(bytearray[pos], (address[0], address[1]))
-
 
