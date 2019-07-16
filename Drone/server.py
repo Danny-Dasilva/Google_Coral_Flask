@@ -35,18 +35,10 @@ def flaskServer():
 def signal_handler(signal, frame):
     print("\nprogram exiting gracefully")
     sys.exit()
-def Drone_code():
-    while True:
-        sleep(0.01)
-        Drone.sendSBUSData(Drone.channels)
-    
 
 if __name__ == "__main__":
     thread = Thread(target=flaskServer)
     thread.daemon = True
     thread.start()
-    thread1 = Thread(target=Drone_code)
-    thread1.daemon = True
-    thread1.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)

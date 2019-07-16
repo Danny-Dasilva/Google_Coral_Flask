@@ -2,6 +2,7 @@ import socket
 import time
 import serial
 from threading import Thread
+
 class drone:
 
     def __init__(self):
@@ -9,19 +10,35 @@ class drone:
         self.channels = []
         self.timeSent = 0
         self.port = "/dev/ttymxc0"
+        self.ultrasound_port = "/dev/ttymxc2"
         self.baudRate = 100000
+        self.ultrasound_baudrate = 9600
         self.ser = serial.Serial(port=self.port, baudrate=self.baudRate, parity=serial.PARITY_EVEN, stopbits=serial.STOPBITS_TWO)
+        self.ultrasound_ser = serial.Serial(port=self.ultrasound_port, baudrate=self.ultrasound_baudrate)
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_socket.bind(('', 6666))
         self.align = False
         self.count = 0
         self.newChannels = [1024] * 16
+        self.height = 0
+
+        self.throttleMin = 900
+        self.throttleMax = 2000
+        self.throttleDeltaScalar = 4
+        self.throttle = self.throttleMin
+
+        t2 = Thread(target=self.updateHeight)
+        t2.daemon = True
+        t2.start()
+
         t1 = Thread(target=self.updateData)
         t1.daemon = True
         t1.start()
 
+
     def updateData(self):
         while True:
+            # Update joystick data
             dataFromClient, address = self.server_socket.recvfrom(256)
             global timeSent
             self.timeSent = time.time()
@@ -41,11 +58,25 @@ class drone:
                         LSB = self.channels[i]
                         MSB = self.channels[i+1] << 8
                         num = int(LSB + MSB)
+
+                        # if(i == 4):
+                        #     # print(num)
+                        #     num = (num - 500) / 500.0
+                        #     self.throttle += num * self.throttleDeltaScalar
+                        #     num = self.throttle
+                        #     print(num)
+
                         chan.append(num)
                     self.channels = chan
+                    print(self.channels)
                     for i in range(len(self.channels)):
                         self.update_channel(i, self.channels[i])
-                    #self.create_SBUS(self.newChannels)
+                    time.sleep(0.02)
+                    # print(self.newChannels)
+                    # print(self.height)
+                    self.ser.write(self.create_SBUS(self.newChannels))
+                    self.newChannels = [1024] * 16
+
 
             elif(cmd == "BEAT"):
                 print("BEAT")
@@ -60,6 +91,14 @@ class drone:
                     self.align = False
                     self.server_socket.sendto(b"FACE", (address[0], address[1]))
                     self.count = 0
+        print("Done")
+
+    def updateHeight(self):
+        while True:
+            current_reading = self.ultrasound_ser.read(6)
+            current_reading = current_reading[1:5]
+            self.height = int(current_reading)
+            # print(self.height)
 
     def bit_not(self, n, numbits=8):
         return (1 << numbits) - 1 - n
@@ -113,6 +152,13 @@ class drone:
             time.sleep(0.05)
             self.ser.write(self.create_SBUS(self.newChannels))
             self.newChannels = [1024] * 16
+
         else:
             None
 
+    def clip(self, num, min, max):
+        if(num < min):
+            return min
+        if(num > max):
+            return max
+        return num
