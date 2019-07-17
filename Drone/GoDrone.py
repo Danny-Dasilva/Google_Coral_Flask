@@ -59,16 +59,12 @@ class drone:
                         MSB = self.channels[i+1] << 8
                         num = int(LSB + MSB)
 
-                        # if(i == 4):
-                        #     # print(num)
-                        #     num = (num - 500) / 500.0
-                        #     self.throttle += num * self.throttleDeltaScalar
-                        #     num = self.throttle
-                        #     print(num)
+                        #if(i == 4):
+                        #     print(self.height)
 
                         chan.append(num)
                     self.channels = chan
-                    print(self.channels)
+                    #print(self.channels)
                     for i in range(len(self.channels)):
                         self.update_channel(i, self.channels[i])
                     time.sleep(0.02)
@@ -95,10 +91,12 @@ class drone:
 
     def updateHeight(self):
         while True:
+            print(self.ultrasound_ser)
             current_reading = self.ultrasound_ser.read(6)
+            print(current_reading)
             current_reading = current_reading[1:5]
             self.height = int(current_reading)
-            # print(self.height)
+            print(self.height)
 
     def bit_not(self, n, numbits=8):
         return (1 << numbits) - 1 - n
