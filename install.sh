@@ -1,10 +1,14 @@
 sudo pip3 install svgwrite
 if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   echo "Installing DevBoard specific dependencies"
+  sudo apt-get update -y
+  sudo apt-get upgrade -y 
+  sudo apt-get dist-upgrade
   sudo apt-get install python3-pip -y
   sudo apt-get install python3-dev -y
   python3 -m pip install python-periphery -y
-  sudo apt-get install keyboard -y
+  sudo pip3 install keyboard 
+  sudo pip3 install flask
   sudo pip3 install adafruit-circuitpython-servokit -y
   wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/libgpiod.sh
   chmod +x libgpiod.sh
