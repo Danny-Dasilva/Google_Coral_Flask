@@ -107,7 +107,7 @@ class UI_Keyboard(UI):
     from app import keyinput
 
     # Layout of GPIOs for Raspberry demo
-    self._buttons = ['q', '1' , '2' , '3', '4']
+    self._buttons = ['q', '1' , '2' , '3', '4', '5', '6', '7', '8', '9', '0', 'b', 's']
     self._LEDs = [None]*5
     super(UI_Keyboard, self).__init__()
 
@@ -170,7 +170,7 @@ class Model(object):
 
     # Print/Display results
     self._ui.setOnlyLED(classification)
-    classes = ['--', 'One', 'Two', 'Three', 'Four']
+    classes = ['--', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Board', 'Start']
     status = [fps, self._engine.exampleCount(),classes[classification or 0]]
     #print(img)
     #print(type(img))

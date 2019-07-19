@@ -74,7 +74,7 @@ def Drone_code():
                         servo_2 = servo_min1
 
                 kit.servo[0].angle = servo_2
-                print(y)  
+                print(y)
                 print(servo_2)
 
 if __name__ == "__main__":
