@@ -10,17 +10,13 @@ Path to folder
 
 `cd Google-Coral-Flask-Server`
 
-path to Ai
-
-`cd Ai `
-
 install dependencies
 
 `sh install.sh`
 
 run server
 
-`sudo python3 server.py`
+`sudo python3 test.py`
 
 # Troubleshooting and additional info 
 

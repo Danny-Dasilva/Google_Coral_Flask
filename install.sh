@@ -6,10 +6,17 @@ if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   sudo apt-get dist-upgrade
   sudo apt-get install python3-pip -y
   sudo apt-get install python3-dev -y
+<<<<<<< HEAD
   python3 -m pip install python-periphery 
   sudo pip3 install keyboard 
   sudo pip3 install Flask
   sudo pip3 install adafruit-circuitpython-servokit -y
+=======
+  python3 -m pip install python-periphery
+  sudo pip3 install keyboard 
+  sudo pip3 install Flask
+  sudo pip3 install adafruit-circuitpython-servokit
+>>>>>>> 1dc4539aa176ecbc0d889aef65b4c36c79c93076
   wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/libgpiod.sh
   chmod +x libgpiod.sh
   ./libgpiod.sh
