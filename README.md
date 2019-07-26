@@ -35,7 +35,7 @@ runs the face detect model
 runs the teachable machine model
 
 
-## Info for changing servos or mottors
+## Info for changing servos or motors
 
 The adafruit servokit library has 2 methods for doing servos or motors
 
