@@ -1,6 +1,6 @@
-from app import Detect, Classify, Teachable, Empty
+from app import Detect, Classify, Teachable, Empty, pose_camera_test
 from flask import Flask, send_file, Response, render_template
-from app.Cam import camera
+from app.Cam2 import camera
 import keyboard
 from time import sleep
 from threading import Thread, active_count
@@ -14,10 +14,10 @@ import sys
 app = Flask(__name__)
 
 
-Image = camera(Teachable.AI())
+Image = camera(pose_camera_test.AI())
 
-#Image = Cam.camera(Classify.AI())
-#Image = Cam.camera(Detect.AI())
+#Image = camera(Classify.AI())
+#Image = camera(Detect.AI())
 #Image = Cam.camera(Empty.AI())
 @app.route('/')
 def index():
@@ -37,13 +37,15 @@ def signal_handler(signal, frame):
 def Robot_code():
     while True:
         sleep(0.01)
-        result = Image.val
-        print(result)
+        result = Image.result
+        print('result')
 
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
     thread.start()
+    # = Thread(target=Robot_code)
+    #thread5.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
 
