@@ -1,6 +1,6 @@
-from app import Detect, Classify, Teachable, Empty, pose_camera_test
+from app import Detect, Classify, Teachable, Empty, pose_camera
 from flask import Flask, send_file, Response, render_template
-from app.Cam2 import camera
+from app.Cam import camera
 import keyboard
 from time import sleep
 from threading import Thread, active_count
@@ -14,7 +14,7 @@ import sys
 app = Flask(__name__)
 
 
-Image = camera(pose_camera_test.AI())
+Image = camera(pose_camera.AI())
 
 #Image = camera(Classify.AI())
 #Image = camera(Detect.AI())

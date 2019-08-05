@@ -20,9 +20,8 @@ import time
 import numpy as np
 from PIL import Image
 import svgwrite
-import gstreamer
-
-from pose_engine import PoseEngine
+from app import gstreamer
+from app.pose_engine import PoseEngine
 
 EDGES = (
     ('nose', 'left eye'),
@@ -68,16 +67,17 @@ def draw_pose(dwg, pose, color='yellow', threshold=0.2):
         bx, by = xys[b]
         dwg.add(dwg.line(start=(ax, ay), end=(bx, by), stroke=color, stroke_width=2))
 
+
+
+
+
 class Model():
-
     def __init__(self):
-
         self.last_time = time.monotonic()
         self.n = 0
         self.sum_fps = 0
         self.sum_process_time = 0
         self.sum_inference_time = 0
-
         parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         parser.add_argument('--mirror', help='flip video horizontally', action='store_true')
         parser.add_argument('--model', help='.tflite model path.', required=False)
@@ -86,32 +86,30 @@ class Model():
         parser.add_argument('--videosrc', help='Which video source to use', default='/dev/video0')
         parser.add_argument('--h264', help='Use video/x-h264 input', action='store_true')
         self.args = parser.parse_args()
-        args = parser.parse_args()
 
-        default_model = 'all_models/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
-        if args.res == '480x360':
-            src_size = (640, 480)
-            appsink_size = (480, 360)
-            self.model = args.model or default_model % (353, 481)
-        elif args.res == '640x480':
+        default_model = './app/all_models/posenet_mobilenet_v1_075_%d_%d_quant_decoder_edgetpu.tflite'
+        if self.args.res == '480x360':
+            self.src_size = (640, 480)
+            self.appsink_size = (480, 360)
+            model = args.model or default_model % (353, 481)
+        elif self.args.res == '640x480':
             self.src_size = (640, 480)
             self.appsink_size = (640, 480)
-            self.model = args.model or default_model % (481, 641)
-        elif args.res == '1280x720':
-            src_size = (1280, 720)
-            appsink_size = (1280, 720)
+            model = self.args.model or default_model % (481, 641)
+        elif self.args.res == '1280x720':
+            self.src_size = (1280, 720)
+            self.appsink_size = (1280, 720)
             model = args.model or default_model % (721, 1281)
+
+        self.engine = PoseEngine(model, mirror=self.args.mirror)
         self.use_appsrc = False
-        print('Loading model: ', self.model)
-        self.engine = PoseEngine(self.model, mirror=args.mirror)
 
-
-    def render_overlay(self, engine, image, width, height):
+    def render_overlay(self, image):
+        global flaskStatus
         #nonlocal n, sum_fps, sum_process_time, sum_inference_time, last_time
         self.start_time = time.monotonic()
-        outputs, self.inference_time = engine.DetectPosesInImage(image)
+        outputs, self.inference_time = self.engine.DetectPosesInImage(image)
         self.end_time = time.monotonic()
-
         self.n += 1
         self.sum_fps += 1.0 / (self.end_time - self.last_time)
         self.sum_process_time += 1000 * (self.end_time - self.start_time) - self.inference_time
@@ -120,12 +118,30 @@ class Model():
         text_line = 'PoseNet: %.1fms Frame IO: %.2fms TrueFPS: %.2f Nposes %d' % (
             self.sum_inference_time / self.n, self.sum_process_time / self.n, self.sum_fps / self.n, len(outputs)
         )
-        print(text_line)
+        flaskStatus = outputs
+        #print(flaskStatus)
+        # print(flaskStatus)
+        return(flaskStatus)
 
 
 
 
 
-if __name__ == '__main__':
+
+model = None
+def main():
+    global model
     model = Model()
-    gstreamer.run_pipeline(partial(model.render_overlay, model.engine))
+class AI():
+  def __init__(self):
+    self.type = "Pose"
+    main()
+  def run(self, img):
+    if (img != None):
+        #s2 = partial(model.render_overlay(img), model.engine)
+        #s3 = s2, model.src_size, model.appsink_size, mirror = model.args.mirror, videosrc = model.args.videosrc, h264input = model.args.h264
+        mirror = model.args.mirror
+        videosrc = model.args.videosrc
+        h264input = model.args.h264
+        return(model.render_overlay(img), model.engine, model.src_size, model.appsink_size, mirror, videosrc, h264input)
+
