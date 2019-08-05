@@ -1,4 +1,5 @@
 import sys
+from app import pose_gstreamer
 from app import gstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
@@ -68,8 +69,12 @@ class camera:
 
     def runThread(self):
         while True:
-            pipeline = gstreamer.run_pipeline(self.updateIMG)
-            self.result = sys.exit(pipeline)
+            if self.AI.type == 'Pose':
+                pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
+                self.result = sys.exit(pipeline)
+            else:
+                pipeline = gstreamer.run_pipeline(self.updateIMG)
+                self.result = sys.exit(pipeline)
 
     def updateIMG(self, image, width, height):
 
