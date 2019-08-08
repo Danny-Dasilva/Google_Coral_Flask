@@ -73,7 +73,7 @@ class camera:
                 pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
                 self.result = sys.exit(pipeline)
             else:
-                pipeline = gstreamer.run_pipeline(self.updateIMG)
+                pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
                 self.result = sys.exit(pipeline)
 
     def updateIMG(self, image, width, height):
@@ -150,27 +150,30 @@ class camera:
 
                 elif (self.AI.type == "Pose"):
                     outputs = self.result[0]
-                    xys = {}
-                    threshold = 0.2
-                    for pose in outputs:
 
+                    def draw_pose(pose, color='yellow', threshold=0.2):
+                        xys = {}
                         for label, keypoint in pose.keypoints.items():
-                            for a, b in EDGES:
-                                if a not in xys or b not in xys: continue
-                                ax, ay = xys[a]
-                                bx, by = xys[b]
-                                draw.line((ax, ay, bx, by), fill=(0,0,255), width=1)
-
                             if keypoint.score < threshold: continue
                             xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
                             r = 2
                             x = int(keypoint.yx[1])
                             y = int(keypoint.yx[0])
                             draw.ellipse((x - r, y - r, x + r, y + r), fill=(255, 0, 0, 0))
-                            #dwg.add(dwg.circle(center=(int(keypoint.yx[1]), int(keypoint.yx[0])), r=5,
-                            #                        #fill='cyan', fill_opacity=keypoint.score, stroke=color))
 
-                            #dwg.add(dwg.line(start=(ax, ay), end=(bx, by), stroke=color, stroke_width=2))
+                        for a, b in EDGES:
+                            if a not in xys or b not in xys: continue
+                            ax, ay = xys[a]
+                            bx, by = xys[b]
+                            draw.line((ax, ay, bx, by), fill=(0, 0, 255), width=1)
+
+                    for pose in outputs:
+                        draw_pose(pose)
+
+
+
+
+
                 else:
                     self.result = [0, 0]
                     self.val = ('no model')
