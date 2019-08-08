@@ -1,5 +1,4 @@
 import sys
-from app import pose_gstreamer
 from app import gstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
@@ -38,6 +37,7 @@ class camera:
         self.height = None
         self.shape = None
         self.AI = ai
+        self.bac_img = None
         self.result = None
         self.fps = None
         self.numImages = None
@@ -46,48 +46,25 @@ class camera:
         thread1.deamon = True
         thread1.start()
 
-    def draw_pose(self, outputs, color='yellow', threshold=0.2):
-        xys = {}
-        for pose in outputs:
-
-            for label, keypoint in pose.keypoints.items():
-
-                if keypoint.score < threshold: continue
-                xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
-                draw.ellipse((20, 20, 180, 180), fill='blue', outline='blue')
-                #dwg.add(dwg.circle(center=(int(keypoint.yx[1]), int(keypoint.yx[0])), r=5,
-        #                        #fill='cyan', fill_opacity=keypoint.score, stroke=color))
-
-        #
-        # for a, b in EDGES:
-        #     if a not in xys or b not in xys: continue
-        #     ax, ay = xys[a]
-        #     bx, by = xys[b]
-        #     #dwg.add(dwg.line(start=(ax, ay), end=(bx, by), stroke=color, stroke_width=2))
-        #
-        #
 
     def runThread(self):
         while True:
-            if self.AI.type == 'Pose':
-                pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
-                self.result = sys.exit(pipeline)
-            else:
-                pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
-                self.result = sys.exit(pipeline)
+
+            pipeline = gstreamer.run_pipeline(self.updateIMG)
+            self.result = sys.exit(pipeline)
 
     def updateIMG(self, image, width, height):
 
         self.img = image
         self.width = width
         self.height = height
-
         if self.AI.type == 'None':
             self.AI.type = 'None'
             pass
-        if self.AI.type == 'Pose':
+        if self.AI.type == 'Anonymizer' or 'Pose':
             image = self.NPImage()
             self.result = self.AI.run(image)
+
 
         else:
             image = self.PILImage()
@@ -110,7 +87,12 @@ class camera:
         if(self.img != None):
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
+    def backround(self):
 
+        sleep(0.01)
+        if(self.bac_img != None):
+            return Image.frombytes('RGB', (self.width, self.height), self.bac_img, 'raw')
+        return None
 
     def ImageStream(self):
         return self.convertIMG()
@@ -124,6 +106,23 @@ class camera:
                 draw = ImageDraw.Draw(image)
                 font = ImageFont.truetype("./app/fonts/Gentona-Bold.ttf", 15)
                 font2 = ImageFont.truetype("./app/fonts/Gentona-Bold.ttf", 20)
+
+                def draw_pose(pose, color='yellow', threshold=0.2):
+                    xys = {}
+                    for label, keypoint in pose.keypoints.items():
+                        if keypoint.score < threshold: continue
+                        xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
+                        r = 2
+                        x = int(keypoint.yx[1])
+                        y = int(keypoint.yx[0])
+                        draw.ellipse((x - r, y - r, x + r, y + r), fill=(255, 0, 0, 0))
+
+                    for a, b in EDGES:
+                        if a not in xys or b not in xys: continue
+                        ax, ay = xys[a]
+                        bx, by = xys[b]
+                        draw.line((ax, ay, bx, by), fill=(0, 0, 255), width=1)
+
 
                 if(self.AI.type == "embedding"):
                     draw.rectangle([0,0,200,20], fill="Black")
@@ -148,27 +147,48 @@ class camera:
                             draw.text((i[1] * self.width, i[4] * self.height), str(i[0]), (255, 255, 255), font=font2)
                             draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline="Red")
 
+
                 elif (self.AI.type == "Pose"):
                     outputs = self.result[0]
+                    for pose in outputs:
+                        draw_pose(pose)
 
-                    def draw_pose(pose, color='yellow', threshold=0.2):
-                        xys = {}
-                        for label, keypoint in pose.keypoints.items():
-                            if keypoint.score < threshold: continue
-                            xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
-                            r = 2
-                            x = int(keypoint.yx[1])
-                            y = int(keypoint.yx[0])
-                            draw.ellipse((x - r, y - r, x + r, y + r), fill=(255, 0, 0, 0))
+                elif (self.AI.type == "Anonymizer"):
+                    back_image = self.result[0][1]
+                    self.bac_img = self.result[0][1]
+                    #print(back_image)
 
-                        for a, b in EDGES:
-                            if a not in xys or b not in xys: continue
-                            ax, ay = xys[a]
-                            bx, by = xys[b]
-                            draw.line((ax, ay, bx, by), fill=(0, 0, 255), width=1)
+                    outputs = self.result[0][0]
+                    if back_image != None:
+                        image.paste(self.backround())
 
                     for pose in outputs:
                         draw_pose(pose)
+
+                    # for pose in outputs:
+                    #     draw_pose(pose)
+
+
+                    # outputs = self.result[0]
+                    #
+                    # def draw_pose(pose, color='yellow', threshold=0.2):
+                    #     xys = {}
+                    #     for label, keypoint in pose.keypoints.items():
+                    #         if keypoint.score < threshold: continue
+                    #         xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
+                    #         r = 2
+                    #         x = int(keypoint.yx[1])
+                    #         y = int(keypoint.yx[0])
+                    #         draw.ellipse((x - r, y - r, x + r, y + r), fill=(255, 0, 0, 0))
+                    #
+                    #     for a, b in EDGES:
+                    #         if a not in xys or b not in xys: continue
+                    #         ax, ay = xys[a]
+                    #         bx, by = xys[b]
+                    #         draw.line((ax, ay, bx, by), fill=(0, 0, 255), width=1)
+                    #
+                    # for pose in outputs:
+                    #     draw_pose(pose)
 
 
 

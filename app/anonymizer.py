@@ -20,53 +20,9 @@ import time
 import numpy as np
 from PIL import Image
 import svgwrite
-from app import pose_gstreamer
+from app import gstreamer
 from app.pose_engine import PoseEngine
 
-EDGES = (
-    ('nose', 'left eye'),
-    ('nose', 'right eye'),
-    ('nose', 'left ear'),
-    ('nose', 'right ear'),
-    ('left ear', 'left eye'),
-    ('right ear', 'right eye'),
-    ('left eye', 'right eye'),
-    ('left shoulder', 'right shoulder'),
-    ('left shoulder', 'left elbow'),
-    ('left shoulder', 'left hip'),
-    ('right shoulder', 'right elbow'),
-    ('right shoulder', 'right hip'),
-    ('left elbow', 'left wrist'),
-    ('right elbow', 'right wrist'),
-    ('left hip', 'right hip'),
-    ('left hip', 'left knee'),
-    ('right hip', 'right knee'),
-    ('left knee', 'left ankle'),
-    ('right knee', 'right ankle'),
-)
-
-
-
-def shadow_text(dwg, x, y, text, font_size=16):
-    dwg.add(dwg.text(text, insert=(x + 1, y + 1), fill='black',
-                     font_size=font_size, style='font-family:sans-serif'))
-    dwg.add(dwg.text(text, insert=(x, y), fill='white',
-                     font_size=font_size, style='font-family:sans-serif'))
-
-
-def draw_pose(dwg, pose, color='yellow', threshold=0.2):
-    xys = {}
-    for label, keypoint in pose.keypoints.items():
-        if keypoint.score < threshold: continue
-        xys[label] = (int(keypoint.yx[1]), int(keypoint.yx[0]))
-        dwg.add(dwg.circle(center=(int(keypoint.yx[1]), int(keypoint.yx[0])), r=5,
-                           fill='cyan', fill_opacity=keypoint.score, stroke=color))
-
-    for a, b in EDGES:
-        if a not in xys or b not in xys: continue
-        ax, ay = xys[a]
-        bx, by = xys[b]
-        dwg.add(dwg.line(start=(ax, ay), end=(bx, by), stroke=color, stroke_width=2))
 
 
 
@@ -108,31 +64,33 @@ class Model():
         self.timer_time = time.monotonic()
 
 
+
     def render_overlay(self, image):
+        global flaskStatus
         #nonlocal timer_time, background_image
         outputs, inference_time = self.engine.DetectPosesInImage(image)
         now_time = time.monotonic()
         BACKGROUND_DELAY = 2
 
-
+        action = "none"
         if self.background_image is None:
             if outputs:  # frame still has people in it, restart timer
+                action = 'Waiting for everyone to leave the frame...'
                 print('Waiting for everyone to leave the frame...')
                 self.timer_time = now_time
             elif now_time > self.timer_time + BACKGROUND_DELAY:  # frame has been empty long enough
                 self.background_image = image
+                action = 'Background set.'
                 print('Background set.')
-                print(self.background_image)
 
-        else:
-            image = self.background_image
-
-        #return image
+        # else:
+        #     image = self.background_image
 
         flaskStatus = outputs
-        # print(flaskStatus)
-        # print(flaskStatus)
-        return (flaskStatus, image)
+        #print(flaskStatus)
+        return flaskStatus, self.background_image, action
+
+
 
 
 
@@ -144,15 +102,14 @@ def main():
     model = Model()
 class AI():
   def __init__(self):
-    self.type = "Pose"
+    self.type = "Anonymizer"
     main()
   def run(self, img):
     if (img != None):
         #s2 = partial(model.render_overlay(img), model.engine)
         #s3 = s2, model.src_size, model.appsink_size, mirror = model.args.mirror, videosrc = model.args.videosrc, h264input = model.args.h264
-        use_appsrc = model.use_appsrc
         mirror = model.args.mirror
         videosrc = model.args.videosrc
         h264input = model.args.h264
-        return(model.render_overlay(img), model.engine, model.src_size, model.appsink_size, use_appsrc, mirror, videosrc, h264input)
+        return(model.render_overlay(img), model.engine, model.src_size, model.appsink_size, mirror, videosrc, h264input)
 

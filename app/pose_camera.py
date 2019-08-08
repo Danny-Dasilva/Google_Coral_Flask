@@ -20,7 +20,7 @@ import time
 import numpy as np
 from PIL import Image
 import svgwrite
-from app import pose_gstreamer
+from app import gstreamer
 from app.pose_engine import PoseEngine
 
 EDGES = (
