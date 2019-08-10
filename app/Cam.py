@@ -1,5 +1,5 @@
 import sys
-from app import gstreamer
+from app import pose_gstreamer, gstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
 from time import sleep
@@ -49,9 +49,16 @@ class camera:
 
     def runThread(self):
         while True:
+            print(self.AI.type)
+            if self.AI.type in ["Anonymizer", "Pose"]:
+                print('fuck')
+                pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
+                self.result = sys.exit(pipeline)
 
-            pipeline = gstreamer.run_pipeline(self.updateIMG)
-            self.result = sys.exit(pipeline)
+            else:
+                print("functional")
+                pipeline = gstreamer.run_pipeline(self.updateIMG)
+                self.result = sys.exit(pipeline)
 
     def updateIMG(self, image, width, height):
 
@@ -61,10 +68,9 @@ class camera:
         if self.AI.type == 'None':
             self.AI.type = 'None'
             pass
-        if self.AI.type == 'Anonymizer' or 'Pose':
+        if self.AI.type in ["Anonymizer", "Pose"]:
             image = self.NPImage()
             self.result = self.AI.run(image)
-
 
         else:
             image = self.PILImage()
