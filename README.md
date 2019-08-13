@@ -18,13 +18,17 @@ run server
 
 `sudo python3 test.py`
 
-# Troubleshooting and additional info 
+# Running Models
 
 in test.py
+
+## Empty Feed
 
 `Image = camera(Empty.AI())`
 
 returns a video feed with no model running
+
+## Image Classification
 
 `Image = camera(Classify.AI())`
 
@@ -32,11 +36,15 @@ runs the image classify model, returns an image classification model
 
 ![classify](https://media.giphy.com/media/XfyrthymaGNiBV1uBv/giphy.gif)
 
+## Object Detection 
+
 `Image = camera(Detect.AI())`
 
 runs an object detection model detect model
 
 ![Detect](https://media.giphy.com/media/cmrryjBDbPpAcmcODv/giphy.gif)
+
+## Teachable Machine
 
 `Image = camera(Teachable.AI())`
 
@@ -48,11 +56,15 @@ runs the teachable machine model
 
 <kbd>q</kbd> deletes current classes
 
+## Pose-Net
+
 `Image = camera(Pose.AI())`
 
 runs the Pose-Net model 
 
 ![Pose](https://media.giphy.com/media/fA1OEwxQO0Y1kWF0NI/giphy.gif)
+
+## Anonymizer
 
 `Image = camera(anonymizer.AI())`
 
@@ -60,12 +72,14 @@ example of the pose net model, when you move out of the frame it saves the image
 
 ![Anonymizer](https://media.giphy.com/media/ZdlHCGdZ4R3GYFQiE5/giphy.gif)
 
+## Music Synthesizer
+
 `Image = camera(synthesizer.AI())`
  
  People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
 
 
-## Info for changing servos or motors
+## Robot Thread
 
 The adafruit servokit library has 2 methods for doing servos or motors
 
