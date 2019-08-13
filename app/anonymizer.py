@@ -63,32 +63,45 @@ class Model():
         self.background_image = None
         self.timer_time = time.monotonic()
 
-
+        self.action = 'none'
 
     def render_overlay(self, image):
         global flaskStatus
         #nonlocal timer_time, background_image
-        outputs, inference_time = self.engine.DetectPosesInImage(image)
         now_time = time.monotonic()
         BACKGROUND_DELAY = 2
+        self.start_time = time.monotonic()
+        outputs, self.inference_time = self.engine.DetectPosesInImage(image)
+        self.end_time = time.monotonic()
+        self.n += 1
+        self.sum_fps += 1.0 / (self.end_time - self.last_time)
+        self.sum_process_time += 1000 * (self.end_time - self.start_time) - self.inference_time
+        self.sum_inference_time += self.inference_time
+        self.last_time = self.end_time
 
-        action = "none"
+
         if self.background_image is None:
             if outputs:  # frame still has people in it, restart timer
-                action = 'Waiting for everyone to leave the frame...'
-                print('Waiting for everyone to leave the frame...')
+                self.action = 'Waiting for everyone to leave the frame...'
+                #print('Waiting for everyone to leave the frame...')
                 self.timer_time = now_time
             elif now_time > self.timer_time + BACKGROUND_DELAY:  # frame has been empty long enough
                 self.background_image = image
-                action = 'Background set.'
-                print('Background set.')
+
+
+        else:
+            self.action = 'PoseNet: %.1fms Frame IO: %.2fms TrueFPS: %.2f Nposes %d' % (
+            self.sum_inference_time / self.n, self.sum_process_time / self.n, self.sum_fps / self.n,
+            len(outputs)
+        )
+
 
         # else:
         #     image = self.background_image
 
         flaskStatus = outputs
         #print(flaskStatus)
-        return flaskStatus, self.background_image, action
+        return flaskStatus, self.background_image, self.action
 
 
 
