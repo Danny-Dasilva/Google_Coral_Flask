@@ -50,7 +50,7 @@ runs an object detection model detect model
 
 runs the teachable machine model
 
-![Teachable](https://media.giphy.com/media/KgFN80mDAUwfO3Mz68/giphy.gif)
+![Teachable](https://imgur.com/a/Mtoi8nK)
 
 <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> are the class categories
 
