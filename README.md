@@ -20,19 +20,35 @@ run server
 
 # Troubleshooting and additional info 
 
-in server.py
+in test.py
 
-`Image = camera(Image_classify.AI())`
+`Image = camera(Empty.AI())`
 
-runs the image classify model, returns an overlay with a model trained on 100 labels
+returns a video feed with no model running
 
-`Image = camera(face_detect.AI())`
+`Image = camera(Classify.AI())`
 
-runs the face detect model
+runs the image classify model, returns an image classification model
 
-`Image = camera(teach.AI())`
+`Image = camera(Detect.AI())`
+
+runs an object detection model detect model
+
+`Image = camera(Teachable.AI())`
 
 runs the teachable machine model
+
+`Image = camera(Pose.AI())`
+
+runs the Pose-Net model 
+
+`Image = camera(anonymizer.AI())`
+
+example of the pose net model, when you move out of the frame it saves the image backround
+
+`Image = camera(synthesizer.AI())`
+ 
+ People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
 
 
 ## Info for changing servos or motors
