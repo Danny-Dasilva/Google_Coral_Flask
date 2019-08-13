@@ -30,22 +30,31 @@ returns a video feed with no model running
 
 runs the image classify model, returns an image classification model
 
+![classify](https://media.giphy.com/media/XfyrthymaGNiBV1uBv/giphy.gif)
+
 `Image = camera(Detect.AI())`
 
 runs an object detection model detect model
+
+![Detect](https://media.giphy.com/media/cmrryjBDbPpAcmcODv/giphy.gif)
 
 `Image = camera(Teachable.AI())`
 
 runs the teachable machine model
 
+![Teacheable Machine](https://media.giphy.com/media/L1X48NmuGGUDrQy7ES/giphy.gif)
+
 `Image = camera(Pose.AI())`
 
 runs the Pose-Net model 
+
+![Pose](https://media.giphy.com/media/fA1OEwxQO0Y1kWF0NI/giphy.gif)
 
 `Image = camera(anonymizer.AI())`
 
 example of the pose net model, when you move out of the frame it saves the image backround
 
+![Anonymizer](https://media.giphy.com/media/ZdlHCGdZ4R3GYFQiE5/giphy.gif)
 `Image = camera(synthesizer.AI())`
  
  People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
