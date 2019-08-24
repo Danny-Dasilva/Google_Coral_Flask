@@ -18,12 +18,12 @@ export TEST_DATA=/usr/lib/python3/dist-packages/edgetpu/test_data
 
 Run face detection model:
 python3 -m edgetpuvision.detect \
-  --model ${TEST_DATA}/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite
+  --model mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite
 
 Run coco model:
 python3 -m edgetpuvision.detect \
-  --model ${TEST_DATA}/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite \
-  --labels ${TEST_DATA}/coco_labels.txt
+  --model mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite \
+  --labels coco_labels.txt
 """
 import argparse
 import time
@@ -50,23 +50,22 @@ class Model():
         default_labels = 'coco_labels.txt'
         parser = argparse.ArgumentParser()
         parser.add_argument('--model', help='.tflite model path',
-                            default=os.path.join(default_model_dir,default_model))
+                            default=default_model)
         parser.add_argument('--labels', help='label file path',
-                            default=os.path.join(default_model_dir, default_labels))
+                            default=default_labels)
         parser.add_argument('--top_k', type=int, default=3,
                             help='number of classes with highest score to display')
         parser.add_argument('--threshold', type=float, default=0.1,
                             help='class score threshold')
         self.args = parser.parse_args()
 
-        print("Loading %s with %s labels."%(self.args.model, self.args.labels))
-        self.engine = DetectionEngine(self.args.model)
+        print("Loading %s with %s labels."%(os.path.join(default_model_dir,self.args.model), os.path.join(default_model_dir,self.args.labels)))
+        self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
         self.labels = load_labels(self.args.labels)
 
         self.last_time = time.monotonic()
     def user_callback(self, image):
 
-      #added
       global flaskImage
       global flaskStatus
       flaskImage = image
@@ -83,12 +82,9 @@ class Model():
       for obj in objs:
           x0, y0, x1, y1 = obj.bounding_box.flatten().tolist()
           percent = int(100 * obj.score)
-          #print(percent)
           objBoxes.append([percent, x0,y0,x1,y1])
 
-
       self.last_time = end_time
-
 
       flaskStatus = objBoxes
       return(flaskStatus)

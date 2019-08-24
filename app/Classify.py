@@ -41,23 +41,25 @@ class Model():
         default_labels = 'imagenet_labels.txt'
         parser = argparse.ArgumentParser()
         parser.add_argument('--model', help='.tflite model path',
-                            default=os.path.join(default_model_dir,default_model))
+                            default=default_model)
         parser.add_argument('--labels', help='label file path',
-                            default=os.path.join(default_model_dir, default_labels))
+                            default=default_labels)
         parser.add_argument('--top_k', type=int, default=1,
                             help='number of classes with highest score to display')
         parser.add_argument('--threshold', type=float, default=0.1,
                             help='class score threshold')
         self.args = parser.parse_args()
 
-        #print("Loading %s with %s labels."%(self.args.model, self.args.labels))
-        self.engine = ClassificationEngine(self.args.model)
-        self.labels = load_labels(self.args.labels)
+        print("Loading %s with %s labels."%(os.path.join(default_model_dir, self.args.model), os.path.join(default_model_dir, self.args.labels)))
+        self.engine = ClassificationEngine(os.path.join(default_model_dir, self.args.model))
+        self.labels = load_labels(os.path.join(default_model_dir, self.args.labels))
+
 
         self.last_time = time.monotonic()
+
     def user_callback(self,image):
 
-      #added
+
       global flaskImage
       global flaskStatus
       flaskImage = image
@@ -72,19 +74,19 @@ class Model():
       ]
       for index, score in results:
         text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
-      #for index, score in results:
-      #  text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
-      #print(' '.join(text_lines))
+
+      print(len(text_lines))
       if(len(text_lines) > 2):
         status = [text_lines[1], text_lines[2], ""]
       else:
           status = [text_lines[1], "", ""]
+          print("weird")
       self.last_time = end_time
-      #generate_svg(svg_canvas, text_lines)
 
 
       flaskStatus = status
       return(flaskStatus)
+
 model = None
 def main():
     global model
