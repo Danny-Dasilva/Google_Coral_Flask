@@ -14,10 +14,10 @@ import sys
 app = Flask(__name__)
 
 
-#Image = camera(anonymizer.AI())
+#Image = camera(pose_camera.AI())
 #Image = camera(Teachable.AI())
 #Image = camera(Classify.AI())
-Image = camera(Detect.AI())
+#Image = camera(Detect.AI())
 #Image = camera(Empty.AI())
 @app.route('/')
 def index():
@@ -38,14 +38,14 @@ def Robot_code():
     while True:
         sleep(0.01)
         result = Image.result
-        print(result)
+        print('result')
 
 if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
     thread.start()
-    thread5 = Thread(target=Robot_code)
-    thread5.start()
+    # = Thread(target=Robot_code)
+    #thread5.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
 
