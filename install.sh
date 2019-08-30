@@ -1,6 +1,8 @@
-sudo pip3 install svgwrite
+
+
 if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   echo "Installing DevBoard specific dependencies"
+  sudo pip3 install svgwrite
   sudo apt-get update -y
   sudo apt-get upgrade -y 
   sudo apt-get dist-upgrade -y 
@@ -9,11 +11,6 @@ if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   python3 -m pip install python-periphery
   sudo pip3 install keyboard 
   sudo pip3 install Flask
-  sudo pip3 install adafruit-circuitpython-servokit
-  wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/libgpiod.sh
-  chmod +x libgpiod.sh
-  ./libgpiod.sh
-  rm -rf ./libgpiod.sh
 
 else
   # Install gstreamer
