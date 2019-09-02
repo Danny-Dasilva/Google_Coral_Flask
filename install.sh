@@ -6,7 +6,6 @@ if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   sudo apt-get update -y
   sudo apt-get upgrade -y 
   sudo apt-get dist-upgrade -y 
-  sudo apt-get install python3-pip -y
   sudo apt-get install python3-dev -y
   python3 -m pip install python-periphery
   sudo pip3 install keyboard 
@@ -19,6 +18,14 @@ else
   if grep -s -q "Raspberry Pi" /sys/firmware/devicetree/base/model; then
     echo "Installing Raspberry Pi specific dependencies"
     sudo apt-get install python3-rpi.gpio
+    sudo pip3 install svgwrite
+    sudo apt-get update -y
+    sudo apt-get upgrade -y 
+    sudo apt-get dist-upgrade -y 
+    sudo apt-get install python3-dev -y
+    python3 -m pip install python-periphery
+    sudo pip3 install keyboard 
+    sudo pip3 install Flask
     # Add v4l2 video module to kernel
     if ! grep -q "bcm2835-v4l2" /etc/modules; then
       echo bcm2835-v4l2 | sudo tee -a /etc/modules
