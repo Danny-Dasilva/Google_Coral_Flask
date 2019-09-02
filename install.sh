@@ -10,8 +10,8 @@ if grep -s -q "MX8MQ" /sys/firmware/devicetree/base/model; then
   python3 -m pip install python-periphery
   sudo pip3 install keyboard 
   sudo pip3 install Flask
-  apt install fluidsynth fluid-soundfont-gm
-  pip3 install pyfluidsynth
+  sudo apt install fluidsynth fluid-soundfont-gm -y
+  sudo pip3 install pyfluidsynth
   
 
 else
