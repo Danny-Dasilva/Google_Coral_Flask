@@ -19,6 +19,8 @@ app = Flask(__name__)
 Image = camera(Classify.AI())
 #Image = camera(Detect.AI())
 #Image = camera(Empty.AI())
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -34,7 +36,7 @@ def signal_handler(signal, frame):
     print("\nprogram exiting gracefully")
     sys.exit(0)
 
-def Robot_code():
+def my_function():
     while True:
         sleep(0.01)
         result = Image.result
@@ -44,7 +46,7 @@ if __name__ == "__main__":
     global status
     thread = Thread(target=flaskServer)
     thread.start()
-    thread5 = Thread(target=Robot_code)
+    thread5 = Thread(target=my_function)
     thread5.start()
     sleep(2)
     signal.signal(signal.SIGINT, signal_handler)
