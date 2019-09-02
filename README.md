@@ -24,13 +24,13 @@ run server
 
 in test.py
 
-## Empty Feed
+### Empty Feed
 
 `Image = camera(Empty.AI())`
 
 returns a video feed with no model running
 
-## Image Classification
+### Image Classification
 
 `Image = camera(Classify.AI())`
 
@@ -38,7 +38,7 @@ runs the image classify model, returns an image classification model
 
 ![classify](https://media.giphy.com/media/XfyrthymaGNiBV1uBv/giphy.gif)
 
-## Object Detection 
+### Object Detection 
 
 `Image = camera(Detect.AI())`
 
@@ -46,7 +46,7 @@ runs an object detection model detect model
 
 ![Detect](https://media.giphy.com/media/cmrryjBDbPpAcmcODv/giphy.gif)
 
-## Teachable Machine
+### Teachable Machine
 
 `Image = camera(Teachable.AI())`
 
@@ -58,7 +58,7 @@ runs the teachable machine model
 
 <kbd>q</kbd> reset current classes
 
-## Pose-Net
+### Pose-Net
 
 `Image = camera(Pose.AI())`
 
@@ -66,7 +66,7 @@ runs the Pose-Net model
 
 ![Pose](https://media.giphy.com/media/fA1OEwxQO0Y1kWF0NI/giphy.gif)
 
-## Anonymizer
+### Anonymizer
 
 `Image = camera(anonymizer.AI())`
 
@@ -74,7 +74,7 @@ example of the pose net model, when you move out of the frame it saves the image
 
 ![Anonymizer](https://media.giphy.com/media/ZdlHCGdZ4R3GYFQiE5/giphy.gif)
 
-## Music Synthesizer
+### Music Synthesizer
 
 `Image = camera(synthesizer.AI())`
  
