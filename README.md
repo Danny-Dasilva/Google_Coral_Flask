@@ -1,5 +1,7 @@
 ## Google Coral Flask Server
 
+Expose deep learning models and receive data on the Coral usb accelerator and Edge TPU via a Flask app
+
 
 # Instructions
 clone repository
@@ -54,7 +56,7 @@ runs the teachable machine model
 
 <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> are the class categories
 
-<kbd>q</kbd> deletes current classes
+<kbd>q</kbd> reset current classes
 
 ## Pose-Net
 
@@ -79,39 +81,6 @@ example of the pose net model, when you move out of the frame it saves the image
  People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
 
 
-## Robot Thread
-
-The adafruit servokit library has 2 methods for doing servos or motors
-
-`kit.continuous_servo[1].throttle = 0.3`
- 
- this will set a *motor* to move continuously in a direction
- 
- `kit.servo[1].angle = 0`
- 
- this will set a *servo* angle 
- 
- the number in the brackets [ ] is the pin number on the hat
- 
- ## Example of servo movement
- 
-```python
-if(result == "One"):
-            print("One")
-            kit.servo[0].angle = 0
-            sleep(0.4)
-            #kit.continuous_servo[1].throttle = 0.3
-            kit.servo[1].angle = 0
-        elif(result == "Two"):
-            print("Two")
-            kit.servo[0].angle = 30
-            sleep(0.4)
-            kit.servo[1].angle = 0
-        else:
-            kit.servo[1].angle = 17
-```
-
-result is the value returned by teachable machine, if you want to add more values the other two are `'Three'` and `'Four'`
 
 ## Flask stuff
 
