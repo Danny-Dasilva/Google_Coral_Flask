@@ -62,7 +62,11 @@ runs the teachable machine model
 
 `Image = camera(Pose.AI())`
 
-runs the Pose-Net model 
+runs the Pose-Net mdef my_function():
+    while True:
+        sleep(0.01)
+        result = Image.result
+        print(result)odel 
 
 ![Pose](https://media.giphy.com/media/fA1OEwxQO0Y1kWF0NI/giphy.gif)
 
@@ -81,6 +85,45 @@ example of the pose net model, when you move out of the frame it saves the image
  People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
 
 
+## Return values
+
+in test.py
+
+```python
+def my_function():
+    while True:
+        sleep(0.01)
+        result = Image.result
+        print(result)
+```
+For every model your run there are corresponding instance attributes that are returned
+
+`Image.fps` returns the frames per second for the camera
+
+`Image.interference` returns the interference rate
+
+
+`self.numImages` returns the number of examples for the teacheable machine
+
+
+`Image.class` returns the class of the model 
+
+## e.g 
+`teacheable` returns 'One', 'Two', 'Three', or 'Four'
+
+`classify` returns 'ping-pong ball' or 'spatula'
+
+`detect` returns bounding box 
+
+any of the posenet models returns a posenet object
+
+## Args
+
+All normal arguments that each model takes can be applied as long as the right class is being used
+
+eg. 'python 3 test.py --model /path to my example model'
+
+gif of custom object detection model
 
 ## Flask stuff
 
