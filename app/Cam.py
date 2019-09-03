@@ -86,13 +86,12 @@ class camera:
         return None
 
     def PILImage(self):
-
         sleep(0.01)
         if(self.img != None):
             return Image.frombytes('RGB', (self.width, self.height), self.img, 'raw')
         return None
-    def backround(self):
 
+    def backround(self):
         sleep(0.01)
         if(self.bac_img != None):
             return Image.frombytes('RGB', (self.width, self.height), self.bac_img, 'raw')

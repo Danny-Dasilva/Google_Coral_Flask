@@ -1,0 +1,10 @@
+   0  top
+   1  trouser
+   2  pullover
+   3  dress
+   4  coat
+   5  sandal
+   6  shirt
+   7  sneaker
+   8  bag
+   9  ankle boot

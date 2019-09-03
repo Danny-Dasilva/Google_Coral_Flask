@@ -38,7 +38,7 @@ def Robot_code():
     while True:
         sleep(0.01)
         result = Image.result
-        print(result)
+        #print(result)
 
 if __name__ == "__main__":
     global status
