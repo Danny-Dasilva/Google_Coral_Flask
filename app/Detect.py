@@ -41,7 +41,6 @@ def load_labels(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
        lines = (p.match(line).groups() for line in f.readlines())
-       print({int(num): text.strip() for num, text in lines})
        return {int(num): text.strip() for num, text in lines}
 
 def rand_color():
@@ -52,7 +51,7 @@ def Gen_Color(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
        lines = (p.match(line).groups() for line in f.readlines())
-       color = [(num, rand_color()) for num, text in lines]
+       color = {int(num) : rand_color() for num, text in lines}
        return color
 
 class Model():
@@ -75,7 +74,7 @@ class Model():
         print("Loading %s with %s labels."%(os.path.join(default_model_dir,self.args.model), os.path.join(default_model_dir,self.args.labels)))
         self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
         self.labels = load_labels(os.path.join(default_model_dir,self.args.labels))
-        print(len(self.labels))
+    
         self.color = Gen_Color(os.path.join(default_model_dir,self.args.labels))
 
 
@@ -105,7 +104,7 @@ class Model():
           label = self.labels[obj.label_id]
           flaskLabel.append(label)
           FlaskPercent.append(percent)
-          print(obj.label_id)
+
           color = self.color[obj.label_id]
 
           if percent > 50:

@@ -18,7 +18,7 @@ def Gen_Color(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
        lines = (p.match(line).groups() for line in f.readlines())
-       color = [(num, rand_color()) for num, text in lines]
+       color = {int(num) : rand_color() for num, text in lines}
        return color
 default_model_dir = './app/all_models'
 
@@ -30,5 +30,5 @@ labels = load_labels(os.path.join(default_model_dir,default_labels))
 
 print(labels)
 
-color = reee(os.path.join(default_model_dir,default_labels))
+color = Gen_Color(os.path.join(default_model_dir,default_labels))
 print(color)
