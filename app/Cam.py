@@ -146,16 +146,21 @@ class camera:
                     draw.text((0,0), status, (255, 255, 255), font=font)
 
                 elif(self.AI.type == "face"):
-                    status = self.result
-                   
-                
-                    #color = self.color
-                    color = self.Gen_color()
+                    status = self.result[0]
+                    label = self.result[1]
+                    percent = self.result[2]
+                    color = self.result[3]
+                    print(label)
+                    print(percent)
                     print(color)
+                    #print(status)
+                    color = self.Gen_color()
                     if len(status) > 0:
                         self.val = status
+                        
                         for i in status:
-                            
+                            color = i[0]
+                            #print(str(i[1]))
                             draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill=color)
                             draw.text((i[1] * self.width, i[4] * self.height), str(i[0]), (255, 255, 255), font=font2)
                             draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline=color)

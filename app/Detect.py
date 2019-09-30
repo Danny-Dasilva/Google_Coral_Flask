@@ -33,6 +33,7 @@ import imp
 import os
 from edgetpu.detection.engine import DetectionEngine
 from app import gstreamer
+from random import randrange
 flaskImage = None
 flaskStatus = None
 
@@ -42,13 +43,15 @@ def load_labels(path):
        lines = (p.match(line).groups() for line in f.readlines())
        return {int(num): text.strip() for num, text in lines}
 
-
+def Gen_color():
+        color = (randrange(255), randrange(255), randrange(255), 0)
+        return color
 
 class Model():
     def __init__(self):
         default_model_dir = './app/all_models'
-        #default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
-        default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
+        default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
+        #default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
         default_labels = 'coco_labels.txt'
         parser = argparse.ArgumentParser()
         parser.add_argument('--model', help='.tflite model path',
@@ -64,12 +67,19 @@ class Model():
         print("Loading %s with %s labels."%(os.path.join(default_model_dir,self.args.model), os.path.join(default_model_dir,self.args.labels)))
         self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
         self.labels = load_labels(os.path.join(default_model_dir,self.args.labels))
-        print(self.labels)
+        print(len(self.labels))
+        self.color = []
+        for i in range(len(self.labels)):
+          self.color.append(Gen_color())
+        print(self.color[2])
+
         self.last_time = time.monotonic()
     def user_callback(self, image):
 
       global flaskImage
       global flaskStatus
+      global flaskLabel
+      global FlaskPercent
       flaskImage = image
       start_time = time.monotonic()
       objs = self.engine.DetectWithImage(image, threshold=self.args.threshold,
@@ -81,15 +91,25 @@ class Model():
           'FPS: %.2f fps' %(1.0/(end_time - self.last_time)),
       ]
       objBoxes = []
+      flaskLabel = []
+      FlaskPercent = []
+      Color = []
       for obj in objs:
           x0, y0, x1, y1 = obj.bounding_box.flatten().tolist()
           percent = int(100 * obj.score)
           objBoxes.append([percent, x0,y0,x1,y1])
+          label = self.labels[obj.label_id]
+          flaskLabel.append(label)
+          FlaskPercent.append(percent)
+          color = self.color[obj.label_id]
+          Color.append(color)
+          objBoxes.append([color, x0,y0,x1,y1])
 
       self.last_time = end_time
 
       flaskStatus = objBoxes
-      return(flaskStatus)
+     
+      return(flaskStatus, flaskLabel, FlaskPercent, Color)
 
 model = None
 def main():
