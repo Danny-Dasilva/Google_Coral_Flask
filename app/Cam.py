@@ -60,7 +60,6 @@ class camera:
 
     def runThread(self):
         while True:
-            print(self.AI.type)
             if self.AI.type in ["Anonymizer", "Pose"]:
                 pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
                 self.result = sys.exit(pipeline)
@@ -149,10 +148,14 @@ class camera:
                     draw.rectangle([0,0,320,12], fill="Black")
                     self.inference = self.result[0]
                     self.fps = self.result[1]
-                    self.score = self.result[2]
-                    # self.Class = self.result[3]
-                    
-                    status = 'fps %.1f; % 7s' % (self.fps, self.Class)
+                    if len(self.result) > 3:
+
+                        self.score = self.result[2]
+                        self.Class = self.result[3]
+                        
+                        status = 'fps %.1f,  score, %.2f, %s' % (self.fps, self.score, self.Class)
+                    else:
+                        status = 'fps %.1f; % 7s' % (self.fps, self.inference)
                     
                     draw.text((0,0), status, (255, 255, 255), font=font)
 
@@ -172,7 +175,6 @@ class camera:
                             else:
                                 color = i[0]
                                 label = i[1]
-                                print(label)
                                 draw.rectangle([i[2]*self.width,i[3]*self.height,i[4]*self.width,i[5]*self.height],outline=color)
 
                 elif (self.AI.type == "Pose"):

@@ -68,23 +68,22 @@ class Model():
       start_time = time.monotonic()
       results = self.engine.ClassifyWithImage(image, threshold=self.args.threshold, top_k=self.args.top_k)
       end_time = time.monotonic()
-      print(self.args.top_k)
       text_lines = [
           'Inference: %.2f ms' %((end_time - start_time) * 1000),
           (1.0/(end_time - self.last_time)),
       ]
       for index, score in results:
-        text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
-       
-      if(len(text_lines) > 2):
-        status = [text_lines[1], text_lines[2], ""]
-      else:
-          status = [text_lines[1], "", ""]
+        #text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
+        labels = [score, self.labels[index]]
+        text_lines.extend(labels)
+        
+      # if(len(text_lines) > 2):
+      #   status = [text_lines[1], text_lines[2], ""]
+      # else:
+      #     status = [text_lines[1], "", ""]
       self.last_time = end_time
-
-
-      flaskStatus = status
-
+ 
+      flaskStatus = text_lines
       return(flaskStatus)
 
 model = None
