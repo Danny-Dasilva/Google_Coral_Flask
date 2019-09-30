@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 #Image = camera(anonymizer.AI())
 #Image = camera(Teachable.AI())
-#Image = camera(Classify.AI())
-Image = camera(Detect.AI())
+Image = camera(Classify.AI())
+#Image = camera(Detect.AI())
 #Image = camera(Empty.AI())
 
 
@@ -39,7 +39,13 @@ def signal_handler(signal, frame):
 def my_function():
     while True:
         sleep(0.01)
-        result = Image.result
+        #result = Image.result
+        # count = Image.numImages
+        # fps = Image.fps
+        # Inference = Image.inference
+        # Class = Image.Class
+        # Score = Image.Score
+
         #print(result)
 
 if __name__ == "__main__":

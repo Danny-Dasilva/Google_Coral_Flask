@@ -40,10 +40,20 @@ class camera:
         self.AI = ai
         self.bac_img = None
         self.result = None
-        self.fps = None
-        self.numImages = None
+        
         self.val = None
         self.color = (255, 0, 0, 0)
+
+
+
+        self.fps = None
+        self.inference = None
+        self.Class = None
+        self.Score = None
+        self.numImages = None
+
+
+
         thread1 = Thread(target=self.runThread)
         thread1.deamon = True
         thread1.start()
@@ -137,9 +147,13 @@ class camera:
                     draw.text((0,0), status, (255, 255, 255), font=font)
                 elif(self.AI.type == "objClass"):
                     draw.rectangle([0,0,320,12], fill="Black")
-                    self.fps = self.result[0]
-                    self.numImages = self.result[1]
-                    status = 'fps %.1f; % 7s' % (self.fps, self.numImages)
+                    self.inference = self.result[0]
+                    self.fps = self.result[1]
+                    self.score = self.result[2]
+                    # self.Class = self.result[3]
+                    
+                    status = 'fps %.1f; % 7s' % (self.fps, self.Class)
+                    
                     draw.text((0,0), status, (255, 255, 255), font=font)
 
                 elif(self.AI.type == "face"):

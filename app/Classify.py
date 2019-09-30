@@ -75,7 +75,7 @@ class Model():
       ]
       for index, score in results:
         text_lines.append('score=%.2f: %s' % (score, self.labels[index]))
-
+       
       if(len(text_lines) > 2):
         status = [text_lines[1], text_lines[2], ""]
       else:
