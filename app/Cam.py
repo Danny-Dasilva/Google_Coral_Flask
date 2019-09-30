@@ -43,12 +43,14 @@ class camera:
         self.fps = None
         self.numImages = None
         self.val = None
-        self.color = randrange(255)
+        self.color = (255, 0, 0, 0)
         thread1 = Thread(target=self.runThread)
         thread1.deamon = True
         thread1.start()
 
-
+    def Gen_color(self):
+        color = (randrange(255), randrange(255), randrange(255), 0)
+        return color
     def runThread(self):
         while True:
             print(self.AI.type)
@@ -145,16 +147,16 @@ class camera:
 
                 elif(self.AI.type == "face"):
                     status = self.result
-                    color = randrange(255)
-                    print(self.color)
-                    color = (0, self.color, 0, 0)
+                   
+                
+                    #color = self.color
+                    color = self.Gen_color()
                     print(color)
-                    print(type(color))
                     if len(status) > 0:
                         self.val = status
                         for i in status:
                             
-                            draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill=(0, 255, 0, 0))
+                            draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill=color)
                             draw.text((i[1] * self.width, i[4] * self.height), str(i[0]), (255, 255, 255), font=font2)
                             draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline=color)
 
