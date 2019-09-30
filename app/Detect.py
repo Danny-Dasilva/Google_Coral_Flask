@@ -62,7 +62,7 @@ class Model():
 
         print("Loading %s with %s labels."%(os.path.join(default_model_dir,self.args.model), os.path.join(default_model_dir,self.args.labels)))
         self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
-        self.labels = load_labels(self.args.labels)
+        self.labels = load_labels(os.path.join(default_model_dir,self.args.labels))
         print(self.labels)
         self.last_time = time.monotonic()
     def user_callback(self, image):
