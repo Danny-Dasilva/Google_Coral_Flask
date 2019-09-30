@@ -44,9 +44,16 @@ def load_labels(path):
        print({int(num): text.strip() for num, text in lines})
        return {int(num): text.strip() for num, text in lines}
 
-def Gen_color():
+def rand_color():
         color = (randrange(255), randrange(255), randrange(255), 0)
         return color
+
+def Gen_Color(path):
+    p = re.compile(r'\s*(\d+)(.+)')
+    with open(path, 'r', encoding='utf-8') as f:
+       lines = (p.match(line).groups() for line in f.readlines())
+       color = [(num, rand_color()) for num, text in lines]
+       return color
 
 class Model():
     def __init__(self):
@@ -69,10 +76,8 @@ class Model():
         self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
         self.labels = load_labels(os.path.join(default_model_dir,self.args.labels))
         print(len(self.labels))
-        self.color = []
-        for i in range(len(self.labels)):
-          self.color.append(Gen_color())
-        print(len(self.color))
+        self.color = Gen_Color(os.path.join(default_model_dir,self.args.labels))
+
 
         self.last_time = time.monotonic()
     def user_callback(self, image):
