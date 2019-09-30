@@ -41,6 +41,7 @@ def load_labels(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
        lines = (p.match(line).groups() for line in f.readlines())
+       print({int(num): text.strip() for num, text in lines})
        return {int(num): text.strip() for num, text in lines}
 
 def Gen_color():
@@ -71,7 +72,7 @@ class Model():
         self.color = []
         for i in range(len(self.labels)):
           self.color.append(Gen_color())
-        print(self.color[2])
+        print(len(self.color))
 
         self.last_time = time.monotonic()
     def user_callback(self, image):
@@ -93,23 +94,26 @@ class Model():
       objBoxes = []
       flaskLabel = []
       FlaskPercent = []
-      Color = []
       for obj in objs:
           x0, y0, x1, y1 = obj.bounding_box.flatten().tolist()
           percent = int(100 * obj.score)
-          objBoxes.append([percent, x0,y0,x1,y1])
           label = self.labels[obj.label_id]
           flaskLabel.append(label)
           FlaskPercent.append(percent)
+          print(obj.label_id)
           color = self.color[obj.label_id]
-          Color.append(color)
-          objBoxes.append([color, x0,y0,x1,y1])
+
+          if percent > 50:
+            if obj.label_id > 0:
+              objBoxes.append([color, label, x0,y0,x1,y1])
+            else:
+              objBoxes.append([percent, x0,y0,x1,y1])
 
       self.last_time = end_time
 
       flaskStatus = objBoxes
      
-      return(flaskStatus, flaskLabel, FlaskPercent, Color)
+      return(flaskStatus, flaskLabel, FlaskPercent)
 
 model = None
 def main():

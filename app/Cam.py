@@ -48,9 +48,6 @@ class camera:
         thread1.deamon = True
         thread1.start()
 
-    def Gen_color(self):
-        color = (randrange(255), randrange(255), randrange(255), 0)
-        return color
     def runThread(self):
         while True:
             print(self.AI.type)
@@ -147,24 +144,22 @@ class camera:
 
                 elif(self.AI.type == "face"):
                     status = self.result[0]
-                    label = self.result[1]
-                    percent = self.result[2]
-                    color = self.result[3]
-                    print(label)
-                    print(percent)
-                    print(color)
-                    #print(status)
-                    color = self.Gen_color()
+
+                    
                     if len(status) > 0:
                         self.val = status
-                        
                         for i in status:
-                            color = i[0]
-                            #print(str(i[1]))
-                            draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill=color)
-                            draw.text((i[1] * self.width, i[4] * self.height), str(i[0]), (255, 255, 255), font=font2)
-                            draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline=color)
 
+                            if isinstance(i[0], int) == True:
+                                percent = str(i[0])
+                                draw.rectangle([i[1] * self.width, i[4] * self.height, (i[1] * self.width) + 25, (i[4] * self.height) + 20], fill="Red")
+                                draw.text((i[1] * self.width, i[4] * self.height), percent, (255, 255, 255), font=font2)
+                                draw.rectangle([i[1]*self.width,i[2]*self.height,i[3]*self.width,i[4]*self.height],outline="Red")
+                            else:
+                                color = i[0]
+                                label = i[1]
+                                print(label)
+                                draw.rectangle([i[2]*self.width,i[3]*self.height,i[4]*self.width,i[5]*self.height],outline=color)
 
                 elif (self.AI.type == "Pose"):
                     outputs = self.result[0][0]
