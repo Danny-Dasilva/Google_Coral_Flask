@@ -35,6 +35,7 @@ from edgetpu.detection.engine import DetectionEngine
 from app import gstreamer
 flaskImage = None
 flaskStatus = None
+
 def load_labels(path):
     p = re.compile(r'\s*(\d+)(.+)')
     with open(path, 'r', encoding='utf-8') as f:
@@ -46,7 +47,7 @@ def load_labels(path):
 class Model():
     def __init__(self):
         default_model_dir = './app/all_models'
-        default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
+        default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
         default_labels = 'coco_labels.txt'
         parser = argparse.ArgumentParser()
         parser.add_argument('--model', help='.tflite model path',
