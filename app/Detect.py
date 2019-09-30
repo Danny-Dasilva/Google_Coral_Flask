@@ -67,6 +67,9 @@ class Model():
                             default=default_labels)
         parser.add_argument('--top_k', type=int, default=3,
                             help='number of classes with highest score to display')
+        parser.add_argument('--cutoff', type=int, default=50,
+                            help='Cutoff for showing objects')
+
         parser.add_argument('--threshold', type=float, default=0.1,
                             help='class score threshold')
         self.args = parser.parse_args()
@@ -74,7 +77,6 @@ class Model():
         print("Loading %s with %s labels."%(os.path.join(default_model_dir,self.args.model), os.path.join(default_model_dir,self.args.labels)))
         self.engine = DetectionEngine(os.path.join(default_model_dir,self.args.model))
         self.labels = load_labels(os.path.join(default_model_dir,self.args.labels))
-    
         self.color = Gen_Color(os.path.join(default_model_dir,self.args.labels))
 
 
@@ -107,7 +109,7 @@ class Model():
 
           color = self.color[obj.label_id]
 
-          if percent > 50:
+          if percent > self.args.cutoff:
             if obj.label_id > 0:
               objBoxes.append([color, label, x0,y0,x1,y1])
             else:
