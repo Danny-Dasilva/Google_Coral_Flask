@@ -41,7 +41,7 @@ class Model():
     def user_callback(self, image):
       start_time = time.monotonic()
       end_time = time.monotonic()
-      self.last_time = end_time
+      self.last_time = end_time\
 
 model = None
 def main():

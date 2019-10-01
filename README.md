@@ -54,7 +54,7 @@ runs the teachable machine model
 
 ![Teachable](https://media.giphy.com/media/H22nyRM1AibZJPPNor/giphy.gif)
 
-<kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> are the class categories
+<kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> add an image to each corresponding class
 
 <kbd>q</kbd> reset current classes
 
@@ -77,7 +77,7 @@ example of the pose net model, when you move out of the frame it saves the image
 
 `Image = camera(synthesizer.AI())`
  
- People are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
+ Three people are given control instrument and octave, the pitch is controlled with their right wrists and the volume with their left wrists.
 
 
 ## Return values
@@ -104,26 +104,26 @@ For every model your run there are corresponding instance attributes that you ca
 
 `numImages` returns the number of examples for the teacheable machine
 
-`Class` returns the class of the model \
+`Class` returns the class of the model
 
 `Score` returns the percentage accuracy the model believes the class to be 
 
-## e.g 
+### e.g 
 `teacheable` returns 'One', 'Two', 'Three', or 'Four'
 
 `classify` returns 'ping-pong ball' or 'spatula'
 
 `detect` returns bounding box 
 
-any of the posenet models returns a posenet object
+You can modify `my_function` and add your own python operations
 
 ## Args
 
 All normal arguments that each model takes can be applied as long as the right class is being used
 
-eg. 'python 3 test.py --model /path to my example model'
+eg. 'python 3 test.py --model /<path to my example model>'
 
-gif of custom object detection model
+
 
 ## Flask stuff
 
@@ -139,8 +139,8 @@ in order to access the server you need to go to the ip of the Coral and go to th
 
 ### Additional
 
-theres a while loop for the gstreamer thread so in order to stop the program you need to press
-<kbd>CTRL</kbd>+<kbd>C</kbd> until it stops
+If you receive a `segmentation fault` error simply rerun the code
+
 
 If you encounter a gstreamer error 'must write bytes' then simply restart the program
 
