@@ -32,8 +32,7 @@ import socket
 
 os.environ['XDG_RUNTIME_DIR'] = '/run/user/1000'
 
-flaskImage = None
-flaskStatus = None
+
 
 
 def detectPlatform():
@@ -144,9 +143,7 @@ class Model(object):
 
     def classify(self, img):
 
-        global flaskImage
         global flaskStatus
-        flaskImage = img
         # Classify current image and determine
         emb = self._engine.DetectWithImage(img)
 
@@ -171,14 +168,8 @@ class Model(object):
         # Print/Display results
         self._ui.setOnlyLED(classification)
         classes = ['--', 'One', 'Two', 'Three', 'Four']
-        status = [fps, self._engine.exampleCount(), classes[classification or 0]]
-        # print(img)
-        # print(type(img))
-        # print(status)
-
-        flaskStatus = status
-        # print(flaskStatus)
-        return (flaskStatus)
+        flaskData = [fps, self._engine.exampleCount(), classes[classification or 0]]
+        return (flaskData)
 
 
 model = None

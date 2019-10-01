@@ -57,8 +57,8 @@ def Gen_Color(path):
 class Model():
     def __init__(self):
         default_model_dir = './app/all_models'
-        default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
-        #default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
+        #default_model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
+        default_model = 'mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite'
         default_labels = 'coco_labels.txt'
         parser = argparse.ArgumentParser()
         parser.add_argument('--model', help='.tflite model path',
@@ -97,14 +97,16 @@ class Model():
           'Inference: %.2f ms' %((end_time - start_time) * 1000),
           'FPS: %.2f fps' %(1.0/(end_time - self.last_time)),
       ]
+      FlaskInf = ((end_time - start_time) * 1000)
+      fps = (1.0/(end_time - self.last_time))
       objBoxes = []
-      flaskLabel = []
+      flaskClass = []
       FlaskPercent = []
       for obj in objs:
           x0, y0, x1, y1 = obj.bounding_box.flatten().tolist()
           percent = int(100 * obj.score)
           label = self.labels[obj.label_id]
-          flaskLabel.append(label)
+          flaskClass.append(label)
           FlaskPercent.append(percent)
 
           color = self.color[obj.label_id]
@@ -119,7 +121,7 @@ class Model():
 
       flaskStatus = objBoxes
      
-      return(flaskStatus, flaskLabel, FlaskPercent)
+      return(flaskStatus, FlaskInf, fps, flaskClass, FlaskPercent)
 
 model = None
 def main():

@@ -83,8 +83,8 @@ class Model():
       #     status = [text_lines[1], "", ""]
       self.last_time = end_time
  
-      flaskStatus = text_lines
-      return(flaskStatus)
+      flaskData = text_lines
+      return(flaskData)
 
 model = None
 def main():
