@@ -98,15 +98,15 @@ def my_function():
 ```
 For every model your run there are corresponding instance attributes that you can call from the camera class
 
-`Image.fps` returns the frames per second for the camera
+`fps` returns the frames per second for the camera
 
-`Image.interference` returns the interference rate
+`inference` returns the interference rate
 
+`numImages` returns the number of examples for the teacheable machine
 
-`self.numImages` returns the number of examples for the teacheable machine
+`Class` returns the class of the model \
 
-
-`Image.class` returns the class of the model 
+`Score` returns the percentage accuracy the model believes the class to be 
 
 ## e.g 
 `teacheable` returns 'One', 'Two', 'Three', or 'Four'

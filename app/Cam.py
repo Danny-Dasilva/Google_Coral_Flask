@@ -40,8 +40,7 @@ class camera:
         self.AI = ai
         self.bac_img = None
         self.result = None
-        
-        self.val = None
+
         self.color = (255, 0, 0, 0)
 
 
@@ -166,7 +165,6 @@ class camera:
                     self.Score = self.result[4]
                     
                     if len(status) > 0:
-                        self.val = status
                         for i in status:
 
                             if isinstance(i[0], int) == True:
@@ -210,7 +208,8 @@ class camera:
 
                 else:
                     self.result = [0, 0]
-                    self.val = ('no model')
+                    self.Class = ('no model')
+                    self.fps
                     status = ""
 
                 image.save(img_io, 'JPEG', quality=100)
