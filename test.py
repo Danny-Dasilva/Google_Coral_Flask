@@ -39,14 +39,13 @@ def signal_handler(signal, frame):
 def my_function():
     while True:
         sleep(0.01)
-        #result = Image.result
-        # count = Image.numImages
+        count = Image.numImages
         fps = Image.fps
         Inference = Image.inference
         Class = Image.Class
         Score = Image.Score
 
-        print(fps, Inference, Class, Score)
+        print(fps, Inference, Class, Score, count)
 
 if __name__ == "__main__":
     global status
