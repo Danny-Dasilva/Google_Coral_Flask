@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 #Image = camera(anonymizer.AI())
 #Image = camera(Teachable.AI())
-#Image = camera(Classify.AI())
-Image = camera(Detect.AI())
+Image = camera(Classify.AI())
+#Image = camera(Detect.AI())
 #Image = camera(Empty.AI())
 
 
@@ -45,7 +45,7 @@ def my_function():
         Class = Image.Class
         Score = Image.Score
 
-        print(fps, Inference, Class, Score, count)
+        #print(fps, Inference, Class, Score, count)
 
 if __name__ == "__main__":
     global status
