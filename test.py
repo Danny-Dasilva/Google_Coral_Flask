@@ -7,16 +7,7 @@ from threading import Thread, active_count
 import signal
 from threading import Thread, Event
 from threading import Thread
-import sys# """test"""
-
-
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# s.bind((socket.gethostname(), 1235))
-# s.listen(5)
-
-# """end test"""
-
-
+import sys
 
 app = Flask(__name__)
 
