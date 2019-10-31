@@ -7,17 +7,19 @@ from threading import Thread, active_count
 import signal
 from threading import Thread, Event
 from threading import Thread
-import sys
+import sys# """test"""
+
+
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.bind((socket.gethostname(), 1235))
+# s.listen(5)
+
+# """end test"""
 
 
 
 app = Flask(__name__)
 
-
-#Image = camera(anonymizer.AI())
-#Image = camera(Teachable.AI())
-#Image = camera(Classify.AI())
-#Image = camera(Detect.AI())
 Image = camera(Empty.AI())
 
 
