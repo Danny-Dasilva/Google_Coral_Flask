@@ -1,5 +1,5 @@
 import sys
-from app import pose_gstreamer, gstreamer
+from app import pose_gstreamer, gstreamer, EmptyGstreamer
 from threading import Thread, Event
 from PIL import Image, ImageFont, ImageDraw
 from time import sleep
@@ -60,6 +60,9 @@ class camera:
         while True:
             if self.AI.type in ["Anonymizer", "Pose"]:
                 pipeline = pose_gstreamer.run_pipeline(self.updateIMG)
+                self.result = sys.exit(pipeline)
+            elif self.AI.type in ["None"]:
+                pipeline = EmptyGstreamer.run_pipeline(self.updateIMG)
                 self.result = sys.exit(pipeline)
 
             else:

@@ -31,8 +31,7 @@ import re
 import svgwrite
 import imp
 import os
-from edgetpu.detection.engine import DetectionEngine
-from app import gstreamer_none as gstreamer
+from app import EmptyGstreamer as gstreamer
 
 class Model():
     def __init__(self):

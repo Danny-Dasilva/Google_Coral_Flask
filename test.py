@@ -1,4 +1,4 @@
-from app import Detect, Classify, Teachable, Empty, pose_camera, anonymizer, synthesizer
+from app import Detect, Classify, Teachable, Empty#, pose_camera, anonymizer, synthesizer
 from flask import Flask, send_file, Response, render_template
 from app.Cam import camera
 import keyboard
@@ -12,6 +12,7 @@ import sys
 app = Flask(__name__)
 
 Image = camera(Empty.AI())
+
 
 
 @app.route('/')
@@ -38,7 +39,6 @@ def my_function():
         Class = Image.Class
         Score = Image.Score
 
-        #print(fps, Inference, Class, Score, count)
 
 if __name__ == "__main__":
     global status

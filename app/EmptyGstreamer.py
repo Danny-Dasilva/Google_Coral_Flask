@@ -72,17 +72,18 @@ def detectCoralDevBoard():
 
 
 def run_pipeline(user_function, src_size=(640, 480), appsink_size=(320, 180)):
-    PIPELINE = 'v4l2src ! {src_caps} ! {leaky_q}  ! tee name=t'
+    PIPELINE = 'v4l2src device=/dev/video1 ! {src_caps} ! {leaky_q}  ! tee name=t'
     if detectCoralDevBoard():
-        SRC_CAPS = 'video/x-raw,format=YUY2,width={width},height={height},framerate=30/1'
-        PIPELINE += """
-            t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
-               ! {dl_caps} ! videoconvert ! {sink_caps} ! {sink_element}
-            t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
-               ! rsvgoverlay name=overlay ! waylandsink
-        """
+    #     SRC_CAPS = 'video/x-raw,format=YUY2,width={width},height={height},framerate=30/1'
+    #     PIPELINE += """
+    #         t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
+    #            ! {dl_caps} ! videoconvert ! {sink_caps} ! {sink_element}
+    #         t. ! {leaky_q} ! glupload ! glfilterbin filter=glcolorscale
+    #            ! rsvgoverlay name=overlay ! waylandsink
+    #     """
 
-    else:
+    # else:, 
+        print('{width}, {height}')
         SRC_CAPS = 'video/x-raw,width={width},height={height},framerate=30/1'
         PIPELINE += """
             t. ! {leaky_q} ! videoconvert ! videoscale ! {sink_caps} ! {sink_element}
