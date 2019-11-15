@@ -1,4 +1,4 @@
-from app import Detect, Classify, Teachable, Empty#, pose_camera, anonymizer, synthesizer
+from app import Detect, Classify, Teachable, Empty, pose_camera, anonymizer, synthesizer
 from flask import Flask, send_file, Response, render_template
 from app.Cam import camera
 import keyboard
@@ -11,7 +11,7 @@ import sys
 
 app = Flask(__name__)
 
-Image = camera(Empty.AI())
+Image = camera(Detect.AI())
 
 
 
